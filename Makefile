@@ -22,6 +22,13 @@ release: doc stamp clean tar
 ftpput: ${RGL}.tgz
 	ftpput.rb $<
 
+releasedoc: doc
+	rm -f htdocs
+	ln -fs doc htdocs
+	tar --dereference --exclude='*.bak' -czf htdocs.tgz htdocs
+	rm htdocs
+	scp htdocs.tgz monora@rgl.sf.net:/home/groups/r/rg/rgl
+
 stamp:
 		ruby -i.bak -pe 'sub!(/V\d+(\.\d+)+/, "V$(VERSION)") if /_VERSION =/' ${LIB}/rgl/base.rb
 		rm ${LIB}/rgl/base.rb.bak
