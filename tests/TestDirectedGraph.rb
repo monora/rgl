@@ -97,4 +97,11 @@ class TestDirectedGraph < Test::Unit::TestCase
 	assert_equal(dg.vertices.sort, [1,2,3,4])
 	assert_equal(dg.edges.to_s, "(1-2)(3-4)")
   end
+
+  def test_reverse
+    reverted = @dg.reverse
+    @dg.each_edge do |u,v|
+      assert(reverted.has_edge?(v,u))
+    end
+  end
 end

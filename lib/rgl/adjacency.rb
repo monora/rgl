@@ -130,7 +130,7 @@ module RGL
 	#
 	# If the graph is undirected the result is self.
 	def reverse
-	  reurn self unless directed?
+	  return self unless directed?
 	  result = DirectedAdjacencyGraph.new
 	  each_edge { |u,v| result.add_edge v,u }
 	  result

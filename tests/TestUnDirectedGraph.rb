@@ -95,4 +95,8 @@ class TestUnDirectedGraph < Test::Unit::TestCase
 	dg.remove_vertices 1,3,Object		# ones again
 	assert_equal dg.vertices.sort, [2,4]
   end
+
+  def test_reverse
+    assert_equal(@dg, @dg.reverse)
+  end
 end
