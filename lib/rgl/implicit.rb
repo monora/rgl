@@ -86,8 +86,7 @@ module RGL
 	# receiver which satisfy the predicate _filter_.
 	#
 	# The methods provides similar functionaty as the BGL graph adapter
-	# filtered_graph (see
-	# file://D:/Programme/bgl/boost_1_25_1/libs/graph/doc/filtered_graph.html). 
+	# filtered_graph (see BOOST_DOC/filtered_graph.html). 
 	#
 	# ==== Example
 	#

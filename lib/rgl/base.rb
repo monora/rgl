@@ -23,7 +23,7 @@ module RGL
 	# omit to instantiate edges. They instead use two vertex parameters for
 	# representing edges (see each_edge). If a client wants to store edges
 	# explicitly DirecteEdge or UnDirectedEdge instances are return
-	# (i.e. Graph::edges). 
+	# (i.e. Graph#edges). 
 	class DirectedEdge
 	  attr_accessor :source, :target
 
@@ -85,7 +85,7 @@ module RGL
   # In BGL terminology the module Graph defines the concept graph (see
   # BOOST_DOC/graph_concepts.html). We though do not
   # distinguish between IncidenceGraph, EdgeListGraph and VertexListGraph
-  # conecpt, which would complicate
+  # concept, which would complicate
   # the interface two much. These concepts are defined in BGL to differentiate
   # between efficient access to edges and vertices.
   # 
