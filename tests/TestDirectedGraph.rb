@@ -14,8 +14,8 @@ class TestDirectedGraph < Test::Unit::TestCase
 
   def test_empty_graph
 	dg = DirectedAdjacencyGraph.new
-	assert(dg.empty?)
-	assert(dg.directed?)
+	assert dg.empty?
+    assert dg.directed?
 	assert(!dg.has_edge?(2,1))
 	assert(!dg.has_vertex?(3))
 	# Non existend vertex result in a Name Error because each_key is
@@ -103,5 +103,18 @@ class TestDirectedGraph < Test::Unit::TestCase
     @dg.each_edge do |u,v|
       assert(reverted.has_edge?(v,u))
     end
+  end
+
+  def test_reverse
+    # Add isolated vertex
+    @dg.add_vertex(42)
+    reverted = @dg.reverse
+    
+    @dg.each_edge do |u,v|
+      assert(reverted.has_edge?(v,u))
+    end
+
+    assert(reverted.has_vertex?(42),
+           "Reverted graph should contain isolated Vertex 42")
   end
 end
