@@ -24,27 +24,78 @@ module DOT
   # options for node declaration
 
   NODE_OPTS = [
+    # attributes due to
+    # http://www.graphviz.org/Documentation/dotguide.pdf
+    # March, 26, 2005
+    'bottomlabel', # auxiliary label for nodes of shape M*
+    'color', # default: black; node shape color
+    'comment', # any string (format-dependent)
+    'distortion', # default: 0.0; node distortion for shape=polygon
+    'fillcolor', # default: lightgrey/black; node fill color
+    'fixedsize', # default: false; label text has no affect on node size
+    'fontcolor', # default: black; type face color
+    'fontname', # default: Times-Roman; font family
+    'fontsize', #default: 14; point size of label
+    'group', # name of node’s group
+    'height', # default: .5; height in inches
+    'label', # default: node name; any string
+    'layer', # default: overlay range; all, id or id:id
+    'orientation', # dafault: 0.0; node rotation angle
+    'peripheries', # shape-dependent number of node boundaries
+    'regular', # default:  false; force polygon to be regular
+    'shape', # default: ellipse; node shape; see Section 2.1 and Appendix E
+    'shapefile', # external EPSF or SVG custom shape file
+    'sides', # default: 4; number of sides for shape=polygon
+    'skew' , # default: 0.0; skewing of node for shape=polygon
+    'style', # graphics options, e.g. bold, dotted, filled; cf. Section 2.3
+    'toplabel', # auxiliary label for nodes of shape M*
+    'URL', # URL associated with node (format-dependent)
+    'width', # default: .75; width in inches
+    'z', #default: 0.0; z coordinate for VRML output
+
+    # maintained for backward compatibility or rdot internal
     'bgcolor',
-    'color',
-    'fontcolor', 'fontname', 'fontsize',
-    'height',
-    'label', 'layer',
-    'rank',
-    'shape', 'shapefile', 'style',
-    'width'
+    'rank'
   ]
     
   # options for edge declaration
 
   EDGE_OPTS = [
-    'color',
-    'decorate', 'dir',
-    'fontcolor', 'fontname', 'fontsize',
-    'id',
-    'label', 'layer',
-    'minlen',
-    'style',
-    'weight'
+    'arrowhead', # default: normal; style of arrowhead at head end
+    'arrowsize', # default: 1.0; scaling factor for arrowheads
+    'arrowtail', # default: normal; style of arrowhead at tail end
+    'color', # default: black; edge stroke color
+    'comment', # any string (format-dependent)
+    'constraint', # default: true use edge to affect node ranking
+    'decorate', # if set, draws a line connecting labels with their edges
+    'dir', # default: forward; forward, back, both, or none
+    'fontcolor', # default: black type face color
+    'fontname', # default: Times-Roman; font family
+    'fontsize', # default: 14; point size of label
+    'headlabel', # label placed near head of edge
+    'headport', # n,ne,e,se,s,sw,w,nw
+    'headURL', # URL attached to head label if output format is ismap
+    'label', # edge label
+    'labelangle', # default: -25.0; angle in degrees which head or tail label is rotated off edge
+    'labeldistance', # default: 1.0; scaling factor for distance of head or tail label from node
+    'labelfloat', # default: false; lessen constraints on edge label placement
+    'labelfontcolor', # default: black; type face color for head and tail labels
+    'labelfontname', # default: Times-Roman; font family for head and tail labels
+    'labelfontsize', # default: 14 point size for head and tail labels
+    'layer', # default: overlay range; all, id or id:id
+    'lhead', # name of cluster to use as head of edge
+    'ltail', # name of cluster to use as tail of edge
+    'minlen', # default: 1 minimum rank distance between head and tail
+    'samehead', # tag for head node; edge heads with the same tag are merged onto the same port
+    'sametail', # tag for tail node; edge tails with the same tag are merged onto the same port
+    'style', # graphics options, e.g. bold, dotted, filled; cf. Section 2.3
+    'taillabel', # label placed near tail of edge
+    'tailport', # n,ne,e,se,s,sw,w,nw
+    'tailURL', # URL attached to tail label if output format is ismap
+    'weight', # default: 1; integer cost of stretching an edge
+
+    # maintained for backward compatibility or rdot internal
+    'id'
   ]
     
   # options for graph declaration
