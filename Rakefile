@@ -127,7 +127,7 @@ else
     #### Load-time details: library and application (you will need one or both).
 
     s.require_path = 'lib'                         # Use these for libraries.
-    s.autorequire = 'rgl'
+    s.autorequire = 'rgl/base'
 
     #### Documentation and testing.
 
