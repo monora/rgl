@@ -1,13 +1,17 @@
-require 'rgl/rdot'
-
+# 
+# $Id$
+# 
 # Minimal Dot support based on Dave Thomas dot module (included in
 # rdoc). rdot.rb is a modified version which also contains support for
 # undirected graphs.
+
+require 'rgl/rdot'
+
 module RGL
   module Graph
 	# Return a DOT::DOTDigraph for directed graphs or a DOT::DOTSubgraph for an
 	# undirected Graph. _params_ can contain any graph property specified in
-	# dot/dot.rb.
+	# rdot.rb.
 	def to_dot_graph( params = {} )
 	  params['name'] ||= self.class.name.gsub(/:/,'_')
 	  fontsize = params['fontsize'] ? params['fontsize'] : '8'
@@ -15,7 +19,7 @@ module RGL
 	  edge_class = directed? ? DOT::DOTDirectedEdge : DOT::DOTEdge
 	  each_vertex do |v|
 		name = v.to_s
-		graph << DOT::DOTNode.new('name' => name,
+		graph << DOT::DOTNode.new('name' => '"' + name + '"',
 								  'fontsize' => fontsize,
 								  'label' => name)
 	  end
@@ -39,7 +43,7 @@ module RGL
 	  File.open(dotfile, "w") {|f|
 		print_dotted_on(params, f)
 	  }
-	  system "dotty #{dotfile}"
+	  system("dotty", dotfile)
 	end
 
 	# Use +do+ to create a graphical representation of the graph. Returns the
