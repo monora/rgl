@@ -6,7 +6,7 @@
 # library. The main module is RGL::Graph which defines the abstract behavior of
 # all graphs in the library.
 
-RGL_VERSION = "0.2.1"
+RGL_VERSION = "0.2.2"
 
 unless Enumerable.instance_methods(true).grep(/inject/)
   module Enumerable

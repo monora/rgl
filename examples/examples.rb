@@ -1,5 +1,6 @@
 # Some graph examples
 
+require 'rubygems' rescue nil
 require 'rgl/adjacency'
 require 'rgl/implicit'
 
@@ -97,10 +98,10 @@ if $0 == __FILE__
   require 'rgl/dot'
 
   dg = RGL::DirectedAdjacencyGraph[1,2 ,2,3 ,2,4, 4,5, 6,4, 1,6]
-  #dg.dotty
-  #dg.write_to_graphic_file
-  #bfs_example(dg,1).dotty
-  #bfs_example(graph_from_dotfile('dot/unix.dot'), 'Interdata').dotty({'label'=>'Interdata Nachfolger', 'fontsize' => 12})
+  dg.dotty
+  dg.write_to_graphic_file
+  bfs_example(dg,1).dotty
+  bfs_example(graph_from_dotfile('dot/unix.dot'), 'Interdata').dotty({'label'=>'Interdata Nachfolger', 'fontsize' => 12})
 
   g = module_graph
   tree = bfs_example(module_graph,RGL::AdjacencyGraph)

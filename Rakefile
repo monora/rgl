@@ -1,13 +1,13 @@
-# Rakefile for         -*- ruby -*-
+# Rakefile for RGL        -*- ruby -*-
 
 begin
   require 'rubygems'
+  require 'rake/gempackagetask'
 rescue Exception
   nil
 end
 require 'rake/clean'
 require 'rake/testtask'
-require 'rake/gempackagetask'
 require 'rake/rdoctask'
 
 # Determine the current version of the software
@@ -18,7 +18,9 @@ else
   PKG_VERSION = "0.0.0"
 end
 
-SRC_RB = FileList['lib/*.rb']
+SUMMARY = "Ruby Graph Library"
+SOURCES = FileList['lib/**/*.rb']
+RDOC_DIR = './rgl'
 
 # The default task is run if rake is given no explicit arguments.
 
@@ -46,16 +48,27 @@ task :install do
   ruby "install.rb"
 end
 
+# CVS Tasks ----------------------------------------------------------
+
+desc "Tag all the CVS files with the latest release number (TAG=x)"
+task :tag do
+  rel = "REL_" + PKG_VERSION.gsub(/\./, '_')
+  rel << ENV['TAG'] if ENV['TAG']
+  puts rel
+  sh %{cvs commit -m 'pre-tag commit'}
+  sh %{cvs tag #{rel}}
+end
+
 # Create a task to build the RDOC documentation tree.
 
 rd = Rake::RDocTask.new("rdoc") { |rdoc|
-  rdoc.rdoc_dir = 'html'
+  rdoc.rdoc_dir = RDOC_DIR
 #  rdoc.template = 'kilmer'
 #  rdoc.template = 'css2'
-  rdoc.title    = "Rgl - Extended External Iterators"
-  rdoc.options << '--line-numbers' << '--inline-source'
-  rdoc.rdoc_files.include('README')
-  rdoc.rdoc_files.include('lib/**/*.rb', 'doc/**/*.rdoc')
+  rdoc.title    = SUMMARY
+  rdoc.options << '--line-numbers' << '--inline-source' <<
+     '--main' << 'README'
+  rdoc.rdoc_files.include(SOURCES, 'README', 'examples/examples.rb')
 }
 
 # ====================================================================
@@ -65,10 +78,9 @@ rd = Rake::RDocTask.new("rdoc") { |rdoc|
 PKG_FILES = FileList[
   'install.rb',
   '[A-Z]*',
-  'lib/**/*.rb', 
   'tests/**/*.rb',
   'examples/**/*'
-]
+] + SOURCES
 
 if ! defined?(Gem)
   puts "Package Target requires RubyGEMs"
@@ -79,33 +91,52 @@ else
 
     s.name = 'rgl'
     s.version = PKG_VERSION
-    s.summary = "Rgl - Extended External Iterators"
+    s.summary = SUMMARY
+
     s.description = <<-EOF
-      Module Rgl defines an interface for external iterators.
+    RGL is a framework for graph data structures and algorithms.
+
+    The design of the library is much influenced by the Boost Graph Library (BGL)
+    which is written in C++ heavily using its template mechanism.
+
+
+    RGL currently contains a core set of algorithm patterns:
+
+
+     * Breadth First Search 
+     * Depth First Search 
+
+    The algorithm patterns by themselves do not compute any meaningful quantities
+    over graphs, they are merely building blocks for constructing graph
+    algorithms. The graph algorithms in RGL currently include:
+
+     * Topological Sort 
+     * Connected Components 
+     * Strongly Connected Components 
+     * Transitive Closure
     EOF
 
     #### Dependencies and requirements.
 
-    #s.add_dependency('log4r', '> 1.0.4')
-    #s.requirements << ""
+    s.add_dependency('stream', '>= 0.5')
+    s.requirements << "Stream library, v0.5 or later"
 
     #### Which files are to be included in this gem?  Everything!  (Except CVS directories.)
-
     s.files = PKG_FILES.to_a
-
-    #### C code extensions.
-
-    #s.extensions << "ext/rmagic/extconf.rb"
 
     #### Load-time details: library and application (you will need one or both).
 
     s.require_path = 'lib'                         # Use these for libraries.
-    # s.autorequire = 'rgl'
+    s.autorequire = 'rgl'
 
     #### Documentation and testing.
 
     s.has_rdoc = true
-    #s.test_suite_file = "test/rmagic-tests.rb"
+    s.extra_rdoc_files = ['README']
+    s.rdoc_options <<
+      '--title' <<  'RGL - Ruby Graph Library' <<
+      '--main' << 'README' <<
+      '--line-numbers'
 
     #### Author and project details.
     s.author = "Horst Duchene"
@@ -115,9 +146,21 @@ else
   end
 
   Rake::GemPackageTask.new(spec) do |pkg|
-    pkg.need_zip = true
+    #pkg.need_zip = true
     pkg.need_tar = true
   end
+end
+
+# TAGS ---------------------------------------------------------------
+
+file 'tags' => SOURCES do
+  print "Running ctags..."
+  sh %{ctags #{SOURCES.join(' ')}}             # vi tags
+  puts "done."
+end
+
+file 'TAGS' => SOURCES do
+  sh %{ctags -e #{SOURCES.join(' ')}}          # emacs TAGS
 end
 
 # Misc tasks =========================================================
@@ -145,7 +188,7 @@ task :lines do
   total_lines = 0
   total_code = 0
   show_line("File Name", "LINES", "LOC")
-  SRC_RB.each do |fn|
+  SOURCES.each do |fn|
     lines, codelines = count_lines(fn)
     show_line(fn, lines, codelines)
     total_lines += lines
@@ -158,4 +201,10 @@ ARCHIVEDIR = '/mnt/flash'
 
 task :archive => [:package] do
   cp FileList["pkg/*.tgz", "pkg/*.zip", "pkg/*.gem"], ARCHIVEDIR
+end
+
+desc "Copy rdoc html to rubyforge"
+task :rdoc2rf => [:rdoc] do
+  #sh "scp -r #{RDOC_DIR} monora@rubyforge.org:/var/www/gforge-projects/rgl"
+  sh "scp examples/*.jpg monora@rubyforge.org:/var/www/gforge-projects/rgl/examples"
 end

@@ -8,7 +8,7 @@ require 'rgl/dot'
 include RGL
 
 class TestGraphXML < Test::Unit::TestCase
-  NORTH_DIR = '../examples/north/'
+  NORTH_DIR = './examples/north/'
 
   def setup
     @stream = File.new(NORTH_DIR + "g.10.0.graphml")

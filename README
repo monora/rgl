@@ -11,8 +11,6 @@ A comprehensive summary of graph terminology can be found in the the graph
 section of the <em>Dictionary of Algorithms and Data Structures</em> at
 http://www.nist.gov/dads/HTML/graph.html.
 
-Download: http://sourceforge.net/projects/rgl
-
 == Design principles
 
 This document concentrates on the special issues of the implementation in
@@ -53,25 +51,25 @@ machinery.
 
 The first version of RGL only contains a core set of algorithm patterns:
 
-* Breadth First Search 
-* Depth First Search 
+* Breadth First Search (RGL::BFSIterator)
+* Depth First Search (RGL::DFSIterator)
 
 The algorithm patterns by themselves do not compute any meaningful quantities
 over graphs, they are merely building blocks for constructing graph
 algorithms. The graph algorithms in RGL currently include:
 
-* Topological Sort 
-* Connected Components 
-* Strongly Connected Components 
-* Transitive Closure
+* Topological Sort (RGL::TopsortIterator)
+* Connected Components (RGL::Graph#each_connected_component)
+* Strongly Connected Components (RGL::Graph#strongly_connected_components)
+* Transitive Closure (RGL::Graph#transitive_closure)
 
 === Data Structures
 
 RGL currently provides two graph classes that implement a generalized adjacency
 list and an edge list adaptor.
 
-* AdjacencyGraph
-* ImplicitGraph
+* RGL::AdjacencyGraph
+* RGL::ImplicitGraph
 
 The AdjacencyGraph class is the general purpose *swiss army knife* of graph
 classes. It is highly parameterized so that it can be optimized for different
@@ -89,10 +87,30 @@ http://www.boost.org/libs/graph/doc/graph_concepts.html
 
 == Installation
 
-  % make test (OPTIONAL)
+RGL is depended on the _stream_ library which can also be downloaded from
+http://rubyforge.org/frs/?group_id=110.
+
+=== GEM Installation
+
+Download the GEM file and install it with ..
+
+   gem install rgl-VERSION.gem
+
+or directly with 
+
+   gem install rgl
+
+Use the correct version number for VERSION (e.g. 0.2.2).  You may need root
+privileges to install.
+
+=== Normal Installation
+
+You have to install stream library before. You can than install RGL with the
+following command:
+
   % ruby install.rb
 
-  % make doc			# for doc generation with rdoc
+from its distribution directory.
 
 == Example irb session with RGL
 
@@ -103,7 +121,7 @@ http://www.boost.org/libs/graph/doc/graph_concepts.html
   irb> dg.write_to_graphic_file('jpg')
   "graph.jpg"
   
-The result: link:example.jpg  
+The result: link:../examples/example.jpg  
   
   irb> dg.directed?
   true
@@ -138,13 +156,13 @@ Add inverse edge (4-2) to directed graph:
   irb> dg.remove_edge 4,2
   true
 
-Topological sort is realized with as iterator:
+<em>Topological sort</em> is realized with as iterator:
 
   require 'graph/traversal'
   irb> dg.topsort_iterator.to_a
   [1, 2, 3, 6, 4, 5]
 
-A more elaborated example showing implicit graphs:
+A more elaborated example showing <em>implicit graphs</em>:
 
   def module_graph
 	RGL::ImplicitGraph.new { |g|
@@ -177,9 +195,10 @@ Create the graphics with DOT:
 
   g.write_to_graphic_file
 
-produces module_graph.jpg: link:module_graph.jpg
+produces module_graph.jpg: link:../examples/module_graph.jpg
 
-See more examples in examples/examples.rb.
+Look for more in the examples directory (i.e.
+examples.rb[link:files/examples/examples_rb.html]).
 
 == Credits
 
@@ -208,7 +227,7 @@ rgl/dot.rb).
 
 == Copying
 
-RGL is Copyright (c) 2002 by Horst Duchene.  It is free software, and may be
+RGL is Copyright (c) 2002,2004 by Horst Duchene.  It is free software, and may be
 redistributed under the terms specified in the README file of the Ruby
 distribution.
 

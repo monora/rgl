@@ -30,10 +30,10 @@ module RGL
 	  def tag_start(name, attrs)
 		case name
 		when 'edge'
-		  @graph.add_edge(attrs.assoc('source').last,
-						  attrs.assoc('target').last)
+		  @graph.add_edge(attrs['source'],
+						  attrs['target'])
 		when 'node'
-		  @graph.add_vertex(attrs.assoc('id').last)
+		  @graph.add_vertex(attrs['id'])
 		end
 	  end
 	end

@@ -8,8 +8,8 @@
 # for the DFSIterator).
 
 require 'rgl/base'
+require 'rubygems' rescue LoadError # If using stream gem
 require 'stream'
-require 'utils'							# for length
 
 module RGL
   module GraphWrapper					# :nodoc:
