@@ -103,7 +103,7 @@ http://www.boost.org/libs/graph/doc/graph_concepts.html
   irb> dg.write_to_graphic_file('jpg')
   "graph.jpg"
   
-The result: http://example.jpg  
+The result: link:example.jpg  
   
   irb> dg.directed?
   true
@@ -177,7 +177,7 @@ Create the graphics with DOT:
 
   g.write_to_graphic_file
 
-produces module_graph.jpg: http://module_graph.jpg
+produces module_graph.jpg: link:module_graph.jpg
 
 See more examples in examples/examples.rb.
 

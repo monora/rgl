@@ -26,14 +26,12 @@ stamp:
 		ruby -i.bak -pe 'sub!(/V\d+(\.\d+)+/, "V$(VERSION)") if /_VERSION =/' ${LIB}/rgl/base.rb
 		rm ${LIB}/rgl/base.rb.bak
 		cvs commit
-		cvs rtag `echo V$(VERSION) | sed s/\\\\./_/g` ruby/rgl
+		cvs rtag `echo V$(VERSION) | sed s/\\\\./_/g` rgl
 
 doc: ${LIB}/rgl/*.rb README
 #	cd ${LIB} && rdoc --diagram --fileboxes --title RGL --main rgl/base.rb --op ../doc
 	cd ${LIB} && rdoc.bat --title RGL --main rgl/base.rb --op ../doc
-	cp examples/*.jpg doc/files/rgl
-	ruby -i.bak -pe 'sub!(/http:..example.jpg/,"example.jpg")' doc/files/rgl/base_rb.html
-	ruby -i.bak -pe 'sub!(/http:..module_graph.jpg/,"module_graph.jpg")' doc/files/rgl/base_rb.html
+	cp examples/*.jpg doc
 	find doc -name \*.html -print | xargs	ruby -i.bak -pe 'sub!(/BOOST_DOC.(.*.html)/,"<a href=${BOOST_DOC}/\\1>\\1<a>")'
 
 install:
@@ -53,6 +51,7 @@ tar: test
 			--exclude='cvs' 		\
 			--exclude='misc' 		\
 			--exclude='doc' 		\
+			--exclude='homepage' 		\
 			--exclude='*.tgz' 		\
 			--exclude='*/.*'		\
 			${RGL}

@@ -1,3 +1,8 @@
+# This is a modified version of dot.rb from Dave Thomas rdoc project. I renamed it to
+# rdot.rb to avoid collision with an installed rdoc/dot.
+#
+# It also supports undirected edges.
+
 module DOT
     
     # these glogal vars are used to make nice graph source

@@ -1,7 +1,7 @@
-require 'dot/dot'
+require 'rgl/rdot'
 
 # Minimal Dot support based on Dave Thomas dot module (included in
-# rdoc). dot/dot.rb is a modified version which also contains support for
+# rdoc). rdot.rb is a modified version which also contains support for
 # undirected graphs.
 module RGL
   module Graph
