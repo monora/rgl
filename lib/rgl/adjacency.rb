@@ -16,7 +16,7 @@ module RGL
 
 	# Shortcut for creating a DirectedAdjacencyGraph:
 	#
-	#  RGL::DirectedAdjacencyGraph[1,2 ,2,3 ,2,4, 4,5].edges.to_a.to_s =>
+	#  RGL::DirectedAdjacencyGraph[1,2, 2,3, 2,4, 4,5].edges.to_a.to_s =>
 	#    "(1-2)(2-3)(2-4)(4-5)"
 	def self.[](*a)
 	  result = new
