@@ -162,6 +162,7 @@ module RGL
     def reverse
       return self unless directed?
       result = DirectedAdjacencyGraph.new
+      each_vertex { |v| result.add_vertex v }
       each_edge { |u,v| result.add_edge(v, u) }
       result
     end
