@@ -13,11 +13,12 @@ module RGL
 	  fontsize = params['fontsize'] ? params['fontsize'] : '8'
 	  graph = (directed? ? DOT::DOTDigraph : DOT::DOTSubgraph).new(params)
 	  edge_class = directed? ? DOT::DOTDirectedEdge : DOT::DOTEdge
-#	  each_vertex do |v|
-#		graph << DOT::DOTNode.new('name' => escape(v.to_s),
-#								  'fontsize' => fontsize,
-#								  'label' => v.to_s)
-#	  end
+	  each_vertex do |v|
+		name = v.to_s
+		graph << DOT::DOTNode.new('name' => name,
+								  'fontsize' => fontsize,
+								  'label' => name)
+	  end
 	  each_edge do |u,v|
 		graph << edge_class.new('from' => '"'+ u.to_s + '"',
 								'to' => '"'+ v.to_s + '"',
