@@ -140,7 +140,7 @@ module RGL
 	# edges_filtered_by and vertices_filtered_by.
 	def implicit_graph
 	  result = ImplicitGraph.new {|g|
-		g.vertex_iterator { |b| self.each_vertex &b}
+		g.vertex_iterator { |b| self.each_vertex(&b)}
 		g.adjacent_iterator { |v, b| self.each_adjacent(v,&b)}
 		g.directed = self.directed?
 	  }

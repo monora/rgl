@@ -2,6 +2,7 @@ require 'test/unit'
 require 'rgl/adjacency'
 require 'rgl/traversal'
 require 'rgl/topsort'
+require 'rgl/implicit'
 
 class Array
   alias add push
@@ -11,7 +12,7 @@ include RGL
 
 class TestTraversal < Test::Unit::TestCase
 
-  def set_up
+  def setup
     @dg = DirectedAdjacencyGraph.new(Array)
 	edges = [[1,2],[2,3],[2,4],[4,5],[1,6],[6,4]]
     edges.each do |(src,target)| 
@@ -21,7 +22,7 @@ class TestTraversal < Test::Unit::TestCase
 	@dfs = @dg.dfs_iterator(1)
 
 	@ug = AdjacencyGraph.new(Array)
-	@ug.add_edges *edges
+	@ug.add_edges(*edges)
   end
 
   def test_bfs_iterator_creation

@@ -5,7 +5,7 @@ include RGL
 include RGL::Edge
 
 class TestDirectedGraph < Test::Unit::TestCase
-  def set_up
+  def setup
     @dg = DirectedAdjacencyGraph.new
     [[1,2],[2,3],[3,2],[2,4]].each do |(src,target)| 
       @dg.add_edge(src, target)

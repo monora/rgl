@@ -6,7 +6,7 @@ include RGL::Edge
 
 class TestUnDirectedGraph < Test::Unit::TestCase
 
-  def set_up
+  def setup
     @dg = AdjacencyGraph.new
     [[1,2],[2,3],[3,2],[2,4]].each do |(src,target)| 
       @dg.add_edge(src, target)
@@ -53,7 +53,7 @@ class TestUnDirectedGraph < Test::Unit::TestCase
 
   def test_edges
     assert_equal(3, @dg.edges.length)
-	edges = [[1,2],[2,3],[2,4]].map {|x| UnDirectedEdge.new *x}
+	edges = [[1,2],[2,3],[2,4]].map {|x| UnDirectedEdge.new(*x)}
     assert_equal(edges, @dg.edges.sort)
 #    assert_equal([0,1,2,3], @dg.edges.map {|l| l.info}.sort)
   end
@@ -81,7 +81,7 @@ class TestUnDirectedGraph < Test::Unit::TestCase
 	@dg.remove_vertex 3
 	assert !@dg.has_vertex?(3), "3 should not be a vertex any more."
 	assert !@dg.has_edge?(2,3)
-	assert_equal([UnDirectedEdge.new 2,4],@dg.edges)
+	assert_equal([UnDirectedEdge.new(2,4)],@dg.edges)
   end
 
   def test_add_vertices

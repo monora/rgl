@@ -10,7 +10,7 @@ include RGL
 class TestGraphXML < Test::Unit::TestCase
   NORTH_DIR = '../examples/north/'
 
-  def set_up
+  def setup
     @stream = File.new(NORTH_DIR + "g.10.0.graphml")
   end
 

@@ -9,7 +9,7 @@ end
 
 class TestTransitiveClosure < Test::Unit::TestCase
 
-  def set_up
+  def setup
     @dg = DirectedAdjacencyGraph.new(Array)
 	edges = [[1,2],[2,3],[2,4],[4,5],[1,6],[6,4]]
     edges.each do |(src,target)| 
