@@ -1,11 +1,14 @@
+# 
+# $Id$
+# 
 # The DirectedAdjacencyGraph class implements a generalized adjacency list
 # graph structure. An AdjacencyGraph is basically a two-dimensional structure,
-# where each element of the first dimension represents a vertex, and each of the
-# vertices contains a one-dimensional structure that is the list of all adjacent
-# vertices.
+# where each element of the first dimension represents a vertex, and each of
+# the vertices contains a one-dimensional structure that is the list of all
+# adjacent vertices.
 #
-# The class for representing the adjacency list of a vertex is by default a Set,
-# but can be configured by the client when a AdjacencyGraph is created.
+# The class for representing the adjacency list of a vertex is by default a
+# Set, but can be configured by the client when a AdjacencyGraph is created.
 
 require 'rgl/mutable'
 require 'set'
