@@ -1,0 +1,128 @@
+	name: g.10.1	format: graphml	nodes: 10	edges: 11
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.11	format: graphml	nodes: 10	edges: 14
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.12	format: graphml	nodes: 10	edges: 10
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.13	format: graphml	nodes: 10	edges: 10
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.14	format: graphml	nodes: 10	edges: 10
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.15	format: graphml	nodes: 10	edges: 9
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.16	format: graphml	nodes: 10	edges: 9
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.17	format: graphml	nodes: 10	edges: 9
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.19	format: graphml	nodes: 10	edges: 20
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.2	format: graphml	nodes: 10	edges: 11
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.20	format: graphml	nodes: 10	edges: 21
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.22	format: graphml	nodes: 10	edges: 26
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.24	format: graphml	nodes: 10	edges: 13
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.25	format: graphml	nodes: 10	edges: 28
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.27	format: graphml	nodes: 10	edges: 21
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.28	format: graphml	nodes: 10	edges: 13
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.29	format: graphml	nodes: 10	edges: 21
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.3	format: graphml	nodes: 10	edges: 9
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.30	format: graphml	nodes: 10	edges: 17
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.31	format: graphml	nodes: 10	edges: 25
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.34	format: graphml	nodes: 10	edges: 25
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.37	format: graphml	nodes: 10	edges: 11
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.38	format: graphml	nodes: 10	edges: 21
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.39	format: graphml	nodes: 10	edges: 19
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.4	format: graphml	nodes: 10	edges: 9
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.40	format: graphml	nodes: 10	edges: 20
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.41	format: graphml	nodes: 10	edges: 20
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.42	format: graphml	nodes: 10	edges: 9
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.45	format: graphml	nodes: 10	edges: 11
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.46	format: graphml	nodes: 10	edges: 15
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.5	format: graphml	nodes: 10	edges: 14
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.50	format: graphml	nodes: 10	edges: 13
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.56	format: graphml	nodes: 10	edges: 12
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.57	format: graphml	nodes: 10	edges: 15
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.58	format: graphml	nodes: 10	edges: 15
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.6	format: graphml	nodes: 10	edges: 9
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.60	format: graphml	nodes: 10	edges: 15
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.61	format: graphml	nodes: 10	edges: 17
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.62	format: graphml	nodes: 10	edges: 17
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.68	format: graphml	nodes: 10	edges: 13
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.69	format: graphml	nodes: 10	edges: 15
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.7	format: graphml	nodes: 10	edges: 12
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.70	format: graphml	nodes: 10	edges: 9
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.71	format: graphml	nodes: 10	edges: 10
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.72	format: graphml	nodes: 10	edges: 11
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.74	format: graphml	nodes: 10	edges: 12
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.75	format: graphml	nodes: 10	edges: 12
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.78	format: graphml	nodes: 10	edges: 10
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.79	format: graphml	nodes: 10	edges: 17
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.8	format: graphml	nodes: 10	edges: 12
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.80	format: graphml	nodes: 10	edges: 17
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.82	format: graphml	nodes: 10	edges: 18
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.83	format: graphml	nodes: 10	edges: 15
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.85	format: graphml	nodes: 10	edges: 17
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.86	format: graphml	nodes: 10	edges: 17
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.88	format: graphml	nodes: 10	edges: 20
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.89	format: graphml	nodes: 10	edges: 12
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.9	format: graphml	nodes: 10	edges: 9
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.90	format: graphml	nodes: 10	edges: 15
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.91	format: graphml	nodes: 10	edges: 14
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.92	format: graphml	nodes: 10	edges: 9
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.93	format: graphml	nodes: 10	edges: 15
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown
+	name: g.10.94	format: graphml	nodes: 10	edges: 17
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: true	triconnected: unknown
+	name: g.10.0	format: graphml	nodes: 10	edges: 11
+	directed: true	acyclic: true	planar: unknown	connected: true	biconnected: false	triconnected: unknown

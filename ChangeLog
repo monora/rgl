@@ -1,0 +1,9 @@
+2002-06-10  Horst Duchene  <horst@hduchene.de>
+
+	* lib/rgl/graphxml.rb: added + tests + examples from graphviz catalog
+
+2002-03-21  Horst Duchene  <horst@hduchene.de>
+
+	* Ported tests to Test::Unit
+	* transitive_closure.rb
+
