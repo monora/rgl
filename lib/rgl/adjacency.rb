@@ -38,7 +38,8 @@ module RGL
 	end
 
 	def each_adjacent(v, &b)	# :nodoc:
-	  @vertice_dict[v].each(&b)
+	  adjacency_list = @vertice_dict[v] or raise NoVertexError, "No vertex #{v}."
+	  adjacency_list.each(&b)
 	end
 
 	# Returns true.
@@ -46,7 +47,7 @@ module RGL
 
 	# Complexity is O(1), since the vertices are kept in a Hash containing as
 	# value the list of adjacent vertices of _v_.
-	def has_vertex?(v); @vertice_dict.has_key? v; end
+	def has_vertex?(v); @vertice_dict.has_key?(v); end
 
 	# Complexity is O(1), if a Set is used as adjacency list, otherwise
 	# O(out_degree(v)) 

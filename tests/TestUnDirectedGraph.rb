@@ -21,7 +21,7 @@ class TestUnDirectedGraph < Test::Unit::TestCase
 	assert(!dg.has_vertex?(3))
 	# Non existend vertex result in a Name Error because each_key is
 	# called for nil
-	assert_raises(NameError) {dg.out_degree(3)}
+	assert_raises(NoVertexError) {dg.out_degree(3)}
 	assert_equal([],dg.vertices)
 	assert_equal(0,dg.size)
 	assert_equal(0,dg.num_vertices)

@@ -12,6 +12,9 @@ module RGL
   class NotDirectedError < RuntimeError; end
   class NotUndirectedError < RuntimeError; end
 
+  class NoVertexError < IndexError; end
+  class NoEdgeError < IndexError; end
+
   # Module Edge includes classes for representing egdes of directed and
   # undirected graphs. There is no need for a Vertex class, because every ruby
   # object can be a vertex of a graph.
