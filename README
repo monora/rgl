@@ -157,8 +157,8 @@ The result: link:../examples/example.jpg
   irb> dg.has_vertex? 4
   true
 
-Every object could be a vertex (there is no class Vertex), even the class object
-_Object_:
+Every object could be a vertex (there is no class Vertex), even the class
+object _Object_:
 
   irb> dg.has_vertex? Object
   false
@@ -185,7 +185,7 @@ Add inverse edge (4-2) to directed graph:
 
 <em>Topological sort</em> is realized with as iterator:
 
-  require 'graph/traversal'
+  require 'graph/topsort'
   irb> dg.topsort_iterator.to_a
   [1, 2, 3, 6, 4, 5]
 
@@ -205,7 +205,7 @@ A more elaborated example showing <em>implicit graphs</em>:
 	}
   end
 
-This function creates a directed graph with vertices being all loaded modules:
+This function creates a directed graph, with vertices being all loaded modules:
 
   g = module_graph
 
@@ -213,8 +213,8 @@ We only want to see the ancestors of RGL::AdjacencyGraph:
 
   tree = bfs_search_tree_from(g,RGL::AdjacencyGraph)
 
-Now we want to visualize this component of g with DOT. We therefore create a
-subgraph of the original graph using a filtered graph:
+Now we want to visualize this component of g with DOT.  We therefore create a
+subgraph of the original graph, using a filtered graph:
 
   g = g.vertices_filtered_by {|v| tree.has_vertex? v}
 
