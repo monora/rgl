@@ -2,10 +2,10 @@
 # search. They are implemented as an RGL::GraphIterator which is a Stream of
 # vertices of a given graph. The streams are not reversable.
 #
-# Beside being an iterator in the sense of the Stream mixin RGL::BFSIterator and  
-# RGL::DFSIterator follow the BGL Visitor Concepts (see
-# BOOST_DOC/visitor_concepts.html) in a slightly modified fashion (especially
-# for the DFSIterator).
+# Beside being an iterator in the sense of the Stream mixin RGL::BFSIterator
+# and RGL::DFSIterator follow the BGL
+# Visitor[http://www.boost.org/libs/graph/doc/visitor_concepts.html] Concepts
+# in a slightly modified fashion (especially for the DFSIterator).
 
 require 'rgl/base'
 require 'rubygems' rescue LoadError # If using stream gem
@@ -26,8 +26,8 @@ module RGL
 	include GraphWrapper
   end
 
-  # Module GraphVisitor defines  the BGL BFS Visitor Concept (see
-  # BOOST_DOC/BFSVisitor.html).
+  # Module GraphVisitor defines the BGL
+  # BFS[http://www.boost.org/libs/graph/doc/BFSVisitor.html] Visitor Concept).
   #
   # Visitors provide a mechanism for extending an algorithm; for customizing
   # what is done at each step of the algorithm. They allow the user to insert
@@ -79,8 +79,8 @@ module RGL
 	# Attach a map to the visitor which records the distance of a visited
 	# vertex to the start vertex.
 	#
-	# This is similar to BGLs distance_recorder (see
-	# BOOST_DOC/distance_recorder.html).
+	# This is similar to BGLs
+	# distance_recorder[http://www.boost.org/libs/graph/doc/distance_recorder.html].
 	#
 	# After the distance_map is attached, the visitor has a new method
 	# distance_to_root, which answers the distance to the start vertex.
@@ -130,8 +130,8 @@ module RGL
   # @waiting. During the traversal vertices are *colored* using the colors :GRAY
   # (when waiting) and :BLACK when finished. All other vertices are :WHITE.
   #
-  # For more doc see the BGL BFS Visitor Concept
-  # BOOST_DOC/BFSVisitor.html.
+  # For more doc see the BGL
+  # BFS[http://www.boost.org/libs/graph/doc/BFSVisitor.html] Visitor Concept .
   #
   # See the implementation of bfs_search_tree_from for an example usage.
   class BFSIterator
@@ -228,10 +228,10 @@ module RGL
   # depth_first_search starts a new subtree of the depth first forest defined by
   # the search.
   #
-  # Note that the discover_vertex event defined in the BGL DFSVisitor
-  # (BOOST_DOC/DFSVisitor.html) is not provided. Use examine_vertex instead
-  # which is also defined in the common mixin GraphVisitor of DFSVisitor,
-  # DFSIterator and BFSIterator.
+  # Note that the discover_vertex event defined in the BGL
+  # DFSVisitor[http://www.boost.org/libs/graph/doc/DFSVisitor.html] is not
+  # provided. Use examine_vertex instead which is also defined in the common
+  # mixin GraphVisitor of DFSVisitor, DFSIterator and BFSIterator.
   class DFSVisitor
 	include GraphVisitor
 

@@ -39,13 +39,13 @@ genericity:
 * Vertex and Edge Property Multi-Parameterization
 
 The first is easily achieved in RGL using mixins, which of course is not as
-efficient than C++ templates (but much more readable :-). The second one is even
-more easily implemented using standard iterators with blocks or using the
-Stream module. The third one is no issue since Ruby is dynamically typed: Each
-object can be a graph vertex. There is no need for a vertex (or even edge
-type). In the current version of RGL properties of vertices are simply attached
-using hashes. At first there seems to be not much need for the graph property
-machinery.
+efficient than C++ templates (but much more readable :-). The second one is
+even more easily implemented using standard iterators with blocks or using the
+Stream[http://rgl.rubyforge.org/stream/files/README.html] module. The third one
+is no issue since Ruby is dynamically typed: Each object can be a graph
+vertex. There is no need for a vertex (or even edge type). In the current
+version of RGL properties of vertices are simply attached using hashes. At
+first there seems to be not much need for the graph property machinery.
 
 === Algorithms
 
@@ -87,21 +87,48 @@ http://www.boost.org/libs/graph/doc/graph_concepts.html
 
 == Installation
 
-RGL is depended on the _stream_ library which can also be downloaded from
-http://rubyforge.org/frs/?group_id=110.
+RGL is depended on the
+stream[http://rgl.rubyforge.org/stream/files/README.html] library which can
+also be downloaded from http://rubyforge.org/frs/?group_id=110. If you use gem
+to install RGL the stream library will be installed as a prerequisite.
 
 === GEM Installation
 
 Download the GEM file and install it with ..
 
-   gem install rgl-VERSION.gem
+  % gem install rgl-VERSION.gem
 
 or directly with 
 
-   gem install rgl
+  % gem install rgl
 
 Use the correct version number for VERSION (e.g. 0.2.2).  You may need root
 privileges to install.
+
+=== Running tests
+
+RGL comes with a Rakefile which automatically runs the tests. Goto the
+installation directory and start rake:
+
+ % gem env
+ Rubygems Environment:
+  - VERSION: 0.8.3 (0.8.3)
+  - INSTALLATION DIRECTORY: /usr/lib/ruby/gems/1.8
+  - GEM PATH:
+     - /usr/lib/ruby/gems/1.8
+  - REMOTE SOURCES:
+     - http://gems.rubyforge.org
+
+ % cd /usr/lib/ruby/gems/1.8/gems/rgl-0.2.2/
+ % r40> rake
+  (in /usr/lib/ruby/gems/1.8/gems/rgl-0.2.2)
+  ruby1.8 -Ilib:tests -e0  -rtests/TestGraphXML  -rtests/TestComponents  -rtests/TestDirectedGraph  -rtests/TestEdge  -rtests/TestImplicit  -rtests/TestTransitiveClosure  -rtests/TestTraversal  -rtests/TestUnDirectedGraph
+ Loaded suite -e
+ Started
+ ........................................................................................................
+ Finished in 0.736444 seconds.
+
+ 40 tests, 421 assertions, 0 failures, 0 errors
 
 === Normal Installation
 
@@ -208,9 +235,9 @@ graph resources. Manuel Simoni found a subtle bug in a preliminary version
 announced at http://rubygarden.com/ruby?RubyAlgorithmPackage/Graph.
 
 Robert kindly allowed to integrate his work on graphr, which I did not yet
-succeed. Especially his work to output graphs for GraphViz (see
-http://www.research.att.com/sw/tools/graphviz/download.html) is much more
-elaborated than the minimal support in dot.rb.
+succeed. Especially his work to output graphs for
+GraphViz[http://www.research.att.com/sw/tools/graphviz/download.html] is much
+more elaborated than the minimal support in dot.rb.
 
 Jason Voegele for set.rb implementing sets using hashes. These are used in the
 implementation of adjacency lists in AdjacencyGraph.
@@ -220,10 +247,10 @@ Jeremy Siek one of the authors of the nice book "The Boost Graph Library (BGL)"
 BGL documentation as a _cheap_ reference for RGL. He and Robert also gave
 feedback and many ideas for RGL.
 
-Dave Thomas for RDoc (http://rdoc.sourceforge.net) which generated what you read
+Dave Thomas for RDoc[http://rdoc.sourceforge.net] which generated what you read
 and matz for Ruby. Dave included in the latest version of RDoc (alpha9) the
-module dot/dot.rb which I use instead of Roberts module to visualize graphs (see
-rgl/dot.rb).
+module dot/dot.rb which I use instead of Roberts module to visualize graphs
+(see rgl/dot.rb).
 
 == Copying
 

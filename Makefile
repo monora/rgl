@@ -6,7 +6,6 @@
 LIB=./lib
 RGL=rgl-$(VERSION)
 BOOST_DOC=http://www.boost.org/libs/graph/doc
-#BOOST_DOC=file://D:/Programme/bgl/boost_1_25_1/libs/graph/doc
 
 default: test
 test:

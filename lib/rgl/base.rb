@@ -1,7 +1,3 @@
-# :include: ../../README
-#
-# ----
-#
 # Module RGL defines the namespace for all modules and classes of the graph
 # library. The main module is RGL::Graph which defines the abstract behavior of
 # all graphs in the library.
@@ -127,18 +123,16 @@ module RGL
   end							# Edge
 
   # In BGL terminology the module Graph defines the concept graph (see
-  # BOOST_DOC/graph_concepts.html). We though do not
-  # distinguish between IncidenceGraph, EdgeListGraph and VertexListGraph
-  # concept, which would complicate
-  # the interface two much. These concepts are defined in BGL to differentiate
-  # between efficient access to edges and vertices.
-  # 
+  # http://www.boost.org/libs/graph/doc/graph_concepts.html). We though do not
+  # distinguish between IncidenceGraph, EdgeListGraph and VertexListGraph concept, which would
+  # complicate the interface two much. These concepts are defined in BGL to
+  # differentiate between efficient access to edges and vertices.
+  #
   # The RGL Graph concept contains only few requirements that are common to all
-  # the graph
-  # concepts. These include especially the iterators defining the set of
+  # the graph concepts. These include especially the iterators defining the set of
   # vertices and edges (see each_vertex and each_adjacent). Most other functions
   # are derived from these fundamental iterators, i.e. num_vertices() or
-  # num_edges(). 
+  # num_edges().
   #
   # Each graph is an enumerable of vertices.
   module Graph
@@ -227,9 +221,9 @@ module RGL
 	end
 
 	# Returns the number of vertices.
-	def size # Why not in Enumerable?
-	  #inject(0) { |n, v| n + 1 } # inject not yet available in Enumerable!
-	  r = 0; each_vertex {|v| r +=1}; r
+	def size()                  # Why not in Enumerable?
+	  inject(0) { |n, v| n + 1 }
+	  #r = 0; each_vertex {|v| r +=1}; r
 	end
 
 	# Synonym for size.

@@ -205,6 +205,6 @@ end
 
 desc "Copy rdoc html to rubyforge"
 task :rdoc2rf => [:rdoc] do
-  #sh "scp -r #{RDOC_DIR} monora@rubyforge.org:/var/www/gforge-projects/rgl"
+  sh "scp -r #{RDOC_DIR} monora@rubyforge.org:/var/www/gforge-projects/rgl"
   sh "scp examples/*.jpg monora@rubyforge.org:/var/www/gforge-projects/rgl/examples"
 end

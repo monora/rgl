@@ -1,12 +1,12 @@
-# This file contains minimal support for creating RGL graphs from the GraphML
-# format (see http://www.graphdrawing.org/graphml). The main purpose is to
+# This file contains minimal support for creating RGL graphs from the
+# GraphML[http://www.graphdrawing.org/graphml] format. The main purpose is to
 # have a rich set of example graphs to have some more tests.
 #
 # See the examples directory which contains a subdirectory _north_ with the
-# Graph catalog GraphViz (see http://www.research.att.com/sw/tools/graphviz/refs.html).
+# Graph catalog GraphViz[http://www.research.att.com/sw/tools/graphviz/refs.html].
 #
-# We use REXML::StreamListener from the REXML library
-# (http://www.germane-software.com/software/rexml) to parse the grapml files.
+# We use REXML::StreamListener from the
+# REXML[http://www.germane-software.com/software/rexml]library to parse the graphml files.
 
 require 'rgl/mutable'
 require 'rexml/document'
@@ -42,7 +42,7 @@ module RGL
 	  super
 
 	  # Create a new MutableGraph from the XML-Source _source_.
-	  def includingClass.from_graphxml (source)
+	  def includingClass.from_graphxml(source)
 		listener = MutableGraphParser.new(self.new)
 		REXML::Document.parse_stream(source, listener)
 		listener.graph
