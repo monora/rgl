@@ -1,6 +1,5 @@
 2002-08-29  monora  <monora@hddesktop>
 
-	* TestDirectedGraph.rb, TestUnDirectedGraph.rb:
 	* adjacency.rb, base.rb: Changed NameError to NoVertexError. Fixed Bug Nr. 599872.
 
 2002-08-23  monora  <monora@hddesktop>
