@@ -141,7 +141,7 @@ else
     #### Author and project details.
     s.author = "Horst Duchene"
     s.email = "hd.at.clr@hduchene.de"
-    s.homepage = "rgl.rubyforge.org"
+    s.homepage = "http://rgl.rubyforge.org"
     s.rubyforge_project = "rgl"
   end
 
