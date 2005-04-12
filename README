@@ -239,11 +239,8 @@ succeed. Especially his work to output graphs for
 GraphViz[http://www.research.att.com/sw/tools/graphviz/download.html] is much
 more elaborated than the minimal support in dot.rb.
 
-Jason Voegele for set.rb implementing sets using hashes. These are used in the
-implementation of adjacency lists in AdjacencyGraph.
-
 Jeremy Siek one of the authors of the nice book "The Boost Graph Library (BGL)"
-(http://cseng.awl.com/book/0,3828,0201729148,00.html) kindly allowed to use the
+(http://www.boost.org/libs/graph/doc) kindly allowed to use the
 BGL documentation as a _cheap_ reference for RGL. He and Robert also gave
 feedback and many ideas for RGL.
 
