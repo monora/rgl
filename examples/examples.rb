@@ -1,6 +1,5 @@
 # Some graph examples
 
-require 'rubygems' rescue nil
 require 'rgl/adjacency'
 require 'rgl/implicit'
 
@@ -25,6 +24,7 @@ def modulo (n, m)
   result
 end
 
+# Cyclic graph with _n_ vertices
 def cycle (n)
   RGL::ImplicitGraph.new { |g|
 	g.vertex_iterator { |b| 0.upto(n-1,&b) }
@@ -33,6 +33,7 @@ def cycle (n)
   }
 end
 
+# Complete Graph with _n_ vertices
 def complete (n)
   set = n.integer? ? (1..n) : n
   RGL::ImplicitGraph.new { |g|
@@ -43,6 +44,7 @@ def complete (n)
   }
 end
 
+# Directed graph of ruby modules. Edges are defined by the method _ancestors_
 def module_graph
   RGL::ImplicitGraph.new { |g|
 	g.vertex_iterator { |b|
@@ -57,8 +59,8 @@ def module_graph
   }
 end
 
-# divisors(100).dotty
-def divisors (n)
+# Shows graph of divisors of all integers from 2 to _n_.
+def divisors(n)
   RGL::ImplicitGraph.new { |g|
 	g.vertex_iterator { |b| 2.upto(n,&b) }
 	g.adjacent_iterator { |x, b|
