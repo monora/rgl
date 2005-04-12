@@ -251,7 +251,7 @@ module dot/dot.rb which I use instead of Roberts module to visualize graphs
 
 == Copying
 
-RGL is Copyright (c) 2002,2004 by Horst Duchene.  It is free software, and may be
+RGL is Copyright (c) 2002,2004,2005 by Horst Duchene.  It is free software, and may be
 redistributed under the terms specified in the README file of the Ruby
 distribution.
 
