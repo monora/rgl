@@ -83,7 +83,7 @@ The concepts of IncidenceGraph, AdjacencyGraph and VertexListGraph (see
 http://www.boost.org/libs/graph/doc/IncidenceGraph.html) are here bundled in the
 base graph module. Most methods of IncidenceGraph should be standard in the base
 module Graph. The complexity guarantees can not necessarily provided.  See
-http://www.boost.org/libs/graph/doc/graph_concepts.html
+http://www.boost.org/libs/graph/doc/graph_concepts.html.
 
 == Installation
 
@@ -102,7 +102,7 @@ or directly with
 
   % gem install rgl
 
-Use the correct version number for VERSION (e.g. 0.2.2).  You may need root
+Use the correct version number for VERSION (e.g. 0.2.x).  You may need root
 privileges to install.
 
 === Running tests
@@ -137,7 +137,9 @@ following command:
 
   % ruby install.rb
 
-from its distribution directory.
+from its distribution directory. To uninstall it use
+
+  % ruby install.rb -u
 
 == Example irb session with RGL
 
@@ -226,6 +228,10 @@ produces module_graph.jpg: link:../examples/module_graph.jpg
 
 Look for more in the examples directory (i.e.
 examples.rb[link:files/examples/examples_rb.html]).
+
+== My del.icio.us links concerning RGL
+
+I collect some links to stuff around RGL at http://del.icio.us/monora/rgl
 
 == Credits
 
