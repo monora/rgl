@@ -127,7 +127,7 @@ module RGL
   # In BGL terminology the module Graph defines the concept graph (see
   # http://www.boost.org/libs/graph/doc/graph_concepts.html). We though do not
   # distinguish between IncidenceGraph, EdgeListGraph and VertexListGraph concept, which would
-  # complicate the interface two much. These concepts are defined in BGL to
+  # complicate the interface too much. These concepts are defined in BGL to
   # differentiate between efficient access to edges and vertices.
   #
   # The RGL Graph concept contains only few requirements that are common to all
