@@ -4,10 +4,6 @@ require 'rgl/traversal'
 require 'rgl/topsort'
 require 'rgl/implicit'
 
-class Array
-  alias add push
-end
-
 include RGL
 
 class TestTraversal < Test::Unit::TestCase

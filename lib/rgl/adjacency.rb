@@ -12,6 +12,7 @@
 # Set.  This can be configured by the client, however, when an AdjacencyGraph
 # is created.
 
+require 'rgl/graphxml'
 require 'rgl/mutable'
 require 'set'
 
@@ -19,30 +20,49 @@ module RGL
 
   class DirectedAdjacencyGraph
 
+    include GraphXML
     include MutableGraph
 
     # Shortcut for creating a DirectedAdjacencyGraph:
     #
     #  RGL::DirectedAdjacencyGraph[1,2, 2,3, 2,4, 4,5].edges.to_a.to_s =>
     #    "(1-2)(2-3)(2-4)(4-5)"
-
     def self.[] (*a)
       result = new
       0.step(a.size-1, 2) { |i| result.add_edge(a[i], a[i+1]) }
       result
     end
 
-    # Returns a new empty DirectedAdjacencyGraph which has as its edgelist
-    # class the given class.  The default edgelist class is Set, to ensure
-    # set semantics for edges and vertices.
-
-    def initialize (edgelist_class = Set)
-      @edgelist_class = edgelist_class
+    # Returns a new DirectedAdjacencyGraph which is either a copy of the
+    # Graph that was passed in (or a merge of the graphs passed in)
+    # or a new empty Graph which edgelist is
+    # stored in the give class. The default edgelist class is Set, to
+    # ensure set semantics for edges and vertices.
+    def initialize (*params)
       @vertice_dict   = Hash.new
+
+      # Set class if one is specified
+      klass = params.select {|p| p.class == Class}
+      raise ArgumentError if klass.length > 1
+
+      @edgelist_class = (klass.length == 1 ? klass[0] : nil)
+      # If another graph is given, create a copy
+      params.reject {|p| p.class == Class }.each do |p| 
+        # Only a Class or a Graph is allowed at this point
+        raise ArgumentError unless p.kind_of? Graph
+
+        # Set the edgelist_class if one has not been specified at this point
+        @edgelist_class = p.instance_variable_get(:@edgelist_class) unless @edgelist_class
+
+        # Add all edges from graph
+        p.edges.each {|e| self.add_edge(e.source, e.target)}
+      end
+
+      # Fall through Default for edgelist_class is a Set
+      @edgelist_class = Set unless @edgelist_class
     end
 
     # Iterator for the keys of the vertice list hash.
-
     def each_vertex (&b)
       @vertice_dict.each_key(&b)
     end

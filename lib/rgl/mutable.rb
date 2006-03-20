@@ -6,7 +6,6 @@ module RGL
 
   # A MutableGraph can be changed via the addition or removal of edges and
   # vertices. 
-
   module MutableGraph
 
     include Graph
@@ -69,6 +68,35 @@ module RGL
 
     def remove_vertices (*a)
       a.each { |v| remove_vertex v }
+    end
+
+    # Returns all minimum cycles that pass through a give vertex. 
+    # The format is an Array of cycles, with each cycle being an Array
+    # of vertices in the cycle.
+    def cycles_with_vertex(vertex)
+      cycles_with_vertex_helper(vertex, vertex, [])
+    end
+
+  protected
+    def cycles_with_vertex_helper(vertex, start, visited) #:nodoc:
+      adjacent_vertices(start).reject {|x| visited.include?(x)}.inject([]) do |acc, adj|
+        local_visited = Array.new(visited) << adj
+        acc << local_visited if (adj==vertex)
+        acc = acc + cycles_with_vertex_helper(vertex,adj,local_visited)
+      end
+    end
+
+  public
+    # Returns an array of all minimum cycles in a graph
+    #
+    # This is not an efficient implementation O(n^4) and could
+    # be done using Minimum Spanning Trees. Hint. Hint.
+    def cycles
+      g = self.class.new(self)
+      g.vertices.inject([]) do |acc, v| 
+        acc = acc.concat(g.cycles_with_vertex(v))
+        g.remove_vertex(v); acc
+      end
     end
 
   end		# module MutableGraph

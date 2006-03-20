@@ -4,10 +4,6 @@ require 'rgl/traversal'
 require 'rgl/connected_components'
 require 'rgl/adjacency'
 
-class Array
-  alias add push
-end
-
 include RGL
 
 def graph_from_string(s)

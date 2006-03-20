@@ -3,10 +3,6 @@ require 'rgl/transitiv_closure'
 
 include RGL
 
-class Array
-  alias add push
-end
-
 class TestTransitiveClosure < Test::Unit::TestCase
 
   def setup
