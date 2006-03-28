@@ -41,7 +41,7 @@ module RGL
       s << to_dot_graph(params).to_s << "\n"
     end
 
-    # Call +dotty+ for the graph which is written to the file 'graph.dot'
+    # Call dotty[http://www.graphviz.org] for the graph which is written to the file 'graph.dot'
     # in the # current directory.
 
     def dotty (params = {})
@@ -52,8 +52,8 @@ module RGL
       system("dotty", dotfile)
     end
 
-    # Use +do+ to create a graphical representation of the graph.  Returns the
-    # filename of the graphics file.
+    # Use dot[http://www.graphviz.org] to create a graphical representation of
+    # the graph.  Returns the filename of the graphics file.
 
     def write_to_graphic_file (fmt='png', dotfile="graph")
       src = dotfile + ".dot"
