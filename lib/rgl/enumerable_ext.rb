@@ -1,7 +1,3 @@
-class Array
-  alias add push
-end
-
 unless Enumerable.instance_methods(true).grep(/inject/)
   module Enumerable
     def inject(*argv)
