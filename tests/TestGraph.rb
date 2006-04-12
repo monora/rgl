@@ -1,35 +1,40 @@
 require 'test/unit'
 require 'rgl/adjacency'
+require 'test_helper'
 
 include RGL
 
 class TestGraph < Test::Unit::TestCase
 
   def setup
-    @dg = DirectedAdjacencyGraph.new(Array)
-    edges = [[1,2],[2,3],[2,4],[4,5],[1,6],[6,4]]
-    edges.each do |(src,target)| 
+    @dg = DirectedAdjacencyGraph.new
+    @edges = [[1,2],[2,3],[2,4],[4,5],[1,6],[6,4]]
+    @edges.each do |(src,target)| 
       @dg.add_edge(src, target)
     end
 
     @ug = AdjacencyGraph.new(Array)
-    @ug.add_edges(*edges)
+    @ug.add_edges(*@edges)
   end
 
   def test_equality
-    assert @dg == DirectedAdjacencyGraph.new(@dg)
-    assert @ug == AdjacencyGraph.new(@ug)
-    assert @ug != DirectedAdjacencyGraph.new(@dg)
-    assert @dg != AdjacencyGraph.new(@ug)
-    assert @dg == DirectedAdjacencyGraph[6,4,1,2,2,3,2,4,4,5,1,6]
+    assert @dg == @dg
+    assert @dg == @dg.dup
+    assert @ug == @ug.dup
+    assert @ug != @dg
+    assert @dg != @ug
+    assert @dg != 42
+    dup = DirectedAdjacencyGraph[*@edges.flatten]
+    assert @dg == dup
+    @dg.add_vertex 42
+    assert @dg != dup
   end
 
   def test_merge
     merge = DirectedAdjacencyGraph.new(Array, @dg, @ug)
-    assert merge.edges.size == 12
+    assert merge.num_edges == 12
     merge = DirectedAdjacencyGraph.new(Set, @dg, @dg)
-    assert merge.edges.size == 6
-    assert_raise(ArgumentError) {DirectedAdjacencyGraph.new([])}
+    assert merge.num_edges == 6
   end
 
 end

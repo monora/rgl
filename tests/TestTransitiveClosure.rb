@@ -1,5 +1,6 @@
 require 'test/unit'
 require 'rgl/transitiv_closure'
+require 'test_helper'
 
 include RGL
 

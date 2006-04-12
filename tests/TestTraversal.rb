@@ -4,6 +4,8 @@ require 'rgl/traversal'
 require 'rgl/topsort'
 require 'rgl/implicit'
 
+require 'test_helper'
+
 include RGL
 
 class TestTraversal < Test::Unit::TestCase

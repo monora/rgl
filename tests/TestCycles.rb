@@ -1,5 +1,7 @@
+$LOAD_PATH << "../lib"
 require 'test/unit'
 require 'rgl/adjacency'
+require 'test_helper'
 
 include RGL
 
@@ -26,16 +28,16 @@ class TestCycles < Test::Unit::TestCase
 
   def test_cycles
     d_cycles = @dg.cycles
-    assert 6, d_cycles.size
+    assert_equal 6, d_cycles.size
     assert d_cycles.include?([6])
     assert d_cycles.include?([7])
     assert d_cycles.include?([2])
     assert contains_cycle?(d_cycles, [1,4,5])
     assert contains_cycle?(d_cycles, [1,2,3,4,5])
   
-    assert_equal 5, DirectedAdjacencyGraph.new(Set, @dg).cycles.sort.size
+    assert_equal 5, DirectedAdjacencyGraph.new(Set, @dg).cycles.size
 
-    u_cycles = AdjacencyGraph.new(@dg, Set).cycles.sort
+    u_cycles = AdjacencyGraph.new(Set, @dg).cycles.sort
 
     assert u_cycles.include?([2])
     assert u_cycles.include?([6])
