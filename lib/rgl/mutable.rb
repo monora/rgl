@@ -92,8 +92,8 @@ module RGL
     # This is not an efficient implementation O(n^4) and could
     # be done using Minimum Spanning Trees. Hint. Hint.
     def cycles
-      g = self.class.new(self)
-      g.vertices.inject([]) do |acc, v| 
+      g = self.clone
+      self.inject([]) do |acc, v| 
         acc = acc.concat(g.cycles_with_vertex(v))
         g.remove_vertex(v); acc
       end
