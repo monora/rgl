@@ -1,24 +1,25 @@
+# -*- ruby -*-
 require 'rgl/dot'
 require 'rgl/implicit'
 
-# Usage:
+# Example usage:
 #
 #  rake -R/home/hd/src/rgl/rakelib -f /usr/lib/ruby/gems/1.8/gems/rails-1.0.0/Rakefile dep_graph
-desc "Show dependency graph of rake tasks"
-task :dep_graph do
-
+desc "Generate dependency graph of rake tasks"
+task :dep_graph do |task|
+  this_task = task.name
   dep = RGL::ImplicitGraph.new { |g|
-	g.vertex_iterator { |b| Rake::Task.tasks.each (&b) }
-	g.adjacent_iterator { |t, b| t.prerequisites.each (&b) }
-	g.directed = true
+    # vertices of the graph are all defined tasks without this task
+	g.vertex_iterator do |b|
+      Rake::Task.tasks.each do |t|
+        b.call(t) unless t.name == this_task
+      end
+    end
+    # neighbors of task t are its prerequisites
+    g.adjacent_iterator { |t, b| t.prerequisites.each(&b) }
+    g.directed = true
   }
 
-  dep.dotty
+  dep.write_to_graphic_file('png', this_task)
+  puts "Wrote dependency graph to #{this_task}.png."
 end
-
-desc "Show gem dependency graph"
-task :gem_graph do
-  gem = Rake::Task.tasks.detect {|t| t.name == "package"}
-  pp gem
-end
-
