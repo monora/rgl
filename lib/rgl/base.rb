@@ -79,6 +79,7 @@ module RGL
       # UnDirectedEdge[1,2].to_s == "(1=2)"
       def to_s; "(#{source}=#{target})"; end
     end
+
   end                           # Edge
 
   # In BGL terminology the module Graph defines the concept graph (see
@@ -141,7 +142,7 @@ module RGL
 
     # Returns true if _v_ is a vertex of the graph. Same as include? inherited
     # from enumerable. Complexity is O(num_vertices) by default. Concrete graph
-    # may bee better here (see AdjacencyGraph).
+    # may be better here (see AdjacencyGraph).
     def has_vertex?(v); include?(v); end    # inherited from enumerable
 
     # Returns true if the graph has no vertex, i.e. num_vertices == 0.

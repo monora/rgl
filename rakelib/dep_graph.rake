@@ -1,6 +1,11 @@
 # -*- ruby -*-
-require 'rgl/dot'
-require 'rgl/implicit'
+
+begin
+  require 'rgl/dot'
+  require 'rgl/implicit'
+rescue Exception
+  nil
+end
 
 # Example usage:
 #
