@@ -208,27 +208,31 @@ module DOT
 
     def to_s (t = '')
 
-      # This code is totally incomprehensible; it needs to be replaced!
+      # changed to fix rgl bug 16125
 
-      label = @options['shape'] != 'record' && @ports.length == 0 ?
-                @options['label'] ? 
-                    t + $tab + "label = \"#{@options['label']}\"\n" :
-                    '' :
+      label = if @options['shape'] != 'record' && @ports.length == 0 
+                if @options['label'] 
+		  t + $tab + "label = \"#{@options['label']}\""
+		else
+		  nil
+		end
+	      else
+		ports = @ports.collect{ |i| t + $tab2 + i.to_s}.join( "| \\\n" )
                 t + $tab + 'label = "' + " \\\n" +
-                t + $tab2 + "#{@options['label']}| \\\n" +
-                @ports.collect{ |i|
-                    t + $tab2 + i.to_s
-                }.join( "| \\\n" ) + " \\\n" +
-                t + $tab + '"' + "\n"
-            
-            t + "#{@name} [\n" +
-            @options.to_a.collect{ |i|
-                i[1] && i[0] != 'label' ? 
-                    t + $tab + "#{i[0]} = #{i[1]}" : nil
-            }.compact.join( ",\n" ) + ( label != '' ? ",\n" : "\n" ) + 
-            label +
-            t + "]\n" 
-      end
+		  t + $tab2 + "#{@options['label']}| \\\n" +
+		  ports + " \\\n" +
+		  t + $tab + '"'
+	      end
+      
+      otheropts = @options.to_a.collect{ |i|
+	i[1] && i[0] != 'label' ? 
+	t + $tab + "#{i[0]} = #{i[1]}" : nil
+      }
+
+      t + "#{@name} [\n" +
+	(otheropts + [label]).compact.join( ",\n" ) + "\n" + 
+	t + "]\n" 
+    end
 
   end		# class DOTNode
 
