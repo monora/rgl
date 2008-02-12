@@ -187,7 +187,7 @@ Add inverse edge (4-2) to directed graph:
 
 <em>Topological sort</em> is realized with as iterator:
 
-  require 'graph/topsort'
+  require 'rgl/topsort'
   irb> dg.topsort_iterator.to_a
   [1, 2, 3, 6, 4, 5]
 
@@ -231,7 +231,8 @@ examples.rb[link:files/examples/examples_rb.html]).
 
 == My del.icio.us links concerning RGL
 
-I collect some links to stuff around RGL at http://del.icio.us/monora/rgl
+I collect some links to stuff around RGL at http://del.icio.us/monora/rgl. I
+registered RGL at SWiK[http://swik.net/rgl].
 
 == Credits
 
