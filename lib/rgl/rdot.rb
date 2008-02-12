@@ -36,7 +36,7 @@ module DOT
     'fontcolor', # default: black; type face color
     'fontname', # default: Times-Roman; font family
     'fontsize', #default: 14; point size of label
-    'group', # name of node’s group
+    'group', # name of nodeï¿½s group
     'height', # default: .5; height in inches
     'label', # default: node name; any string
     'layer', # default: overlay range; all, id or id:id
@@ -270,15 +270,15 @@ module DOT
       hdr = t + "#{@dot_string} #{@name} {\n"
 
       options = @options.to_a.collect{ |name, val|
-        val && name != 'label' ? 
-          t + $tab + "#{name} = #{val}" : 
+        val && name != 'label' ?
+          t + $tab + "#{name} = #{val}" :
           name ? t + $tab + "#{name} = \"#{val}\"" : nil
-      }.compact.join( "\n" ) + "\n"
+      }.compact.join( "\n" ) + "\n\n"
 
       nodes = @nodes.collect{ |i|
         i.to_s( t + $tab )
-      }.join( "\n" ) + "\n" 
-      hdr + options + nodes + t + "}\n"
+      }.join( "\n\n" ) + "\n"
+      hdr + options + nodes + t + "}"
     end
 
   end		# class DOTSubgraph
@@ -311,12 +311,24 @@ module DOT
     end
 
     def to_s (t = '')
-      t + "#{@from} #{edge_link} #{to} [\n" +
-          @options.to_a.collect{ |i|
-            i[1] && i[0] != 'label' ? 
-              t + $tab + "#{i[0]} = #{i[1]}" : 
-              i[1] ? t + $tab + "#{i[0]} = \"#{i[1]}\"" : nil
-          }.compact.join( "\n" ) + "\n" + t + "]\n"
+      stringified_options = @options.collect do |name, val|
+        next if val.nil?
+        if name == 'label' then
+          "#{name} = \"#{val}\""
+        else
+          "#{name} = #{val}"
+        end
+      end.compact
+
+      f_s = @from || ''
+      t_s = @to || ''
+      if stringified_options.empty? then
+        t + f_s + ' ' + edge_link + ' ' + t_s
+      else
+        t + f_s + ' ' + edge_link + ' ' + t_s + " [\n" +
+          t + $tab + stringified_options.join(",\n" + t + $tab) + "\n" +
+          t + "]"
+      end
     end
 
   end		# class DOTEdge
