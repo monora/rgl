@@ -11,7 +11,7 @@ class Test::Unit::TestCase
     assert(!(dot =~ pattern).nil?, "#{dot} doesn't match #{pattern}")
   end
 
-  # assert string doresn't match regular expression
+  # assert string doesn't match regular expression
   def assert_no_match(dot, pattern)
     assert((dot =~ pattern).nil?, "#{dot} shouldn't match #{pattern}")
   end
