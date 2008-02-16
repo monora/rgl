@@ -236,8 +236,8 @@ module DOT
 
   end		# class DOTNode
 
-  # A subgraph element is the same to graph, but has another header in dot
-  # notation.
+  # A subgraph element is the same as graph, but has another header in dot
+  # notation with an identifier of 'subgraph' instead of 'graph'.
 
   class DOTSubgraph < DOTElement
 
@@ -247,7 +247,7 @@ module DOT
     def initialize (params = {}, option_list = GRAPH_OPTS)
       super(params, option_list)
       @nodes      = params['nodes'] ? params['nodes'] : []
-      @dot_string = 'graph'
+      @dot_string = 'subgraph'
     end
 
     def each_node

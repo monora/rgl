@@ -50,3 +50,12 @@ class TestDotEdge < Test::Unit::TestCase
     assert_match(dot, /\[[^,]*,[^,]*\]/)
   end
 end
+
+# Tests for DOTSubgraph
+class TestDotSubgraph < Test::Unit::TestCase
+	def test_subgraph_statement
+		subgraph = DOTSubgraph.new()
+		dot = subgraph.to_s
+		assert_match(dot, /^\s*subgraph /)
+	end
+end
