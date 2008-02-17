@@ -33,6 +33,12 @@ class TestDotNode < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /\[[^,]*,[^,]*\]/)
   end
+
+  def test_no_label
+    node = DOTNode.new({"shape"=>"ellipse"})
+    dot = node.to_s
+    assert_no_match(dot, /label/)
+  end
 end
 
 # Tests for DOTEdge
@@ -48,6 +54,12 @@ class TestDotEdge < Test::Unit::TestCase
     edge = DOTEdge.new({"label"=>"the_label", "weight"=>"2"})
     dot = edge.to_s
     assert_match(dot, /\[[^,]*,[^,]*\]/)
+  end
+
+  def test_no_label
+    edge = DOTEdge.new({"weight"=>"2"})
+    dot = edge.to_s
+    assert_no_match(dot, /label/)
   end
 end
 

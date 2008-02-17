@@ -143,7 +143,6 @@ module DOT
       option_list.each{ |i|
         @options[i] = params[i] if params[i]
       }
-      @options['label'] ||= @name if @name != 'node'
     end
         
     def each_option
