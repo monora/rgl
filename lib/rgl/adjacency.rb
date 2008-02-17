@@ -124,11 +124,11 @@ module RGL
     end
 
     # Converts the adjacency list of each vertex to be of type _klass_. The
-    # class is expected to have a new contructor which accepts an enumarable as
+    # class is expected to have a new contructor which accepts an enumerable as
     # parameter.
     def edgelist_class=(klass)
       @vertice_dict.keys.each do |v|
-         @vertice_dict[u] = klass.new( @vertice_dict[u] )
+         @vertice_dict[v] = klass.new @vertice_dict[v].to_a
       end
     end
 
