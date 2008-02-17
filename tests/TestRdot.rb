@@ -45,7 +45,7 @@ class TestDotEdge < Test::Unit::TestCase
   end
 
   def test_2prop_1comma
-    edge = DOTNode.new({"label"=>"the_label", "width"=>"2"})
+    edge = DOTEdge.new({"label"=>"the_label", "weight"=>"2"})
     dot = edge.to_s
     assert_match(dot, /\[[^,]*,[^,]*\]/)
   end
