@@ -37,4 +37,10 @@ class TestGraph < Test::Unit::TestCase
     assert merge.num_edges == 6
   end
 
+  def test_set_edgelist_class
+    edges = @dg.edges
+    @dg.edgelist_class=Array
+    assert_equal edges, @dg.edges
+  end
+  
 end
