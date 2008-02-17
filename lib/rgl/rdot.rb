@@ -164,17 +164,36 @@ module DOT
   # This is used when we build nodes that have shape=record
   # ports don't have options :)
 
-  class DOTPort < DOTSimpleElement
+  class DOTPort
 
-    attr_accessor :label
-        
+    attr_accessor :name, :label, :ports
+
     def initialize (params = {})
-      super(params)
-      @name = params['label'] ? params['label'] : ''
+      @name = params['name'] || ''
+      @label = params['label'] || ''
+      @ports = params['ports'] || []
+    end
+
+    def each_port
+      @ports.each { |i| yield i }
+    end
+
+    def <<(port)
+      @ports << port
+    end
+    alias :push :<<
+
+    def pop
+      @ports.pop
     end
 
     def to_s
-      ( @name && @name != "" ? "<#{@name}>" : "" ) + "#{@label}"
+      if @ports.empty? then
+        name = @name.empty? ? '' : "<#{@name}>"
+        name + ((name.empty? or label.empty?) ? '' : ' ') + label
+      else
+        '{' + @ports.collect {|p| p.to_s}.join(' | ') + '}'
+      end
     end
   end
     
@@ -193,44 +212,46 @@ module DOT
       @ports.each { |i| yield i }
     end
 
-    def << (thing)
-      @ports << thing
+    def << (port)
+      @ports << port
     end
-
-    def push (thing)
-      @ports.push(thing)
-    end
+    alias :push :<<
 
     def pop
       @ports.pop
     end
 
     def to_s (t = '')
+      label_option = nil
+      if @options['shape'] =~ /^M?record$/ && !@ports.empty? then
+        # Ignore the given label option in this case since the ports should each
+        # provide their own name/label.
+        label_option = "label = \"" + @ports.collect { |port| port.to_s }.join(" | ") + "\""
+      elsif @options['label'] then
+        # Otherwise, use the label when given one.
+        label_option = "label = \"#{@options['label']}\""
+      end
 
-      # changed to fix rgl bug 16125
+      # Convert all the options except `label' and options with nil values
+      # straight into name = value pairs.  Then toss out any resulting nil
+      # entries in the final array.
+      stringified_options = @options.collect do |name, val|
+        unless name == 'label' || val.nil? then
+          "#{name} = #{val}"
+        end
+      end.compact
+      # Append the specially computed label option.
+      stringified_options.push(label_option) unless label_option.nil?
 
-      label = if @options['shape'] != 'record' && @ports.length == 0 
-                if @options['label'] 
-		  t + $tab + "label = \"#{@options['label']}\""
-		else
-		  nil
-		end
-	      else
-		ports = @ports.collect{ |i| t + $tab2 + i.to_s}.join( "| \\\n" )
-                t + $tab + 'label = "' + " \\\n" +
-		  t + $tab2 + "#{@options['label']}| \\\n" +
-		  ports + " \\\n" +
-		  t + $tab + '"'
-	      end
-      
-      otheropts = @options.to_a.collect{ |i|
-	i[1] && i[0] != 'label' ? 
-	t + $tab + "#{i[0]} = #{i[1]}" : nil
-      }
-
-      t + "#{@name} [\n" +
-	(otheropts + [label]).compact.join( ",\n" ) + "\n" + 
-	t + "]\n" 
+      # Put it all together into a single string with indentation and return the
+      # result.
+      if stringified_options.empty? then
+        return t + @name.to_s
+      else
+        return t + @name.to_s + " [\n" +
+          t + $tab + stringified_options.join(",\n" + t + $tab) + "\n" +
+          t + "]"
+      end
     end
 
   end		# class DOTNode
