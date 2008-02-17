@@ -11,15 +11,16 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 # Determine the current version of the software
-
-if `ruby -Ilib -rrgl/base -e'puts RGL_VERSION'` =~ /\S+$/
-  PKG_VERSION = $&
+rgl_version =
+if %x(ruby -Ilib -rrgl/base -e'puts RGL_VERSION') =~ /\S+$/
+  $&
 else
-  PKG_VERSION = "0.0.0"
+  "0.0.0"
 end
 
 SUMMARY = "Ruby Graph Library"
 SOURCES = FileList['lib/**/*.rb']
+CLOBBER.include('TAGS', 'coverage')
 RDOC_DIR = './rgl'
 
 # The default task is run if rake is given no explicit arguments.
@@ -33,6 +34,10 @@ Rake::TestTask.new { |t|
   t.libs << "tests"
   t.pattern = 'tests/Test*.rb'
   t.verbose = true
+  
+  # This option is necessary, because graphxml must be loaded first.
+  # See comment in module GraphXML
+  t.ruby_opts << '-rrgl/graphxml'
 }
 
 task :test
@@ -41,9 +46,18 @@ task :test
 desc "Run all test targets"
 task :testall => [:test ]
 
+desc "Do code coverage with rcov"
+task :rcov do
+  begin 
+    sh 'rcov -Ilib:tests --exclude "tests/.*[tT]est.*.rb,usr.local" tests/Test*rb'
+  rescue Exception
+    nil
+  end
+end
+
 # Install rgl using the standard install.rb script.
 
-desc "Install the application"
+desc "Install the library"
 task :install do
   ruby "install.rb"
 end
@@ -52,23 +66,26 @@ end
 
 desc "Tag all the CVS files with the latest release number (TAG=x)"
 task :tag do
-  rel = "REL_" + PKG_VERSION.gsub(/\./, '_')
+  rel = "REL_" + rgl_version.gsub(/\./, '_')
   rel << ENV['TAG'] if ENV['TAG']
   puts rel
   sh %{cvs commit -m 'pre-tag commit'}
   sh %{cvs tag #{rel}}
 end
 
+desc "Accumulate changelog"
+task :changelog do
+  sh %{cvs2cl --tags --utc --prune --accum}
+end
+
 # Create a task to build the RDOC documentation tree.
 
 rd = Rake::RDocTask.new("rdoc") { |rdoc|
   rdoc.rdoc_dir = RDOC_DIR
-#  rdoc.template = 'kilmer'
-#  rdoc.template = 'css2'
+  rdoc.template = 'doc/jamis.rb'
   rdoc.title    = SUMMARY
-  rdoc.options << '--line-numbers' << '--inline-source' <<
-     '--main' << 'README'
-  rdoc.rdoc_files.include(SOURCES, 'README', 'examples/examples.rb')
+  rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README'
+  rdoc.rdoc_files.include(SOURCES, 'README', 'examples/examples.rb', 'rakelib/*.rake')
 }
 
 # ====================================================================
@@ -79,29 +96,28 @@ PKG_FILES = FileList[
   'install.rb',
   '[A-Z]*',
   'tests/**/*.rb',
-  'examples/**/*'
+  'examples/**/*',
+  'rakelib/*.rake'
 ] + SOURCES
 
 if ! defined?(Gem)
-  puts "Package Target requires RubyGEMs"
+  puts "Package Target requires RubyGems"
 else
   spec = Gem::Specification.new do |s|
     
     #### Basic information.
-
+    
     s.name = 'rgl'
-    s.version = PKG_VERSION
+    s.version = rgl_version
     s.summary = SUMMARY
-
+    
     s.description = <<-EOF
     RGL is a framework for graph data structures and algorithms.
 
     The design of the library is much influenced by the Boost Graph Library (BGL)
     which is written in C++ heavily using its template mechanism.
 
-
     RGL currently contains a core set of algorithm patterns:
-
 
      * Breadth First Search 
      * Depth First Search 
@@ -114,37 +130,39 @@ else
      * Connected Components 
      * Strongly Connected Components 
      * Transitive Closure
+     * Search cycles (contributed by Shawn Garbett)
     EOF
-
+    
     #### Dependencies and requirements.
-
+    
     s.add_dependency('stream', '>= 0.5')
+    s.add_dependency 'rake'
     s.requirements << "Stream library, v0.5 or later"
-
+    
     #### Which files are to be included in this gem?  Everything!  (Except CVS directories.)
     s.files = PKG_FILES.to_a
-
+    
     #### Load-time details: library and application (you will need one or both).
-
+    
     s.require_path = 'lib'                         # Use these for libraries.
     s.autorequire = 'rgl/base'
-
+    
     #### Documentation and testing.
-
+    
     s.has_rdoc = true
     s.extra_rdoc_files = ['README']
     s.rdoc_options <<
       '--title' <<  'RGL - Ruby Graph Library' <<
       '--main' << 'README' <<
       '--line-numbers'
-
+    
     #### Author and project details.
     s.author = "Horst Duchene"
-    s.email = "hd.at.clr@hduchene.de"
+    s.email = "monora@gmail.com"
     s.homepage = "http://rgl.rubyforge.org"
     s.rubyforge_project = "rgl"
   end
-
+  
   Rake::GemPackageTask.new(spec) do |pkg|
     #pkg.need_zip = true
     pkg.need_tar = true
@@ -197,14 +215,9 @@ task :lines do
   show_line("TOTAL", total_lines, total_code)
 end
 
-ARCHIVEDIR = '/mnt/flash'
-
-task :archive => [:package] do
-  cp FileList["pkg/*.tgz", "pkg/*.zip", "pkg/*.gem"], ARCHIVEDIR
-end
-
 desc "Copy rdoc html to rubyforge"
-task :rdoc2rf => [:rdoc] do
-  sh "scp -r #{RDOC_DIR} monora@rubyforge.org:/var/www/gforge-projects/rgl"
-  sh "scp examples/*.jpg monora@rubyforge.org:/var/www/gforge-projects/rgl/examples"
+task :rdoc2rf => [:rdoc, :rcov] do
+  mv 'coverage', RDOC_DIR
+  #sh "scp -r #{RDOC_DIR} monora@rubyforge.org:/var/www/gforge-projects/rgl"
+  #sh "scp examples/*.jpg monora@rubyforge.org:/var/www/gforge-projects/rgl/examples"
 end
