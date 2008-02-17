@@ -62,6 +62,12 @@ class TestDotNode < Test::Unit::TestCase
     assert_match(dot, /\[[^,]*,[^,]*\]/)
   end
 
+  def test_name_without_label
+    node = DOTNode.new({"name"=>"test_name"})
+    dot = node.to_s
+    assert_no_match(dot, /label/)
+  end
+
   def test_no_label
     node = DOTNode.new({"shape"=>"ellipse"})
     dot = node.to_s
