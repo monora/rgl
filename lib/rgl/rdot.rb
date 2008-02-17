@@ -113,38 +113,22 @@ module DOT
     'size'
   ]
     
-  # a root class for any element in dot notation
-
-  class DOTSimpleElement
-
-    attr_accessor :name
-
-    def initialize (params = {})
-      @label = params['name'] ? params['name'] : ''
-    end
-
-    def to_s
-      @name
-    end
-  end
-    
   # an element that has options ( node, edge, or graph )
 
-  class DOTElement < DOTSimpleElement
+  class DOTElement
 
     # attr_reader :parent
     attr_accessor :name, :options
 
     def initialize (params = {}, option_list = [])
-      super(params)
-      @name   = params['name']   ? params['name']   : nil 
+      @name   = params['name']   ? params['name']   : nil
       @parent = params['parent'] ? params['parent'] : nil
       @options = {}
       option_list.each{ |i|
         @options[i] = params[i] if params[i]
       }
     end
-        
+
     def each_option
       @options.each{ |i| yield i }
     end
