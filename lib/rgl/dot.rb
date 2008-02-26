@@ -23,13 +23,13 @@ module RGL
     edge_class = directed? ? DOT::DOTDirectedEdge : DOT::DOTEdge
     each_vertex do |v|
       name = v.to_s
-      graph << DOT::DOTNode.new('name'     => '"' + name + '"',
+      graph << DOT::DOTNode.new('name'     => name,
                                 'fontsize' => fontsize,
                                 'label'    => name)
     end
     each_edge do |u,v|
-      graph << edge_class.new('from'     => '"'+ u.to_s + '"',
-                              'to'       => '"'+ v.to_s + '"',
+      graph << edge_class.new('from'     => u.to_s,
+                              'to'       => v.to_s,
                               'fontsize' => fontsize)
       end
       graph
