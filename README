@@ -129,6 +129,10 @@ installation directory and start rake:
  Finished in 0.736444 seconds.
 
  40 tests, 421 assertions, 0 failures, 0 errors
+ 
+=== Code coverage
+
+Running rcov[http://eigenclass.org/hiki.rb?rcov] on the test suite generates this[link:coverage/index.html] result.
 
 === Normal Installation
 
@@ -256,15 +260,17 @@ and matz for Ruby. Dave included in the latest version of RDoc (alpha9) the
 module dot/dot.rb which I use instead of Roberts module to visualize graphs
 (see rgl/dot.rb).
 
+Jeremy Bopp, John Carter, Sascha Doerdelmann and Shawn Garbett for contributing
+additions, test cases and bugfixes.
+
 == Copying
 
-RGL is Copyright (c) 2002,2004,2005 by Horst Duchene.  It is free software, and may be
-redistributed under the terms specified in the README file of the Ruby
-distribution.
+RGL is Copyright (c) 2002,2004,2005,2008 by Horst Duchene.  It is free software, and may be
+redistributed under the terms specified in the README file of the Ruby distribution.
 
 == Support
 
-Please contact me at mailto:monora@users.sourceforge.net with bug reports
+Please contact me at mailto:monora@gmail.com with bug reports
 suggestions, and other comments. If you send patches, it would help if
 they were in-line (not attachments) and generated using "diff -u".
 
