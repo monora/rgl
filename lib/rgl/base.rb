@@ -82,45 +82,44 @@ module RGL
 
   end                           # Edge
 
-  # In BGL terminology the module Graph defines the concept graph (see
-  # http://www.boost.org/libs/graph/doc/graph_concepts.html). We though do not
-  # distinguish between IncidenceGraph, EdgeListGraph and VertexListGraph concept, which would
-  # complicate the interface too much. These concepts are defined in BGL to
-  # differentiate between efficient access to edges and vertices.
+  # In BGL terminology the module Graph defines the graph concept (see
+  # http://www.boost.org/libs/graph/doc/graph_concepts.html). We however do not
+  # distinguish between the IncidenceGraph, EdgeListGraph and VertexListGraph
+	# concepts, which would complicate the interface too much. These concepts are
+	# defined in BGL to differentiate between efficient access to edges and
+	# vertices.
   #
-  # The RGL Graph concept contains only few requirements that are common to all
-  # the graph concepts. These include especially the iterators defining the set of
-  # vertices and edges (see each_vertex and each_adjacent). Most other functions
-  # are derived from these fundamental iterators, i.e. num_vertices() or
-  # num_edges().
+  # The RGL Graph concept contains only a few requirements that are common to
+	# all the graph concepts. These include, especially, the iterators defining
+	# the sets of vertices and edges (see each_vertex and each_adjacent). Most
+	# other functions are derived from these fundamental iterators, i.e.
+	# num_vertices or num_edges.
   #
   # Each graph is an enumerable of vertices.
   module Graph
     include Enumerable
     include Edge
 
-    # The each_vertex iterator defines the set of vertices. This method must be 
-    # defined be concrete graph classes. It defines the BGL VertexListGraph
+    # The each_vertex iterator defines the set of vertices. This method must be
+    # defined by concrete graph classes. It defines the BGL VertexListGraph
     # concept.
-    def each_vertex
+    def each_vertex () # :yields: v
       raise NotImplementedError
-      yield v                   # for RDoc
     end
 
     # The each_adjacent iterator defines the out edges of vertex _v_. This
-    # method must be defined be concrete graph classes. Its defines the BGL
+    # method must be defined by concrete graph classes. Its defines the BGL
     # IncidenceGraph concept.
-    def each_adjacent (v)
+    def each_adjacent (v) # :yields: v
       raise NotImplementedError
-      yield u                   # for RDoc
     end
 
     # The each_edge iterator should provide efficient access to all edges of the
     # graph. Its defines the EdgeListGraph concept.
     #
-    # This method must _not_ be defined be concrete graph classes, because it
+    # This method must _not_ be defined by concrete graph classes, because it
     # can be implemented using each_vertex and each_adjacent. However for
-    # undirected graph the function is inefficient because we must may not yield
+    # undirected graph the function is inefficient because we must not yield
     # (v,u) if we already visited edge (u,v).
     def each_edge (&block)
       if directed?
@@ -131,26 +130,26 @@ module RGL
         each_edge_aux(&block)       # concrete graphs should to this better
       end
     end
-    
+
     # Vertices get enumerated. A graph is thus an enumerable of vertices.
     # ---
     # === Testing
     def each(&block); each_vertex(&block); end
-    
+
     # Is the graph directed? The default returns false.
     def directed?; false; end
 
-    # Returns true if _v_ is a vertex of the graph. Same as include? inherited
-    # from enumerable. Complexity is O(num_vertices) by default. Concrete graph
+    # Returns true if _v_ is a vertex of the graph. Same as #include? inherited
+    # from Enumerable. Complexity is O(num_vertices) by default. Concrete graph
     # may be better here (see AdjacencyGraph).
     def has_vertex?(v); include?(v); end    # inherited from enumerable
 
-    # Returns true if the graph has no vertex, i.e. num_vertices == 0.
+    # Returns true if the graph has no vertices, i.e. num_vertices == 0.
     # ---
     # === accessing vertices and edges
     def empty?; num_vertices.zero?; end
 
-    # Return the array of vertices. Synonym for to_a inherited by enumerable.
+    # Return the array of vertices. Synonym for #to_a inherited by Enumerable.
     def vertices; to_a; end
 
     # Returns the class for edges: DirectedEdge or UnDirectedEdge.
@@ -172,8 +171,8 @@ module RGL
       r
     end
 
-    # Returns the number of out-edges (for directed graphs) or the number of incident
-    # edges (for undirected graphs) of vertex _v_.
+    # Returns the number of out-edges (for directed graphs) or the number of
+		# incident edges (for undirected graphs) of vertex _v_.
     def out_degree (v)
       r = 0
       each_adjacent(v) { |u| r += 1}
@@ -183,11 +182,8 @@ module RGL
     # Returns the number of vertices.
     def size()                  # Why not in Enumerable?
       inject(0) { |n, v| n + 1 }
-      #r = 0; each_vertex {|v| r +=1}; r
     end
-
-    # Synonym for size.
-    def num_vertices; size; end
+		alias :num_vertices :size
 
     # Returns the number of edges.
     def num_edges; r = 0; each_edge {|u,v| r +=1}; r; end
@@ -198,7 +194,7 @@ module RGL
     end
 
     # Equality is defined to be same set of edges and directed?
-    def eql?(g) 
+    def eql?(g)
       equal?(g) or
         begin
           g.is_a?(Graph) and directed? == g.directed? and
@@ -213,7 +209,7 @@ module RGL
     alias == eql?
 
     private
-    
+
     def each_edge_aux
       # needed in each_edge
       visited = Hash.new

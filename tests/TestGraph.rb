@@ -6,6 +6,10 @@ include RGL
 
 class TestGraph < Test::Unit::TestCase
 
+  class NotImplementedGraph
+    include Graph
+  end
+
   def setup
     @dg = DirectedAdjacencyGraph.new
     @edges = [[1,2],[2,3],[2,4],[4,5],[1,6],[6,4]]
@@ -42,5 +46,10 @@ class TestGraph < Test::Unit::TestCase
     @dg.edgelist_class=Array
     assert_equal edges, @dg.edges
   end
-  
+
+  def test_not_implemented
+    graph = NotImplementedGraph.new
+    assert_raise(NotImplementedError) { graph.each_vertex }
+    assert_raise(NotImplementedError) { graph.each_adjacent(nil) }
+  end
 end
