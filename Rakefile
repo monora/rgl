@@ -34,10 +34,6 @@ Rake::TestTask.new { |t|
   t.libs << "tests"
   t.pattern = 'tests/Test*.rb'
   t.verbose = true
-  
-  # This option is necessary, because graphxml must be loaded first.
-  # See comment in module GraphXML
-  t.ruby_opts << '-rrgl/graphxml'
 }
 
 task :test

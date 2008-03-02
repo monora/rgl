@@ -16,26 +16,20 @@ require 'rexml/document'
 require 'rexml/streamlistener'
 
 module RGL
-
-  # Module GraphXML adds to each class, including module MutableGraph, a class
-  # method from_graphxml.
-  #
-  # Attention: Because append_features is used to provide the functionality,
-  # GraphXML must be loaded before the concrete class including MutableGraph
-  # is loaded.
-
-  module GraphXML
-
+  module MutableGraph
+    # Used to parse a subset of GraphML into an RGL graph implementation.
     class MutableGraphParser
-
       include REXML::StreamListener
 
-      attr_reader :graph
-
+      # First resets +graph+ to be empty and stores a reference for use with
+      # #tag_start.
       def initialize (graph)
         @graph = graph
+        @graph.remove_vertices(@graph.vertices)
       end
 
+      # Processes incoming edge and node elements from GraphML in order to
+      # populate the graph given to #new.
       def tag_start (name, attrs)
         case name
         when 'edge'
@@ -44,20 +38,14 @@ module RGL
           @graph.add_vertex(attrs['id'])
         end
       end
-
     end		# class MutableGraphParser
-        
-    def MutableGraph.append_features (includingClass)
-      super
 
-      # Create a new MutableGraph from the XML-Source _source_.
-
-      def includingClass.from_graphxml (source)
-        listener = MutableGraphParser.new(self.new)
-        REXML::Document.parse_stream(source, listener)
-        listener.graph
-      end
+    # Initializes an RGL graph from a subset of the GraphML format given in
+    # +source+ (see http://www.graphdrawing.org/graphml).
+    def from_graphxml(source)
+      listener = MutableGraphParser.new(self)
+      REXML::Document.parse_stream(source, listener)
+      self
     end
-
-  end                           # module GraphXML
+  end                           # module MutableGraph
 end                             # module RGL

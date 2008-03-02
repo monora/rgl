@@ -19,7 +19,7 @@ class TestGraphXML < Test::Unit::TestCase
   end
 
   def test_graphxml
-	@dg = DirectedAdjacencyGraph.from_graphxml(@stream).to_s
+	@dg = DirectedAdjacencyGraph.new.from_graphxml(@stream).to_s
 	assert_equal("(n0-n1)(n0-n2)(n0-n9)(n3-n4)(n4-n5)(n5-n7)(n8-n0)(n8-n3)(n8-n4)(n8-n5)(n8-n6)",@dg.to_s)
   end
 
@@ -35,7 +35,7 @@ class TestGraphXML < Test::Unit::TestCase
 		File.open(NORTH_DIR + name + '.graphml') {
 		  |file|
 		  print '.'; $stdout.flush
-		  graph = (directed == 'true' ? DirectedAdjacencyGraph : AdjacencyGraph).from_graphxml(file)
+		  graph = (directed == 'true' ? DirectedAdjacencyGraph : AdjacencyGraph).new.from_graphxml(file)
 		  #graph.write_to_graphic_file
 		  assert_equal(nnodes,graph.num_vertices)
 		  assert_equal(nedges,graph.num_edges)
