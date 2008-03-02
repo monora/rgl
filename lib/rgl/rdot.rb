@@ -1,26 +1,10 @@
-# rdot.rb
-# 
-# $Id$
-#
 # This is a modified version of dot.rb from Dave Thomas's rdoc project.  I
 # renamed it to rdot.rb to avoid collision with an installed rdoc/dot.
 #
 # It also supports undirected edges.
 
 module DOT
-    
-  # These glogal vars are used to make nice graph source.
 
-  $tab  = '    '
-  $tab2 = $tab * 2
-    
-  # if we don't like 4 spaces, we can change it any time
-
-  def change_tab (t)
-    $tab  = t
-    $tab2 = t * 2
-  end
-    
   # options for node declaration
 
   NODE_OPTS = [
@@ -57,7 +41,7 @@ module DOT
     'rank',
     'toplabel' # auxiliary label for nodes of shape M*
   ]
-    
+
   # options for edge declaration
 
   EDGE_OPTS = [
@@ -146,13 +130,12 @@ module DOT
     # maintained for backward compatibility or rdot internal
     'layerseq'
   ]
-    
-  # an element that has options ( node, edge, or graph )
 
+  # Ancestor of DOTEdge, DOTNode, and DOTGraph.
   class DOTElement
     attr_accessor :name, :options
 
-    def initialize (params = {}, option_list = [])
+    def initialize (params = {}, option_list = []) # :nodoc:
       @name   = params['name']   ? params['name']   : nil
       @options = {}
       option_list.each{ |i|
@@ -160,107 +143,105 @@ module DOT
       }
     end
 
-    def each_option
-      @options.each{ |i| yield i }
-    end
+    private
+      # Returns the string given in _id_ within quotes if necessary. Special
+      # characters are escaped as necessary.
+      def quote_ID(id)
+        # Return the ID verbatim if it looks like a name, a number, or HTML.
+        return id if id =~ /^([[:alpha:]_][[:alnum:]_]*|-?(\.[[:digit:]]+|[[:digit:]]+(\.[[:digit:]]*)?)|<.*>)$/
 
-    def each_option_pair
-      @options.each_pair{ |key, val| yield key, val }
-    end
+        # Return a quoted version of the ID otherwise.
+        '"' + id.gsub('\\', '\\\\\\\\').gsub('"', '\\\\"') + '"'
+      end
 
-    def quote_ID(id)
-      # Return the ID verbatim if it looks like a name, a number, or HTML.
-      return id if id =~ /^([[:alpha:]_][[:alnum:]_]*|-?(\.[[:digit:]]+|[[:digit:]]+(\.[[:digit:]]*)?)|<.*>)$/
+      # Returns the string given in _label_ within quotes if necessary. Special
+      # characters are escaped as necessary. Labels get special treatment in
+      # order to handle embedded *\n*, *\r*, and *\l* sequences which are copied
+      # into the new string verbatim.
+      def quote_label(label)
+        # Return the label verbatim if it looks like a name, a number, or HTML.
+        return label if label =~ /^([[:alpha:]_][[:alnum:]_]*|-?(\.[[:digit:]]+|[[:digit:]]+(\.[[:digit:]]*)?)|<.*>)$/
 
-      # Return a quoted version of the ID otherwise.
-      '"' + id.gsub('\\', '\\\\\\\\').gsub('"', '\\\\"') + '"'
-    end
-    private :quote_ID
-
-    def quote_label(label)
-      # Return the label verbatim if it looks like a name, a number, or HTML.
-      return label if label =~ /^([[:alpha:]_][[:alnum:]_]*|-?(\.[[:digit:]]+|[[:digit:]]+(\.[[:digit:]]*)?)|<.*>)$/
-
-      # Return a quoted version of the label otherwise.
-      '"' + label.split(/(\\n|\\r|\\l)/).collect do |part|
-        case part
-        when "\\n", "\\r", "\\l"
-          part
-        else
-          part.gsub('\\', '\\\\\\\\').gsub('"', '\\\\"').gsub("\n", '\\n')
-        end
-      end.join + '"'
-    end
-    private :quote_ID
+        # Return a quoted version of the label otherwise.
+        '"' + label.split(/(\\n|\\r|\\l)/).collect do |part|
+          case part
+          when "\\n", "\\r", "\\l"
+            part
+          else
+            part.gsub('\\', '\\\\\\\\').gsub('"', '\\\\"').gsub("\n", '\\n')
+          end
+        end.join + '"'
+      end
   end
 
 
-  # This is used when we build nodes that have shape=record or shape=Mrecord.
-  # Ports don't have options. :)
-
+  # Ports are used when a DOTNode instance has its `shape' option set to
+  # _record_ or _Mrecord_.  Ports can be nested.
   class DOTPort
     attr_accessor :name, :label, :ports
 
-    def initialize (params = {})
-      @name = params['name'] || ''
-      @label = params['label'] || ''
-      @ports = params['ports'] || []
+    # Create a new port with either an optional name and label or a set of
+    # nested ports.
+    #
+    # :call-seq:
+    #   new(name = nil, label =  nil)
+    #   new(ports)
+    #
+    # A +nil+ value for +name+ is valid; otherwise, it must be a String or it
+    # will be interpreted as +ports+.
+    def initialize (name_or_ports = nil, label = nil)
+      if name_or_ports.nil? or name_or_ports.kind_of?(String) then
+        @name = name_or_ports
+        @label = label
+        @ports = nil
+      else
+        @ports = name_or_ports
+        @name = nil
+        @label = nil
+      end
     end
 
-    def each_port
-      @ports.each { |i| yield i }
-    end
-
-    def <<(port)
-      @ports << port
-    end
-    alias :push :<<
-
-    def pop
-      @ports.pop
-    end
-
+    # Returns a string representation of this port.  If ports is a non-empty
+    # Enumerable, a nested ports representation is returned; otherwise, a
+    # name-label representation is returned.
     def to_s
-      if @ports.empty? then
-        n = @name.empty? ? '' : "<#{@name}>"
-        n + ((n.empty? or label.empty?) ? '' : ' ') + label
+      if @ports.nil? or @ports.empty? then
+        n = (name.nil? or name.empty?) ? '' : "<#{name}>"
+        n + ((n.empty? or label.nil? or label.empty?) ? '' : ' ') + label.to_s
       else
         '{' + @ports.collect {|p| p.to_s}.join(' | ') + '}'
       end
     end
   end
-    
-  # node element
 
+  # A node representation.  Edges are drawn between nodes.  The rendering of a
+  # node depends upon the options set for it.
   class DOTNode < DOTElement
+    attr_accessor :ports
 
+    # Creates a new DOTNode with the _params_ Hash providing settings for all
+    # node options. The _option_list_ parameter restricts those options to the
+    # list of valid names it contains. The exception to this is the _ports_
+    # option which, if specified, must be an Enumerable containing a list of
+    # ports.
     def initialize (params = {}, option_list = NODE_OPTS)
       super(params, option_list)
       @ports = params['ports'] ? params['ports'] : []
     end
 
-    def each_port
-      @ports.each { |i| yield i }
-    end
-
-    def << (port)
-      @ports << port
-    end
-    alias :push :<<
-
-    def pop
-      @ports.pop
-    end
-
-    def to_s (t = '')
+    # Returns a string representation of this node which is consumable by the
+    # graphviz tools +dot+ and +neato+. The _leader_ parameter is used to indent
+    # every line of the returned string, and the _indent_ parameter is used to
+    # additionally indent nested items.
+    def to_s (leader = '', indent = '    ')
       label_option = nil
       if @options['shape'] =~ /^M?record$/ && !@ports.empty? then
         # Ignore the given label option in this case since the ports should each
         # provide their own name/label.
-        label_option = t + $tab + "#{quote_ID('label')} = #{quote_ID(@ports.collect { |port| port.to_s }.join(" | "))}"
+        label_option = leader + indent + "#{quote_ID('label')} = #{quote_ID(@ports.collect { |port| port.to_s }.join(" | "))}"
       elsif @options['label'] then
         # Otherwise, use the label when given one.
-        label_option = t + $tab + "#{quote_ID('label')} = #{quote_label(@options['label'])}"
+        label_option = leader + indent + "#{quote_ID('label')} = #{quote_label(@options['label'])}"
       end
 
       # Convert all the options except `label' and options with nil values
@@ -268,7 +249,7 @@ module DOT
       # entries in the final array.
       stringified_options = @options.collect do |name, val|
         unless name == 'label' || val.nil? then
-          t + $tab + "#{quote_ID(name)} = #{quote_ID(val)}"
+          leader + indent + "#{quote_ID(name)} = #{quote_ID(val)}"
         end
       end.compact
       # Append the specially computed label option.
@@ -279,69 +260,101 @@ module DOT
       # Put it all together into a single string with indentation and return the
       # result.
       if stringified_options.empty? then
-        return t + quote_ID(@name) unless @name.nil?
+        return leader + quote_ID(@name) unless @name.nil?
         return nil
       else
-        return t + (@name.nil? ? '' : quote_ID(@name) + " ") + "[\n" +
+        return leader + (@name.nil? ? '' : quote_ID(@name) + " ") + "[\n" +
           stringified_options + "\n" +
-          t + "]"
+          leader + "]"
       end
     end
 
   end		# class DOTNode
 
-  # This is a graph.
-
+  # A graph representation. Whether or not it is rendered as directed or
+  # undirected depends on which of the programs *dot* or *neato* is used to
+  # process and render the graph.
   class DOTGraph < DOTElement
 
-    @nodes
-    @dot_string
-
+    # Creates a new DOTGraph with the _params_ Hash providing settings for all
+    # graph options. The _option_list_ parameter restricts those options to the
+    # list of valid names it contains. The exception to this is the _elements_
+    # option which, if specified, must be an Enumerable containing a list of
+    # nodes, edges, and/or subgraphs.
     def initialize (params = {}, option_list = GRAPH_OPTS)
       super(params, option_list)
-      @nodes      = params['nodes'] ? params['nodes'] : []
+      @elements   = params['elements'] ? params['elements'] : []
       @dot_string = 'graph'
     end
 
-    def each_node
-      @nodes.each{ |i| yield i }
+    # Calls _block_ once for each node, edge, or subgraph contained by this
+    # graph, passing the node, edge, or subgraph to the block.
+    #
+    # :call-seq:
+    #   graph.each_element {|element| block} -> graph
+    #
+    def each_element (&block)
+      @elements.each(&block)
+      self
     end
 
-    def << (thing)
-      @nodes << thing
+    # Adds a new node, edge, or subgraph to this graph.
+    #
+    # :call-seq:
+    #   graph << element -> graph
+    #
+    def << (element)
+      @elements << element
+      self
     end
     alias :push :<<
 
+    # Removes the most recently added node, edge, or subgraph from this graph
+    # and returns it.
+    #
+    # :call-seq:
+    #   graph.pop -> element
+    #
     def pop
-      @nodes.pop
+      @elements.pop
     end
 
-    def to_s (t = '')
-      hdr = t + @dot_string + (@name.nil? ? '' : ' ' + quote_ID(@name)) + " {\n"
+    # Returns a string representation of this graph which is consumable by the
+    # graphviz tools +dot+ and +neato+. The _leader_ parameter is used to indent
+    # every line of the returned string, and the _indent_ parameter is used to
+    # additionally indent nested items.
+    def to_s (leader = '', indent = '    ')
+      hdr = leader + @dot_string + (@name.nil? ? '' : ' ' + quote_ID(@name)) + " {\n"
 
       options = @options.to_a.collect do |name, val|
         unless val.nil? then
           if name == 'label' then
-            t + $tab + "#{quote_ID(name)} = #{quote_label(val)}"
+            leader + indent + "#{quote_ID(name)} = #{quote_label(val)}"
           else
-            t + $tab + "#{quote_ID(name)} = #{quote_ID(val)}"
+            leader + indent + "#{quote_ID(name)} = #{quote_ID(val)}"
           end
         end
       end.compact.join( "\n" )
 
-      nodes = @nodes.collect do |i|
-        i.to_s( t + $tab )
-      end.join( "\n\n" )
-      hdr + options + "\n\n" + nodes + "\n" + t + "}"
+      elements = @elements.collect do |element|
+        element.to_s(leader + indent, indent)
+      end.join("\n\n")
+      hdr + (options.empty? ? '' : options + "\n\n") +
+        (elements.empty? ? '' : elements + "\n") + leader + "}"
     end
 
   end		# class DOTGraph
 
-  # A digraph element is the same as graph, but has another header in dot
-  # notation with an identifier of 'digraph' instead of 'graph'.
-
+  # A digraph is a directed graph representation which is the same as a DOTGraph
+  # except that its header in dot notation has an identifier of _digraph_
+  # instead of _graph_.
   class DOTDigraph < DOTGraph
 
+    # Creates a new DOTDigraph with the _params_ Hash providing settings for all
+    # graph options.  The _option_list_ parameter restricts those options to the
+    # list of valid names it contains. The exception to this is the _elements_
+    # option which, if specified, must be an Enumerable containing a list of
+    # nodes, edges, and/or subgraphs.
     def initialize (params = {}, option_list = GRAPH_OPTS)
       super(params, option_list)
       @dot_string = 'digraph'
@@ -349,11 +362,16 @@ module DOT
 
   end		# class DOTDigraph
 
-  # A subgraph element is the same as graph, but has another header in dot
-  # notation with an identifier of 'subgraph' instead of 'graph'.
-
+  # A subgraph is a nested graph element and is the same as a DOTGraph except
+  # that its header in dot notation has an identifier of _subgraph_ instead of
+  # _graph_.
   class DOTSubgraph < DOTGraph
 
+    # Creates a new DOTSubgraph with the _params_ Hash providing settings for
+    # all graph options.  The _option_list_ parameter restricts those options to
+    # list of valid names it contains. The exception to this is the _elements_
+    # option which, if specified, must be an Enumerable containing a list of
+    # nodes, edges, and/or subgraphs.
     def initialize (params = {}, option_list = GRAPH_OPTS)
       super(params, option_list)
       @dot_string = 'subgraph'
@@ -361,47 +379,61 @@ module DOT
 
   end		# class DOTSubgraph
 
-  # This is an edge.
-
+  # This is an undirected edge representation.
   class DOTEdge < DOTElement
 
-    attr_accessor :from, :to
+    # A node or subgraph reference or instance to be used as the starting point
+    # for an edge.
+    attr_accessor :from
+    # A node or subgraph reference or instance to be used as the ending point
+    # for an edge.
+    attr_accessor :to
 
+    # Creates a new DOTEdge with the _params_ Hash providing settings for all
+    # edge options.  The _option_list_ parameter restricts those options to the
+    # list of valid names it contains.
     def initialize (params = {}, option_list = EDGE_OPTS)
       super(params, option_list)
       @from = params['from'] ? params['from'] : nil
       @to   = params['to'] ? params['to'] : nil
     end
-       
-    def edge_link
-      '--'
-    end
 
-    def to_s (t = '')
+    # Returns a string representation of this edge which is consumable by the
+    # graphviz tools +dot+ and +neato+. The _leader_ parameter is used to indent
+    # every line of the returned string, and the _indent_ parameter is used to
+    # additionally indent nested items.
+    def to_s (leader = '', indent = '    ')
       stringified_options = @options.collect do |name, val|
         unless val.nil? then
-          t + $tab + "#{quote_ID(name)} = #{quote_ID(val)}"
+          leader + indent + "#{quote_ID(name)} = #{quote_ID(val)}"
         end
       end.compact.join( ",\n" )
 
       f_s = @from || ''
       t_s = @to || ''
       if stringified_options.empty? then
-        t + quote_ID(f_s) + ' ' + edge_link + ' ' + quote_ID(t_s)
+        leader + quote_ID(f_s) + ' ' + edge_link + ' ' + quote_ID(t_s)
       else
-        t + quote_ID(f_s) + ' ' + edge_link + ' ' + quote_ID(t_s) + " [\n" +
+        leader + quote_ID(f_s) + ' ' + edge_link + ' ' + quote_ID(t_s) + " [\n" +
           stringified_options + "\n" +
-          t + "]"
+          leader + "]"
       end
     end
 
+    private
+      def edge_link
+        '--'
+      end
+
   end		# class DOTEdge
-          
+
+  # A directed edge representation otherwise identical to DOTEdge.
   class DOTDirectedEdge < DOTEdge
 
-    def edge_link
-      '->'
-    end
+    private
+      def edge_link
+        '->'
+      end
 
   end                           # class DOTDirectedEdge
 end                             # module DOT

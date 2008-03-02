@@ -21,33 +21,43 @@ end
 # Tests for DOTPort
 class TestDotPort < Test::Unit::TestCase
   def test_name
-    port = DOTPort.new({'name' => 'test_name'})
+    port = DOTPort.new()
+    assert_equal('', port.to_s)
+
+    port = DOTPort.new('test_name')
     assert_equal('<test_name>', port.to_s)
   end
 
   def test_label
-    port = DOTPort.new({'label' => 'test_label'})
+    port = DOTPort.new(nil, 'test_label')
     assert_equal('test_label', port.to_s)
   end
 
   def test_name_and_label
-    port = DOTPort.new({'name' => 'test_name', 'label' => 'test_label'})
+    port = DOTPort.new('test_name', 'test_label')
     assert_equal('<test_name> test_label', port.to_s)
   end
 
   def test_nested_ports
-    port = DOTPort.new({'ports' => [DOTPort.new({'label' => 'a'}), DOTPort.new({'label' => 'b'})]})
+    port = DOTPort.new([DOTPort.new(nil, 'a'), DOTPort.new(nil, 'b')])
     assert_equal('{a | b}', port.to_s)
   end
 
   def test_name_label_and_nested_ports
-    port = DOTPort.new({'name' => 'test_name', 'label' => 'test_label', 'ports' => [DOTPort.new({'label' => 'a'}), DOTPort.new({'label' => 'b'})]})
+    port = DOTPort.new('test_name', 'test_label')
+    port.ports = [DOTPort.new(nil, 'a'), DOTPort.new(nil, 'b')]
     assert_equal('{a | b}', port.to_s)
   end
 end
 
 # Tests for DOTNode
 class TestDotNode < Test::Unit::TestCase
+
+  def test_no_name
+    node = DOTNode.new()
+    dot = node.to_s
+    assert_nil(dot)
+  end
 
   # bug 16125
   def test_1prop_0comma
@@ -90,8 +100,8 @@ class TestDotNode < Test::Unit::TestCase
 
   def test_Mrecord_label_with_ports
     node = DOTNode.new({"name" => "test_name", "label" => "test_label", "shape"=>"Mrecord"})
-    node << DOTPort.new({"label" => "a"})
-    node << DOTPort.new({"label" => "b"})
+    node.ports << DOTPort.new(nil, "a")
+    node.ports << DOTPort.new(nil, "b")
     dot = node.to_s
     assert_match(dot, /shape\s*=\s*Mrecord/)
     assert_match(dot, /label\s*=\s*"a\s*|\s*b"/)
@@ -99,8 +109,8 @@ class TestDotNode < Test::Unit::TestCase
 
   def test_Mrecord_no_label_with_ports
     node = DOTNode.new({"name" => "test_name", "shape"=>"Mrecord"})
-    node << DOTPort.new({"label" => "a"})
-    node << DOTPort.new({"label" => "b"})
+    node.ports << DOTPort.new(nil, "a")
+    node.ports << DOTPort.new(nil, "b")
     dot = node.to_s
     assert_match(dot, /shape\s*=\s*Mrecord/)
     assert_match(dot, /label\s*=\s*"a\s*|\s*b"/)
@@ -122,8 +132,8 @@ class TestDotNode < Test::Unit::TestCase
 
   def test_record_label_with_ports
     node = DOTNode.new({"name" => "test_name", "label" => "test_label", "shape"=>"record"})
-    node << DOTPort.new({"label" => "a"})
-    node << DOTPort.new({"label" => "b"})
+    node.ports << DOTPort.new(nil, "a")
+    node.ports << DOTPort.new(nil, "b")
     dot = node.to_s
     assert_match(dot, /shape\s*=\s*record/)
     assert_match(dot, /label\s*=\s*"a\s*|\s*b"/)
@@ -131,8 +141,8 @@ class TestDotNode < Test::Unit::TestCase
 
   def test_record_no_label_with_ports
     node = DOTNode.new({"name" => "test_name", "shape"=>"record"})
-    node << DOTPort.new({"label" => "a"})
-    node << DOTPort.new({"label" => "b"})
+    node.ports << DOTPort.new(nil, "a")
+    node.ports << DOTPort.new(nil, "b")
     dot = node.to_s
     assert_match(dot, /shape\s*=\s*record/)
     assert_match(dot, /label\s*=\s*"a\s*|\s*b"/)
@@ -140,8 +150,8 @@ class TestDotNode < Test::Unit::TestCase
 
   def test_no_shape_no_label_no_ports
     node = DOTNode.new({"name" => "test_name"})
-    node << DOTPort.new({"label" => "a"})
-    node << DOTPort.new({"label" => "b"})
+    node.ports << DOTPort.new(nil, "a")
+    node.ports << DOTPort.new(nil, "b")
     dot = node.to_s
     assert_no_match(dot, /shape\s*=\s/)
     assert_no_match(dot, /label\s*=\s*/)
@@ -149,8 +159,8 @@ class TestDotNode < Test::Unit::TestCase
 
   def test_no_shape_no_label_with_ports
     node = DOTNode.new({"name" => "test_name"})
-    node << DOTPort.new({"label" => "a"})
-    node << DOTPort.new({"label" => "b"})
+    node.ports << DOTPort.new(nil, "a")
+    node.ports << DOTPort.new(nil, "b")
     dot = node.to_s
     assert_no_match(dot, /shape\s*=\s*record/)
     assert_no_match(dot, /label\s*=\s*/)
@@ -286,6 +296,12 @@ end
 # Tests for DOTEdge
 class TestDotEdge < Test::Unit::TestCase
 
+  def test_0prop
+    edge = DOTEdge.new({'from' => 'a', 'to' => 'b'})
+    dot = edge.to_s
+    assert_equal('a -- b', dot)
+  end
+
   def test_1prop_0comma
     edge = DOTEdge.new({"label"=>"the_label"})
     dot = edge.to_s
@@ -300,6 +316,34 @@ class TestDotEdge < Test::Unit::TestCase
 
   def test_no_label
     edge = DOTEdge.new({"weight"=>"2"})
+    dot = edge.to_s
+    assert_no_match(dot, /label/)
+  end
+end
+
+# Tests for DOTDirectedEdge
+class TestDotDirectedEdge < Test::Unit::TestCase
+
+  def test_0prop
+    edge = DOTDirectedEdge.new({'from' => 'a', 'to' => 'b'})
+    dot = edge.to_s
+    assert_equal('a -> b', dot)
+  end
+
+  def test_1prop_0comma
+    edge = DOTDirectedEdge.new({"label"=>"the_label"})
+    dot = edge.to_s
+    assert_no_match(dot, /,/)
+  end
+
+  def test_2prop_1comma
+    edge = DOTDirectedEdge.new({"label"=>"the_label", "weight"=>"2"})
+    dot = edge.to_s
+    assert_match(dot, /\[[^,]*,[^,]*\]/)
+  end
+
+  def test_no_label
+    edge = DOTDirectedEdge.new({"weight"=>"2"})
     dot = edge.to_s
     assert_no_match(dot, /label/)
   end
@@ -438,6 +482,26 @@ class TestDotGraph < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /comment\s*=\s*<html><head><title>test<\/title><\/head>\n<body>text<\/body><\/html>/)
   end
+
+  def test_element_containment
+    node1 = DOTNode.new('name' => 'test_node1')
+    node2 = DOTNode.new('name' => 'test_node2')
+
+    graph = DOTGraph.new('name' => 'test_graph')
+    assert_nil(graph.pop)
+    assert_equal(graph, graph.push(node1))
+    assert_equal(graph, graph << node2)
+    graph.each_element do |element|
+      assert([node1, node2].include?(element))
+    end
+    assert_equal(node2, graph.pop)
+    assert_equal(node1, graph.pop)
+    assert_nil(graph.pop)
+
+    graph = DOTGraph.new('name' => 'test_graph', 'elements' => [node1])
+    assert_equal(node1, graph.pop)
+    assert_nil(graph.pop)
+  end
 end
 
 # Tests for DOTDigraph
@@ -573,6 +637,26 @@ class TestDotDigraph < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /comment\s*=\s*<html><head><title>test<\/title><\/head>\n<body>text<\/body><\/html>/)
   end
+
+  def test_element_containment
+    node1 = DOTNode.new('name' => 'test_node1')
+    node2 = DOTNode.new('name' => 'test_node2')
+
+    graph = DOTDigraph.new('name' => 'test_graph')
+    assert_nil(graph.pop)
+    assert_equal(graph, graph.push(node1))
+    assert_equal(graph, graph << node2)
+    graph.each_element do |element|
+      assert([node1, node2].include?(element))
+    end
+    assert_equal(node2, graph.pop)
+    assert_equal(node1, graph.pop)
+    assert_nil(graph.pop)
+
+    graph = DOTDigraph.new('name' => 'test_graph', 'elements' => [node1])
+    assert_equal(node1, graph.pop)
+    assert_nil(graph.pop)
+  end
 end
 
 # Tests for DOTSubgraph
@@ -707,5 +791,25 @@ class TestDotSubgraph < Test::Unit::TestCase
     node = DOTSubgraph.new({"name" => "test_name", "comment" => "<html><head><title>test</title></head>\n<body>text</body></html>"})
     dot = node.to_s
     assert_match(dot, /comment\s*=\s*<html><head><title>test<\/title><\/head>\n<body>text<\/body><\/html>/)
+  end
+
+  def test_element_containment
+    node1 = DOTNode.new('name' => 'test_node1')
+    node2 = DOTNode.new('name' => 'test_node2')
+
+    graph = DOTSubgraph.new('name' => 'test_graph')
+    assert_nil(graph.pop)
+    assert_equal(graph, graph.push(node1))
+    assert_equal(graph, graph << node2)
+    graph.each_element do |element|
+      assert([node1, node2].include?(element))
+    end
+    assert_equal(node2, graph.pop)
+    assert_equal(node1, graph.pop)
+    assert_nil(graph.pop)
+
+    graph = DOTSubgraph.new('name' => 'test_graph', 'elements' => [node1])
+    assert_equal(node1, graph.pop)
+    assert_nil(graph.pop)
   end
 end
