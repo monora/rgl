@@ -147,6 +147,9 @@ module DOT
       # Returns the string given in _id_ within quotes if necessary. Special
       # characters are escaped as necessary.
       def quote_ID(id)
+        # Ensure that the ID is a string.
+        id = id.to_s
+
         # Return the ID verbatim if it looks like a name, a number, or HTML.
         return id if id =~ /^([[:alpha:]_][[:alnum:]_]*|-?(\.[[:digit:]]+|[[:digit:]]+(\.[[:digit:]]*)?)|<.*>)$/
 
@@ -159,6 +162,9 @@ module DOT
       # order to handle embedded *\n*, *\r*, and *\l* sequences which are copied
       # into the new string verbatim.
       def quote_label(label)
+        # Ensure that the label is a string.
+        label = label.to_s
+
         # Return the label verbatim if it looks like a name, a number, or HTML.
         return label if label =~ /^([[:alpha:]_][[:alnum:]_]*|-?(\.[[:digit:]]+|[[:digit:]]+(\.[[:digit:]]*)?)|<.*>)$/
 
