@@ -222,8 +222,8 @@ module DOT
 
     def to_s
       if @ports.empty? then
-        name = @name.empty? ? '' : "<#{@name}>"
-        name + ((name.empty? or label.empty?) ? '' : ' ') + label
+        n = @name.empty? ? '' : "<#{@name}>"
+        n + ((n.empty? or label.empty?) ? '' : ' ') + label
       else
         '{' + @ports.collect {|p| p.to_s}.join(' | ') + '}'
       end

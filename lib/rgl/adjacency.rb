@@ -62,8 +62,8 @@ module RGL
     end
 
     def each_adjacent (v, &b)			# :nodoc:
-      adjacency_list = @vertice_dict[v] or
-        raise NoVertexError, "No vertex #{v}."
+      adjacency_list = (@vertice_dict[v] or
+        raise NoVertexError, "No vertex #{v}.")
       adjacency_list.each(&b)
     end
 
