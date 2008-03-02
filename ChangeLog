@@ -1,147 +1,376 @@
-2005-03-30  monora  <monora@r40>
+2008-03-02 07:57  javanthropus
 
-        * tests/TestDirectedGraph.rb:
-        Added test for isolated vertices in DirectedGraph#reverse.
+	* Rakefile, lib/rgl/graphxml.rb, tests/TestGraphXML.rb: Change the
+	  way GraphML support is added to the MutableGraph module such that
+	  the interface is cleaner and documented
 
-        * lib/rgl/adjacency.rb:
-        Fixed bug in DirectedGraph#reverse reported by Kaspar Schiess. Isolated
-        vertices were not treated correctly.
+2008-03-01 20:12  javanthropus
 
-2005-03-26  wsdng  <wsdng@r40>
+	* lib/rgl/base.rb, tests/TestGraph.rb: Polish the documentation for
+	  and expand the test coverage of RGL::Graph
 
-        * lib/rgl/rdot.rb: added node and edge attributes
+2008-02-27 19:44  monora
 
-2005-03-22  monora  <monora@r40>
+	* README: Added link to coverage page
 
-        * Rakefile: Fixed autorequire to work with gem version 0.8.8
+2008-02-26 06:01  javanthropus
 
-2005-02-04  monora  <monora@r40>
+	* lib/rgl/dot.rb, lib/rgl/rdot.rb, tests/TestDot.rb,
+	  tests/TestRdot.rb: All IDs for DOT objects, including names,
+	  options, and values, are now automatically quoted as necessary
+	  according to the rules documented at
+	  http://www.graphviz.org/doc/info/lang.html and
+	  http://www.graphviz.org/Documentation/dotguide.pdf.
 
-        * README, lib/rgl/adjacency.rb, lib/rgl/base.rb, lib/rgl/connected_components.rb, lib/rgl/dot.rb, lib/rgl/graphxml.rb, lib/rgl/implicit.rb, lib/rgl/mutable.rb, lib/rgl/rdot.rb, lib/rgl/topsort.rb, lib/rgl/transitiv_closure.rb, lib/rgl/traversal.rb:
-        Fixed some formatting issues and smoothed documentation. Thanks to Rich Morin.
+	  Labels are handled specially in order to account for \l, \r, and
+	  \n sequences but are otherwise treated the same as other options.
 
-2004-12-13  monora  <monora@r40>
+	  New tests were added to confirm proper function.
 
-        * Makefile, README, Rakefile, lib/rgl/base.rb, lib/rgl/graphxml.rb, lib/rgl/implicit.rb, lib/rgl/traversal.rb:
-        Polished documentation
+	  Some changes were made in order to remove explicit quotes from
+	  labels which are no longer necessary.
 
-        * lib/rgl/adjacency.rb, tests/TestDirectedGraph.rb, tests/TestUnDirectedGraph.rb:
-        Fixed bug in Graph#reverse reported by Sascha Ebach.
+2008-02-17 20:15  monora
 
-2004-12-12  cyent  <cyent@r40>
+	* lib/rgl/enumerable_ext.rb: Removed backwards compatability method
+	  inject. Ruby > 1.8 supports it out of the box.
 
-        * tests/TestGraphXML.rb: Fixed bug in relative path
+2008-02-17 20:07  monora
 
-        * tests/TestDirectedGraph.rb: Added test_random
+	* tests/: TestEdge.rb, TestDirectedGraph.rb, TestGraph.rb: Improved
+	  test coverage
 
-        * lib/rgl/adjacency.rb, lib/rgl/base.rb, lib/rgl/connected_components.rb, lib/rgl/rdot.rb:
-        Fixed comments, removed warnings in ruby1.9 -w by adding attr_readers, told emacs to use tab-width 4 on these files
+2008-02-17 20:06  monora
 
-2004-12-11  monora  <monora@r40>
+	* lib/rgl/adjacency.rb: fixed bug in edgelist_class
 
-        * README, Rakefile, examples/examples.rb, lib/rgl/base.rb, lib/rgl/graphxml.rb, lib/rgl/traversal.rb, lib/stream.rb, tests/TestGraphXML.rb, tests/_TestGraphXML.rb:
-        Added gem packaging.
+2008-02-17 17:59  monora
 
-2004-10-08  monora  <monora@r40>
+	* Rakefile: - added coverage task - fixed BUG #2674 - added
+	  changelog task - use jamis buck rdoc template
 
-        * tests/runtests.rb: In new testframework not needed.
+2008-02-17 17:45  monora
 
-        * lib/utils.rb: Code move to base.rb
+	* lib/rgl/base.rb: Changed Version to 0.3.0
 
-2004-10-06  monora  <monora@r40>
+2008-02-17 09:09  javanthropus
 
-        * lib/rgl/base.rb: Code from utils.rb included
+	* lib/rgl/rdot.rb: DOTSimpleElement provides no useful function, so
+	  remove it
 
-        * Rakefile: First start for gem preparation
+2008-02-17 09:08  javanthropus
 
-2003-07-30  monora  <monora@r40>
+	* tests/TestRdot.rb: Test that setting only the name for a DOTNode
+	  does NOT set the label
 
-        * lib/rgl/implicit.rb, lib/utils.rb, tests/TestComponents.rb, tests/TestDirectedGraph.rb, tests/TestImplicit.rb, tests/TestTransitiveClosure.rb, tests/TestTraversal.rb, tests/TestUnDirectedGraph.rb, tests/_TestGraphXML.rb, tests/runtests.rb:
-        - port to ruby 1.8
-        - compiler warnings removed
-        - set_up -> setup in testfiles
+2008-02-17 08:58  javanthropus
 
-2002-11-13  monora  <monora@r40>
+	* lib/rgl/rdot.rb, tests/TestRdot.rb: Add support for the Mrecord
+	  shape to DOTNode.  Rewrite DOTNode#to_s to be easier to
+	  understand.  #Rewrite DOTPort to allow for nesting ports.
 
-        * lib/rgl/dot.rb, lib/rgl/rdot.rb:
-        Name-attribute of DOTNode has to be escaped by ".
+2008-02-17 03:20  javanthropus
 
-2002-11-10  monora  <monora@r40>
+	* lib/rgl/rdot.rb, tests/TestRdot.rb: BUG 17964: DOTElement no
+	  longer sets the label unless the user explicitly sets one
 
-        * lib/set.rb, lib/rgl/adjacency.rb, lib/utils.rb:
-        Use knus compatibility library for Ruby 1.8 esp. for set.rb and inject.
+2008-02-17 02:56  javanthropus
 
-2002-11-10  monora  <monora@HDDESKTOP>
+	* tests/TestRdot.rb: Fix a DOTEdge test which was actually
+	  retesting DOTNode
 
-	* lib/set.rb, lib/rgl/adjacency.rb, lib/utils.rb:
-	Use knus compatibility library for Ruby 1.8 esp. for set.rb and inject.
+2008-02-16 19:58  javanthropus
 
-2002-09-22  monora  <monora@HDDESKTOP>
+	* lib/rgl/rdot.rb, tests/TestRdot.rb: BUG #17962: Subgraphs must be
+	  identified by a "subgraph" header rather than a "graph" header
 
-	* lib/rgl/dot.rb:
-	to_dot_graph now also outputs vertices.
+2008-02-13 22:32  monora
+
+	* tests/TestRdot.rb: Fixed typo
+
+2008-02-13 22:20  monora
+
+	* doc/jamis.rb: Added template from Jamis Buck for rdoc. Looks
+	  better.
+
+2008-02-12 23:37  monora
+
+	* lib/rgl/rdot.rb: BUG #17969: Applied patch from Jeremy Bopp.
+	  Thanks.
+
+2008-02-12 22:29  monora
+
+	* README: fixed require in topsort example added delicious links
+
+2007-12-11 21:04  wsdng
+
+	* lib/rgl/rdot.rb, tests/TestRdot.rb: fixed [#16125] DOT::DOTNode
+	  produces wrong DOT syntax
+
+2007-12-11 00:21  wsdng
+
+	* tests/: TestDot.rb, TestRdot.rb: reproduced [#16125] DOT::DOTNode
+	  produces wrong DOT syntax
+
+2007-06-20 22:43  monora
+
+	* lib/rgl/base.rb, rakelib/dep_graph.rake: Fixed typo
+
+2006-04-19 21:32  monora
+
+	* rakelib/dep_graph.rake: - Use write_to_graphic_file instead of
+	  dotty (dotty crashes) - omit added task from vertices
+
+2006-04-12 23:45  monora
+
+	* rakelib/dep_graph.rake: Initial checkin
+
+2006-04-12 23:40  monora
+
+	* lib/rgl/bidirectional.rb: Moved to module RGL
+
+2006-04-12 23:36  monora
+
+	* lib/rgl/base.rb: Moved BidirectionalGraph to own file.
+
+2006-04-12 23:31  monora
+
+	* lib/rgl/: base.rb, edge.rb, graph.rb: - Merged changes from Shawn
+	  - dont want to split base.rb
+
+2006-04-12 23:27  monora
+
+	* tests/: TestCycles.rb, TestGraph.rb, test_helper.rb,
+	  TestComponents.rb, TestTransitiveClosure.rb, TestTraversal.rb: -
+	  Merged changes from Shawn - added test_helper
+
+2006-04-12 23:23  monora
+
+	* lib/rgl/adjacency.rb: - Merged changes from Shawn - implemented
+	  clone support (initialize_copy)
+
+2006-04-12 23:20  monora
+
+	* lib/rgl/mutable.rb: Use clone instead of self.class.new(self)
+
+2006-04-12 23:19  monora
+
+	* lib/rgl/enumerable_ext.rb: Do not extend system class Array. Only
+	  used for testing.
+
+2006-03-28 19:10  monora
+
+	* lib/rgl/dot.rb: Added links to graphviz.
+
+2006-03-20 02:06  spgarbet
+
+	* lib/rgl/adjacency.rb, lib/rgl/base.rb, lib/rgl/bidirectional.rb,
+	  lib/rgl/edge.rb, lib/rgl/enumerable_ext.rb, lib/rgl/graph.rb,
+	  lib/rgl/mutable.rb, tests/TestComponents.rb, tests/TestCycles.rb,
+	  tests/TestGraph.rb, tests/TestTransitiveClosure.rb,
+	  tests/TestTraversal.rb: Added equality test for graphs, added
+	  cycle locating.  Modified initialize to allow duplicating and
+	  merging of graphs.  Split base into various subfiles.  Added test
+	  cases for changes.  Fixed problem with GraphXML.
+
+2006-03-09 23:25  monora
+
+	* lib/rgl/base.rb: Fixed typo Bug #2875
+
+2006-03-03 22:28  monora
+
+	* .cvsignore, .project: We now use Eclipse-RDT
+
+2005-09-18 14:08  monora
+
+	* tests/TestComponents.rb (tags: PRE_CHECKIN_JC): Fixed required
+	  files.
+
+2005-09-17 18:27  monora
+
+	* lib/rgl/base.rb (tags: PRE_CHECKIN_JC): Documentation corrected.
+
+2005-09-17 18:25  monora
+
+	* README (tags: PRE_CHECKIN_JC): Added link to delicious.
+
+2005-04-12 20:59  monora
+
+	* Rakefile (tags: PRE_CHECKIN_JC): corrected homepage link in
+	  gemspec
+
+2005-04-12 20:50  monora
+
+	* Makefile: rake is better than make
+
+2005-04-12 20:35  monora
+
+	* README (tags: REL_0_2_3): updated copyright notice
+
+2005-04-12 20:32  monora
+
+	* examples/examples.rb (tags: PRE_CHECKIN_JC, REL_0_2_3): Added
+	  doc.
+
+2005-04-12 18:23  monora
+
+	* README: Fixed some outdated links.
+
+2005-04-05 19:54  monora
+
+	* ChangeLog (tags: PRE_CHECKIN_JC, REL_0_2_3): New entries
+	  generated
+
+2005-03-30 21:27  monora
+
+	* tests/TestDirectedGraph.rb (tags: PRE_CHECKIN_JC, REL_0_2_3):
+	  Added test for isolated vertices in DirectedGraph#reverse.
+
+2005-03-30 21:25  monora
+
+	* lib/rgl/adjacency.rb (tags: PRE_CHECKIN_JC, REL_0_2_3): Fixed bug
+	  in DirectedGraph#reverse reported by Kaspar Schiess. Isolated
+	  vertices were not treated correctly.
+
+2005-03-26 15:06  wsdng
+
+	* lib/rgl/rdot.rb (tags: PRE_CHECKIN_JC, REL_0_2_3): added node and
+	  edge attributes
+
+2005-03-22 22:31  monora
+
+	* Rakefile (tags: REL_0_2_3): Fixed autorequire to work with gem
+	  version 0.8.8
+
+2005-02-04 22:41  monora
+
+	* README, lib/rgl/adjacency.rb, lib/rgl/base.rb (tags: REL_0_2_3),
+	  lib/rgl/connected_components.rb (tags: PRE_CHECKIN_JC,
+	  REL_0_2_3), lib/rgl/dot.rb (tags: PRE_CHECKIN_JC, REL_0_2_3),
+	  lib/rgl/graphxml.rb (tags: PRE_CHECKIN_JC, REL_0_2_3),
+	  lib/rgl/implicit.rb (tags: PRE_CHECKIN_JC, REL_0_2_3),
+	  lib/rgl/mutable.rb (tags: PRE_CHECKIN_JC, REL_0_2_3),
+	  lib/rgl/rdot.rb, lib/rgl/topsort.rb (tags: PRE_CHECKIN_JC,
+	  REL_0_2_3), lib/rgl/transitiv_closure.rb (tags: PRE_CHECKIN_JC,
+	  REL_0_2_3), lib/rgl/traversal.rb (tags: PRE_CHECKIN_JC,
+	  REL_0_2_3): Fixed some formatting issues and smoothed
+	  documentation. Thanks to Rich Morin.
+
+2004-12-13 23:33  monora
+
+	* Makefile, README, Rakefile, lib/rgl/base.rb, lib/rgl/graphxml.rb,
+	  lib/rgl/implicit.rb, lib/rgl/traversal.rb: Polished documentation
+
+2004-12-13 21:07  monora
+
+	* lib/rgl/adjacency.rb, tests/TestDirectedGraph.rb,
+	  tests/TestUnDirectedGraph.rb (tags: PRE_CHECKIN_JC, REL_0_2_3):
+	  Fixed bug in Graph#reverse reported by Sascha Ebach.
+
+2004-12-12 19:09  cyent
+
+	* tests/TestGraphXML.rb: Fixed bug in relative path
+
+2004-12-12 19:08  cyent
+
+	* tests/TestDirectedGraph.rb: Added test_random
+
+2004-12-12 19:07  cyent
+
+	* lib/rgl/: adjacency.rb, base.rb, connected_components.rb,
+	  rdot.rb: Fixed comments, removed warnings in ruby1.9 -w by adding
+	  attr_readers, told emacs to use tab-width 4 on these files
+
+2004-12-11 23:46  monora
+
+	* README (tags: REL_0_2_2), Rakefile (tags: REL_0_2_2),
+	  examples/examples.rb (tags: REL_0_2_2), lib/stream.rb,
+	  lib/rgl/base.rb (tags: REL_0_2_2), lib/rgl/graphxml.rb (tags:
+	  REL_0_2_2), lib/rgl/traversal.rb (tags: REL_0_2_2),
+	  tests/TestGraphXML.rb (tags: PRE_CHECKIN_JC, REL_0_2_3,
+	  REL_0_2_2), tests/_TestGraphXML.rb: Added gem packaging.
+
+2004-10-08 15:15  monora
+
+	* tests/runtests.rb: In new testframework not needed.
+
+2004-10-08 15:14  monora
+
+	* lib/utils.rb: Code move to base.rb
+
+2004-10-06 22:11  monora
+
+	* lib/rgl/base.rb: Code from utils.rb included
+
+2004-10-06 22:09  monora
+
+	* Rakefile: First start for gem preparation
+
+2003-07-30 21:50  monora
+
+	* lib/utils.rb, lib/rgl/implicit.rb (tags: REL_0_2_2),
+	  tests/TestComponents.rb (tags: REL_0_2_3, REL_0_2_2),
+	  tests/TestDirectedGraph.rb (tags: REL_0_2_2),
+	  tests/TestImplicit.rb (tags: PRE_CHECKIN_JC, REL_0_2_3,
+	  REL_0_2_2), tests/TestTransitiveClosure.rb (tags: PRE_CHECKIN_JC,
+	  REL_0_2_3, REL_0_2_2), tests/TestTraversal.rb (tags:
+	  PRE_CHECKIN_JC, REL_0_2_3, REL_0_2_2),
+	  tests/TestUnDirectedGraph.rb (tags: REL_0_2_2),
+	  tests/_TestGraphXML.rb, tests/runtests.rb (utags: rforge-import):
+	  - port to ruby 1.8 - compiler warnings removed - set_up -> setup
+	  in testfiles
+
+2002-11-13 21:53  monora
+
+	* lib/rgl/: rdot.rb, dot.rb (utags: REL_0_2_2, rforge-import):
+	  Name-attribute of DOTNode has to be escaped by ".
+
+2002-11-10 21:21  monora
+
+	* lib/: utils.rb, rgl/adjacency.rb (tags: REL_0_2_2,
+	  rforge-import), set.rb: Use knus compatibility library for Ruby
+	  1.8 esp. for set.rb and inject.
+
+2002-09-22 15:58  monora
+
+	* lib/rgl/dot.rb: to_dot_graph now also outputs vertices.
+
+2002-09-22 15:57  monora
 
 	* lib/rgl/adjacency.rb: cosmetic.
 
-2002-09-17  monora  <monora@HDDESKTOP>
+2002-09-17 22:58  monora
 
-	* Makefile: Added releasedoc target.
+	* Makefile (tags: REL_0_2_2, rforge-import): Added releasedoc
+	  target.
 
-	* lib/rgl/base.rb, lib/rgl/implicit.rb:
-	Fixed typo.
+2002-09-17 22:57  monora
 
-2002-08-29  monora  <monora@HDDESKTOP>
+	* lib/rgl/: base.rb (tags: rforge-import), implicit.rb: Fixed typo.
 
-	* ChangeLog, lib/rgl/adjacency.rb, lib/rgl/base.rb, tests/TestDirectedGraph.rb, tests/TestUnDirectedGraph.rb:
-	Changed NameError to NoVertexError.
+2002-08-29 21:20  monora
 
-2002-09-22  monora  <monora@HDDESKTOP>
+	* ChangeLog: Changed NameError to NoVertexError.
 
-	* lib/rgl/dot.rb:
-	to_dot_graph now also outputs vertices.
+2002-08-29 21:17  monora
 
-	* lib/rgl/adjacency.rb: cosmetic.
+	* tests/TestDirectedGraph.rb, tests/TestUnDirectedGraph.rb,
+	  lib/rgl/adjacency.rb, lib/rgl/base.rb, ChangeLog: Changed
+	  NameError to NoVertexError.
 
-2002-09-17  monora  <monora@HDDESKTOP>
+2002-08-23 22:07  monora
 
-	* Makefile: Added releasedoc target.
+	* Makefile (tags: V0_2_1), README (tags: rforge-import, V0_2_1),
+	  examples/canvas.rb (tags: PRE_CHECKIN_JC, REL_0_2_3, REL_0_2_2,
+	  rforge-import, V0_2_1), examples/north/g.12.8.graphml (tags:
+	  PRE_CHECKIN_JC, REL_0_2_3, REL_0_2_2, rforge-import, V0_2_1),
+	  examples/north/g.14.9.graphml (tags: PRE_CHECKIN_JC, REL_0_2_3,
+	  REL_0_2_2, rforge-import, V0_2_1), lib/dot/dot.rb,
+	  lib/rgl/base.rb (tags: V0_2_1), lib/rgl/dot.rb (tags: V0_2_1),
+	  lib/rgl/rdot.rb (tags: V0_2_1): canvas.rb added. Collision with
+	  rdoc/dot.rb removed.
 
-	* lib/rgl/base.rb, lib/rgl/implicit.rb:
-	Fixed typo.
+2002-08-19 21:58  monora
 
-2002-08-29  monora  <monora@HDDESKTOP>
-
-	* ChangeLog, lib/rgl/adjacency.rb, lib/rgl/base.rb, tests/TestDirectedGraph.rb, tests/TestUnDirectedGraph.rb:
-	Changed NameError to NoVertexError.
-
-2002-08-29  monora  <monora@hddesktop>
-
-	* TestDirectedGraph.rb, TestUnDirectedGraph.rb:
-	* adjacency.rb, base.rb: Changed NameError to NoVertexError. Fixed Bug Nr. 599872.
-
-2002-08-23  monora  <monora@hddesktop>
-
-	* base.rb, dot.rb, rdot.rb:
-	canvas.rb added. Collision with rdoc/dot.rb removed.
-
-2002-08-19  monora  <monora@hddesktop>
-
-	* traversal.rb: New file.
-
-	* traversal.rb: started at sf
-
-	* adjacency.rb, base.rb, connected_components.rb, dot.rb, graphxml.rb, implicit.rb, mutable.rb, topsort.rb, transitiv_closure.rb:
-	New file.
-
-	* adjacency.rb, base.rb, connected_components.rb, dot.rb, graphxml.rb, implicit.rb, mutable.rb, topsort.rb, transitiv_closure.rb:
-	started at sf
-
-2002-06-10  Horst Duchene  <horst>
-
-	* lib/rgl/graphxml.rb: added + tests + examples from graphviz catalog
-
-2002-03-21  Horst Duchene  <horst>
-
-	* Ported tests to Test::Unit
-	* transitive_closure.rb
+	* README (tags: V0_2): Added link to SF.
 

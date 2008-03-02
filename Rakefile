@@ -101,8 +101,6 @@ if ! defined?(Gem)
 else
   spec = Gem::Specification.new do |s|
     
-    #### Basic information.
-    
     s.name = 'rgl'
     s.version = rgl_version
     s.summary = SUMMARY
@@ -214,6 +212,7 @@ end
 desc "Copy rdoc html to rubyforge"
 task :rdoc2rf => [:rdoc, :rcov] do
   mv 'coverage', RDOC_DIR
+  cp 'ChangeLog', RDOC_DIR
   #sh "scp -r #{RDOC_DIR} monora@rubyforge.org:/var/www/gforge-projects/rgl"
   #sh "scp examples/*.jpg monora@rubyforge.org:/var/www/gforge-projects/rgl/examples"
 end

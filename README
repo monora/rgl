@@ -112,27 +112,31 @@ installation directory and start rake:
 
  % gem env
  Rubygems Environment:
-  - VERSION: 0.8.3 (0.8.3)
+  - VERSION: 0.9.0 (0.9.0)
   - INSTALLATION DIRECTORY: /usr/lib/ruby/gems/1.8
   - GEM PATH:
      - /usr/lib/ruby/gems/1.8
   - REMOTE SOURCES:
      - http://gems.rubyforge.org
 
- % cd /usr/lib/ruby/gems/1.8/gems/rgl-0.2.2/
- % r40> rake
-  (in /usr/lib/ruby/gems/1.8/gems/rgl-0.2.2)
-  ruby1.8 -Ilib:tests -e0  -rtests/TestGraphXML  -rtests/TestComponents  -rtests/TestDirectedGraph  -rtests/TestEdge  -rtests/TestImplicit  -rtests/TestTransitiveClosure  -rtests/TestTraversal  -rtests/TestUnDirectedGraph
- Loaded suite -e
+ % cd /usr/lib/ruby/gems/1.8/gems/rgl-0.3.0/
+ % rake
+ (in /usr/lib/ruby/gems/1.8/gems/rgl-0.3.0)
+ /usr/bin/ruby1.8 -Ilib:tests "/usr/lib/ruby/gems/1.8/gems/rake-0.7.3/lib/rake/rake_test_loader.rb" "tests/TestTransitiveClosure.rb" "tests/TestComponents.rb" "tests/TestCycles.rb" "tests/TestDirectedGraph.rb" "tests/TestEdge.rb" "tests/TestGraph.rb" "tests/TestGraphXML.rb" "tests/TestImplicit.rb" "tests/TestUnDirectedGraph.rb" "tests/TestTraversal.rb" "tests/TestDot.rb" "tests/TestRdot.rb" 
+ Loaded suite /usr/lib/ruby/gems/1.8/gems/rake-0.7.3/lib/rake/rake_test_loader
  Started
- ........................................................................................................
- Finished in 0.736444 seconds.
+ ......................................................................................................................................................
+ Finished in 0.750958 seconds.
 
- 40 tests, 421 assertions, 0 failures, 0 errors
+ 86 tests, 625 assertions, 0 failures, 0 errors
  
 === Code coverage
 
 Running rcov[http://eigenclass.org/hiki.rb?rcov] on the test suite generates this[link:coverage/index.html] result.
+
+=== Latest Changes
+
+For the lastest changes see link:ChangeLog.
 
 === Normal Installation
 
