@@ -134,10 +134,6 @@ installation directory and start rake:
 
 Running rcov[http://eigenclass.org/hiki.rb?rcov] on the test suite generates this[link:coverage/index.html] result.
 
-=== Latest Changes
-
-For the lastest changes see link:ChangeLog.
-
 === Normal Installation
 
 You have to install stream library before. You can than install RGL with the
