@@ -81,7 +81,7 @@ rd = Rake::RDocTask.new("rdoc") { |rdoc|
   rdoc.template = 'doc/jamis.rb'
   rdoc.title    = SUMMARY
   rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README'
-  rdoc.rdoc_files.include(SOURCES, 'README', 'examples/examples.rb', 'rakelib/*.rake')
+  rdoc.rdoc_files.include(SOURCES, 'README', 'ChangeLog', 'examples/examples.rb', 'rakelib/*.rake')
 }
 
 # ====================================================================
@@ -210,9 +210,8 @@ task :lines do
 end
 
 desc "Copy rdoc html to rubyforge"
-task :rdoc2rf => [:rdoc, :rcov] do
+task :rdoc2rf => [:rdoc, :rcov, :changelog] do
   mv 'coverage', RDOC_DIR
-  cp 'ChangeLog', RDOC_DIR
-  #sh "scp -r #{RDOC_DIR} monora@rubyforge.org:/var/www/gforge-projects/rgl"
-  #sh "scp examples/*.jpg monora@rubyforge.org:/var/www/gforge-projects/rgl/examples"
+  sh "scp -r #{RDOC_DIR} monora@rubyforge.org:/var/www/gforge-projects/rgl"
+  sh "scp examples/*.jpg monora@rubyforge.org:/var/www/gforge-projects/rgl/examples"
 end
