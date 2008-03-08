@@ -5,7 +5,7 @@
 # all graphs in the library.
 require 'rgl/enumerable_ext'
 
-RGL_VERSION = "0.3.0"
+RGL_VERSION = "0.3.1"
 
 module RGL
   class NotDirectedError < RuntimeError; end

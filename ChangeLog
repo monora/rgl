@@ -1,7 +1,11 @@
+2008-03-04 20:18  monora
+
+	* Rakefile (tags: REL_0_3_0): pre-tag commit
+
 2008-03-02 18:16  javanthropus
 
-	* lib/rgl/rdot.rb: IDs and labels must be converted to strings
-	  before processing
+	* lib/rgl/rdot.rb (tags: REL_0_3_0): IDs and labels must be
+	  converted to strings before processing
 
 2008-03-02 17:45  javanthropus
 
