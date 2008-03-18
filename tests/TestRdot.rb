@@ -179,6 +179,14 @@ class TestDotNode < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /^"Name with \\\\backslashes\\\\"$/)
 
+    node = DOTNode.new({"name" => "Name with\nembedded\nnewlines"})
+    dot = node.to_s
+    assert_match(dot, /\A.*"Name with\nembedded\nnewlines".*\Z/m)
+
+    node = DOTNode.new({"name" => "Name_with_trailing_newline\n"})
+    dot = node.to_s
+    assert_match(dot, /\A.*"Name_with_trailing_newline\n".*\Z/m)
+
     node = DOTNode.new({"name" => "123.456"})
     dot = node.to_s
     assert_match(dot, /^123.456$/)
@@ -217,9 +225,13 @@ class TestDotNode < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /label\s*=\s*"Label with \\\\backslashes\\\\"/)
 
-    node = DOTNode.new({"name" => "test_name", "label" => "Label with\nembedded newline"})
+    node = DOTNode.new({"name" => "test_name", "label" => "Label with\nembedded\nnewlines"})
     dot = node.to_s
-    assert_match(dot, /label\s*=\s*"Label with\\nembedded newline"/)
+    assert_match(dot, /label\s*=\s*"Label with\\nembedded\\nnewlines"/)
+
+    node = DOTNode.new({"name" => "test_name", "label" => "Label_with_a_trailing_newline\n"})
+    dot = node.to_s
+    assert_match(dot, /label\s*=\s*"Label_with_a_trailing_newline\\n"/)
 
     node = DOTNode.new({"name" => "test_name", "label" => "Left justified label\\l"})
     dot = node.to_s
@@ -370,6 +382,14 @@ class TestDotGraph < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /^graph "Name with \\\\backslashes\\\\" \{$/)
 
+    node = DOTGraph.new({"name" => "Name with\nembedded\nnewlines"})
+    dot = node.to_s
+    assert_match(dot, /\A.*"Name with\nembedded\nnewlines".*\Z/m)
+
+    node = DOTGraph.new({"name" => "Name_with_trailing_newline\n"})
+    dot = node.to_s
+    assert_match(dot, /\A.*"Name_with_trailing_newline\n".*\Z/m)
+
     node = DOTGraph.new({"name" => "123.456"})
     dot = node.to_s
     assert_match(dot, /^graph 123.456 \{$/)
@@ -408,9 +428,13 @@ class TestDotGraph < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /label\s*=\s*"Label with \\\\backslashes\\\\"/)
 
-    node = DOTGraph.new({"name" => "test_name", "label" => "Label with\nembedded newline"})
+    node = DOTGraph.new({"name" => "test_name", "label" => "Label with\nembedded\nnewlines"})
     dot = node.to_s
-    assert_match(dot, /label\s*=\s*"Label with\\nembedded newline"/)
+    assert_match(dot, /label\s*=\s*"Label with\\nembedded\\nnewlines"/)
+
+    node = DOTGraph.new({"name" => "test_name", "label" => "Label_with_a_trailing_newline\n"})
+    dot = node.to_s
+    assert_match(dot, /label\s*=\s*"Label_with_a_trailing_newline\\n"/)
 
     node = DOTGraph.new({"name" => "test_name", "label" => "Left justified label\\l"})
     dot = node.to_s
@@ -525,6 +549,14 @@ class TestDotDigraph < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /^digraph "Name with \\\\backslashes\\\\" \{$/)
 
+    node = DOTDigraph.new({"name" => "Name with\nembedded\nnewlines"})
+    dot = node.to_s
+    assert_match(dot, /\A.*"Name with\nembedded\nnewlines".*\Z/m)
+
+    node = DOTDigraph.new({"name" => "Name_with_trailing_newline\n"})
+    dot = node.to_s
+    assert_match(dot, /\A.*"Name_with_trailing_newline\n".*\Z/m)
+
     node = DOTDigraph.new({"name" => "123.456"})
     dot = node.to_s
     assert_match(dot, /^digraph 123.456 \{$/)
@@ -563,9 +595,13 @@ class TestDotDigraph < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /label\s*=\s*"Label with \\\\backslashes\\\\"/)
 
-    node = DOTDigraph.new({"name" => "test_name", "label" => "Label with\nembedded newline"})
+    node = DOTDigraph.new({"name" => "test_name", "label" => "Label with\nembedded\nnewlines"})
     dot = node.to_s
-    assert_match(dot, /label\s*=\s*"Label with\\nembedded newline"/)
+    assert_match(dot, /label\s*=\s*"Label with\\nembedded\\nnewlines"/)
+
+    node = DOTDigraph.new({"name" => "test_name", "label" => "Label_with_a_trailing_newline\n"})
+    dot = node.to_s
+    assert_match(dot, /label\s*=\s*"Label_with_a_trailing_newline\\n"/)
 
     node = DOTDigraph.new({"name" => "test_name", "label" => "Left justified label\\l"})
     dot = node.to_s
@@ -680,6 +716,14 @@ class TestDotSubgraph < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /^subgraph "Name with \\\\backslashes\\\\" \{$/)
 
+    node = DOTSubgraph.new({"name" => "Name with\nembedded\nnewlines"})
+    dot = node.to_s
+    assert_match(dot, /\A.*"Name with\nembedded\nnewlines".*\Z/m)
+
+    node = DOTSubgraph.new({"name" => "Name_with_trailing_newline\n"})
+    dot = node.to_s
+    assert_match(dot, /\A.*"Name_with_trailing_newline\n".*\Z/m)
+
     node = DOTSubgraph.new({"name" => "123.456"})
     dot = node.to_s
     assert_match(dot, /^subgraph 123.456 \{$/)
@@ -718,9 +762,13 @@ class TestDotSubgraph < Test::Unit::TestCase
     dot = node.to_s
     assert_match(dot, /label\s*=\s*"Label with \\\\backslashes\\\\"/)
 
-    node = DOTSubgraph.new({"name" => "test_name", "label" => "Label with\nembedded newline"})
+    node = DOTSubgraph.new({"name" => "test_name", "label" => "Label with\nembedded\nnewlines"})
     dot = node.to_s
-    assert_match(dot, /label\s*=\s*"Label with\\nembedded newline"/)
+    assert_match(dot, /label\s*=\s*"Label with\\nembedded\\nnewlines"/)
+
+    node = DOTSubgraph.new({"name" => "test_name", "label" => "Label_with_a_trailing_newline\n"})
+    dot = node.to_s
+    assert_match(dot, /label\s*=\s*"Label_with_a_trailing_newline\\n"/)
 
     node = DOTSubgraph.new({"name" => "test_name", "label" => "Left justified label\\l"})
     dot = node.to_s

@@ -151,7 +151,7 @@ module DOT
         id = id.to_s
 
         # Return the ID verbatim if it looks like a name, a number, or HTML.
-        return id if id =~ /^([[:alpha:]_][[:alnum:]_]*|-?(\.[[:digit:]]+|[[:digit:]]+(\.[[:digit:]]*)?)|<.*>)$/
+        return id if id =~ /\A([[:alpha:]_][[:alnum:]_]*|-?(\.[[:digit:]]+|[[:digit:]]+(\.[[:digit:]]*)?)|<.*>)\Z/m and id[-1] != ?\n
 
         # Return a quoted version of the ID otherwise.
         '"' + id.gsub('\\', '\\\\\\\\').gsub('"', '\\\\"') + '"'
@@ -166,7 +166,7 @@ module DOT
         label = label.to_s
 
         # Return the label verbatim if it looks like a name, a number, or HTML.
-        return label if label =~ /^([[:alpha:]_][[:alnum:]_]*|-?(\.[[:digit:]]+|[[:digit:]]+(\.[[:digit:]]*)?)|<.*>)$/
+        return label if label =~ /\A([[:alpha:]_][[:alnum:]_]*|-?(\.[[:digit:]]+|[[:digit:]]+(\.[[:digit:]]*)?)|<.*>)\Z/m and label[-1] != ?\n
 
         # Return a quoted version of the label otherwise.
         '"' + label.split(/(\\n|\\r|\\l)/).collect do |part|
