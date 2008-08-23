@@ -173,6 +173,7 @@ module RGL
 
     def to_adjacency
       result = (directed? ? DirectedAdjacencyGraph : AdjacencyGraph).new
+      each_vertex { |v| result.add_vertex(v) }
       each_edge { |u,v| result.add_edge(u, v) }
       result
     end
