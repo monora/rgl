@@ -78,9 +78,9 @@ end
 
 rd = Rake::RDocTask.new("rdoc") { |rdoc|
   rdoc.rdoc_dir = RDOC_DIR
-  rdoc.template = 'doc/jamis.rb'
+  #rdoc.template = 'doc/jamis.rb'
   rdoc.title    = SUMMARY
-  rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README'
+  #rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README'
   rdoc.rdoc_files.include(SOURCES, 'README', 'ChangeLog', 'examples/examples.rb', 'rakelib/*.rake')
 }
 
@@ -124,6 +124,8 @@ else
      * Connected Components 
      * Strongly Connected Components 
      * Transitive Closure
+     * Transitive Reduction
+     * Graph Condensation
      * Search cycles (contributed by Shawn Garbett)
     EOF
     
