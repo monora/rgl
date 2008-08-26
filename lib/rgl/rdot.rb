@@ -3,7 +3,7 @@
 #
 # It also supports undirected edges.
 
-module DOT
+module RGL; module DOT
 
   # options for node declaration
 
@@ -131,8 +131,8 @@ module DOT
     'layerseq'
   ]
 
-  # Ancestor of DOTEdge, DOTNode, and DOTGraph.
-  class DOTElement
+  # Ancestor of Edge, Node, and Graph.
+  class Element
     attr_accessor :name, :options
 
     def initialize (params = {}, option_list = []) # :nodoc:
@@ -181,9 +181,9 @@ module DOT
   end
 
 
-  # Ports are used when a DOTNode instance has its `shape' option set to
+  # Ports are used when a Node instance has its `shape' option set to
   # _record_ or _Mrecord_.  Ports can be nested.
-  class DOTPort
+  class Port
     attr_accessor :name, :label, :ports
 
     # Create a new port with either an optional name and label or a set of
@@ -222,10 +222,10 @@ module DOT
 
   # A node representation.  Edges are drawn between nodes.  The rendering of a
   # node depends upon the options set for it.
-  class DOTNode < DOTElement
+  class Node < Element
     attr_accessor :ports
 
-    # Creates a new DOTNode with the _params_ Hash providing settings for all
+    # Creates a new Node with the _params_ Hash providing settings for all
     # node options. The _option_list_ parameter restricts those options to the
     # list of valid names it contains. The exception to this is the _ports_
     # option which, if specified, must be an Enumerable containing a list of
@@ -275,14 +275,14 @@ module DOT
       end
     end
 
-  end		# class DOTNode
+  end		# class Node
 
   # A graph representation. Whether or not it is rendered as directed or
   # undirected depends on which of the programs *dot* or *neato* is used to
   # process and render the graph.
-  class DOTGraph < DOTElement
+  class Graph < Element
 
-    # Creates a new DOTGraph with the _params_ Hash providing settings for all
+    # Creates a new Graph with the _params_ Hash providing settings for all
     # graph options. The _option_list_ parameter restricts those options to the
     # list of valid names it contains. The exception to this is the _elements_
     # option which, if specified, must be an Enumerable containing a list of
@@ -349,14 +349,14 @@ module DOT
         (elements.empty? ? '' : elements + "\n") + leader + "}"
     end
 
-  end		# class DOTGraph
+  end		# class Graph
 
-  # A digraph is a directed graph representation which is the same as a DOTGraph
+  # A digraph is a directed graph representation which is the same as a Graph
   # except that its header in dot notation has an identifier of _digraph_
   # instead of _graph_.
-  class DOTDigraph < DOTGraph
+  class Digraph < Graph
 
-    # Creates a new DOTDigraph with the _params_ Hash providing settings for all
+    # Creates a new Digraph with the _params_ Hash providing settings for all
     # graph options.  The _option_list_ parameter restricts those options to the
     # list of valid names it contains. The exception to this is the _elements_
     # option which, if specified, must be an Enumerable containing a list of
@@ -366,14 +366,14 @@ module DOT
       @dot_string = 'digraph'
     end
 
-  end		# class DOTDigraph
+  end		# class Digraph
 
-  # A subgraph is a nested graph element and is the same as a DOTGraph except
+  # A subgraph is a nested graph element and is the same as a Graph except
   # that its header in dot notation has an identifier of _subgraph_ instead of
   # _graph_.
-  class DOTSubgraph < DOTGraph
+  class Subgraph < Graph
 
-    # Creates a new DOTSubgraph with the _params_ Hash providing settings for
+    # Creates a new Subgraph with the _params_ Hash providing settings for
     # all graph options.  The _option_list_ parameter restricts those options to
     # list of valid names it contains. The exception to this is the _elements_
     # option which, if specified, must be an Enumerable containing a list of
@@ -383,10 +383,10 @@ module DOT
       @dot_string = 'subgraph'
     end
 
-  end		# class DOTSubgraph
+  end		# class Subgraph
 
   # This is an undirected edge representation.
-  class DOTEdge < DOTElement
+  class Edge < Element
 
     # A node or subgraph reference or instance to be used as the starting point
     # for an edge.
@@ -395,7 +395,7 @@ module DOT
     # for an edge.
     attr_accessor :to
 
-    # Creates a new DOTEdge with the _params_ Hash providing settings for all
+    # Creates a new Edge with the _params_ Hash providing settings for all
     # edge options.  The _option_list_ parameter restricts those options to the
     # list of valid names it contains.
     def initialize (params = {}, option_list = EDGE_OPTS)
@@ -431,15 +431,15 @@ module DOT
         '--'
       end
 
-  end		# class DOTEdge
+  end		# class Edge
 
-  # A directed edge representation otherwise identical to DOTEdge.
-  class DOTDirectedEdge < DOTEdge
+  # A directed edge representation otherwise identical to Edge.
+  class DirectedEdge < Edge
 
     private
       def edge_link
         '->'
       end
 
-  end                           # class DOTDirectedEdge
-end                             # module DOT
+  end                           # class DirectedEdge
+end; end                        # module RGL; module DOT
