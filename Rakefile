@@ -23,6 +23,17 @@ SOURCES = FileList['lib/**/*.rb']
 CLOBBER.include('TAGS', 'coverage')
 RDOC_DIR = './rgl'
 
+# The location for published documents to be copied.
+remote_user = ENV['REMOTE_USER'] || ''
+remote_host = ENV['REMOTE_HOST'] || 'rubyforge.org'
+remote_path = ENV['REMOTE_PATH'] || '/var/www/gforge-projects/rgl'
+remote_path += '/' unless remote_path[-1, 1] == '/'
+REMOTE_RDOC_DIR = remote_path
+REMOTE_RDOC_DIR.insert(
+  0,
+  remote_user + (remote_user.empty? ? '' : '@') + remote_host + ':'
+) unless remote_host.empty?
+
 # The default task is run if rake is given no explicit arguments.
 
 desc "Default Task"
@@ -213,7 +224,9 @@ end
 
 desc "Copy rdoc html to rubyforge"
 task :rdoc2rf => [:rdoc, :rcov, :changelog] do
-  mv 'coverage', RDOC_DIR
-  sh "scp -r #{RDOC_DIR} monora@rubyforge.org:/var/www/gforge-projects/rgl"
-  sh "scp examples/*.jpg monora@rubyforge.org:/var/www/gforge-projects/rgl/examples"
+  cp_r 'coverage', RDOC_DIR
+  examples = File.join(RDOC_DIR, 'examples')
+  mkdir_p examples
+  cp Dir.glob('examples/*.jpg'), examples
+  sh "rsync -r --delete \"#{RDOC_DIR}\" \"#{REMOTE_RDOC_DIR}\""
 end
