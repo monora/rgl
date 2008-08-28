@@ -1,6 +1,71 @@
+2008-08-27 23:30  javanthropus
+
+	* lib/rgl/base.rb: Preparing for 0.4.0 release
+
+2008-08-26 20:07  javanthropus
+
+	* lib/rgl/dot.rb, lib/rgl/rdot.rb, tests/TestRdot.rb: Move the DOT
+	  module into the RGL module
+
+	  * This eliminates a class conflict with the DOT module from rdoc
+	  when building RGL's documentation * Also remove the superfluous
+	  DOT prefixes from class names in the DOT module
+
+2008-08-24 06:16  javanthropus
+
+	* Rakefile: Remove some comments I accidentally left in while
+	  testing rdoc functionality
+
+2008-08-24 06:03  javanthropus
+
+	* Rakefile, lib/rgl/transitiv_closure.rb, lib/rgl/transitivity.rb,
+	  tests/TestTransitiveClosure.rb, tests/TestTransitivity.rb:
+	  Feature 21641: Added transitive reduction functionality
+
+	  * Updated the gem description to announce this functionality *
+	  Moved the transitive closure functionality into the
+	  transitivity.rb file along with the transitive reduction
+	  funtionality * Modifed the transitiv_closure.rb file to simply
+	  load the transitivity.rb file for backward compatibility * Moved
+	  all transitivity tests into TestTransitivity.rb
+
+2008-08-23 15:45  javanthropus
+
+	* lib/rgl/condensation.rb, lib/rgl/transitiv_closure.rb,
+	  tests/TestTransitiveClosure.rb: Defect 21630: Fixed transitive
+	  closure
+
+	  * The fix is based on the algorithm described in the
+	  documentation for the implementation of transitive closure in
+	  Boost * Along with the fix, performance is improved to O(|V||E|)
+	  * This implementation needs graph condensation, so that function
+	  was added as well * More tests were added to cover more corner
+	  cases
+
+2008-08-23 05:40  javanthropus
+
+	* tests/TestGraph.rb: Update basic graph tests to account for
+	  graphs with edgeless vertices Also clean up some minor formatting
+	  and assertion issues
+
+2008-08-23 05:37  javanthropus
+
+	* lib/rgl/adjacency.rb: Defect 21609: Fix the to_adjacency method
+	  to preserve edgeless vertices
+
+2008-03-18 15:03  javanthropus
+
+	* lib/rgl/rdot.rb, tests/TestRdot.rb: More reliably detect and
+	  handle newlines embedded within IDs and labels
+
+2008-03-08 10:48  monora
+
+	* ChangeLog, lib/rgl/base.rb (utags: REL_0_3_1): Prepare 0.3.1
+	  release
+
 2008-03-04 20:18  monora
 
-	* Rakefile (tags: REL_0_3_0): pre-tag commit
+	* Rakefile (tags: REL_0_3_1, REL_0_3_0): pre-tag commit
 
 2008-03-02 18:16  javanthropus
 
