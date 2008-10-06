@@ -1,4 +1,5 @@
 require 'rgl/base'
+require 'rgl/connected_components'
 require 'rgl/implicit'
 
 module RGL
