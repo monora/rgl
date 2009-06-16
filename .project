@@ -6,12 +6,12 @@
 	</projects>
 	<buildSpec>
 		<buildCommand>
-			<name>org.rubypeople.rdt.core.rubybuilder</name>
+			<name>org.eclipse.dltk.core.scriptbuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>org.rubypeople.rdt.core.rubynature</nature>
+		<nature>org.eclipse.dltk.ruby.core.nature</nature>
 	</natures>
 </projectDescription>
