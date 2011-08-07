@@ -12,14 +12,14 @@ module RGL
 
   module Graph
 
-  # Return a RGL::DOT::Digraph for directed graphs or a DOT::Subgraph for an
+  # Return a RGL::DOT::Digraph for directed graphs or a DOT::Graph for an
   # undirected Graph.  _params_ can contain any graph property specified in
   # rdot.rb.
 
   def to_dot_graph (params = {})
     params['name'] ||= self.class.name.gsub(/:/,'_')
     fontsize   = params['fontsize'] ? params['fontsize'] : '8'
-    graph      = (directed? ? DOT::Digraph : DOT::Subgraph).new(params)
+    graph      = (directed? ? DOT::Digraph : DOT::Graph).new(params)
     edge_class = directed? ? DOT::DirectedEdge : DOT::Edge
     each_vertex do |v|
       name = v.to_s
