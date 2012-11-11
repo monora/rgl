@@ -1,14 +1,11 @@
 # Rakefile for RGL        -*- ruby -*-
 
-begin
-  require 'rubygems'
-  require 'rake/gempackagetask'
-rescue Exception
-  nil
-end
+require 'rubygems'
+require 'rubygems/package_task'
 require 'rake/clean'
 require 'rake/testtask'
-require 'rake/rdoctask'
+require 'rdoc'
+require 'rdoc/task'
 
 # Determine the current version of the software
 rgl_version =
@@ -76,13 +73,9 @@ task :tag do
   rel = "REL_" + rgl_version.gsub(/\./, '_')
   rel << ENV['TAG'] if ENV['TAG']
   puts rel
-  sh %{cvs commit -m 'pre-tag commit'}
-  sh %{cvs tag #{rel}}
-end
-
-desc "Accumulate changelog"
-task :changelog do
-  sh %{cvs2cl --tags --utc --prune --accum}
+  # FIXME: How do we do this in git?
+  sh %{echo FIXME: cvs commit -m 'pre-tag commit'}
+  sh %{echo FIXME: cvs tag #{rel}}
 end
 
 # Create a task to build the RDOC documentation tree.
@@ -170,7 +163,7 @@ else
     s.rubyforge_project = "rgl"
   end
   
-  Rake::GemPackageTask.new(spec) do |pkg|
+  Gem::PackageTask.new(spec) do |pkg|
     #pkg.need_zip = true
     pkg.need_tar = true
   end
@@ -223,7 +216,7 @@ task :lines do
 end
 
 desc "Copy rdoc html to rubyforge"
-task :rdoc2rf => [:rdoc, :rcov, :changelog] do
+task :rdoc2rf => [:rdoc, :rcov] do
   cp_r 'coverage', RDOC_DIR
   examples = File.join(RDOC_DIR, 'examples')
   mkdir_p examples

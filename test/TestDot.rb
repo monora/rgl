@@ -3,7 +3,11 @@ require 'rgl/dot'
 
 class TestDot < Test::Unit::TestCase
 
-  def test_to_dot_graph
+  def assert_match(dot, pattern)
+    assert(!(dot =~ pattern).nil?, "#{dot} doesn't match #{pattern}")
+  end
+
+  def test_to_dot_digraph
     graph = RGL::DirectedAdjacencyGraph[1,2]
     dot = graph.to_dot_graph.to_s
     assert_match(dot, /\{[^}]*\}/) # {...}
@@ -12,7 +16,8 @@ class TestDot < Test::Unit::TestCase
     assert_match(dot, /1\s*->\s*2/) # edge
   end
 
-  def assert_match(dot, pattern)
-    assert(!(dot =~ pattern).nil?, "#{dot} doesn't match #{pattern}")
-  end
+  def test_to_dot_graph
+    graph = RGL::AdjacencyGraph[1,2]
+    dot = graph.dotty
+   end
 end
