@@ -60,6 +60,19 @@ i -> h j e c")
 	vis = @dg2.strongly_connected_components
 	
 	assert_equal(4,vis.num_comp)
-	assert_equal([["a", 3], ["b", 3], ["c", 3], ["d", 0], ["e", 0], ["f", 1], ["g", 1], ["h", 3], ["i", 3], ["j", 2]],vis.comp_map.to_a)
+    res = vis.comp_map.to_a.sort.reduce({}){|res,a|
+      if res.key?(a[1])
+        res[a[1]] << a[0]
+      else
+        res[a[1]] = [a[0]]
+      end
+      res
+    }
+    std_res = res.to_a.map {
+      |a|
+      [a[1][0],a[1]]
+    }.sort
+
+    assert_equal([["a",["a","b","c","h","i"]], ["d",["d","e"]],["f",["f","g"]],["j",["j"]]],std_res)
   end
 end

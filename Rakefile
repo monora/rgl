@@ -42,8 +42,8 @@ task :default => :test
 # Define a test task.
 
 Rake::TestTask.new { |t|
-  t.libs << "tests"
-  t.pattern = 'tests/Test*.rb'
+  t.libs << "test"
+  t.pattern = 'test/Test*.rb'
   t.verbose = true
 }
 
@@ -56,7 +56,7 @@ task :testall => [:test ]
 desc "Do code coverage with rcov"
 task :rcov do
   begin 
-    sh 'rcov -Ilib:tests --exclude "tests/.*[tT]est.*.rb,usr.local" tests/Test*rb'
+    sh 'rcov -Ilib:test --exclude "test/.*[tT]est.*.rb,usr.local" test/Test*rb'
   rescue Exception
     nil
   end
@@ -102,7 +102,7 @@ rd = Rake::RDocTask.new("rdoc") { |rdoc|
 PKG_FILES = FileList[
   'install.rb',
   '[A-Z]*',
-  'tests/**/*.rb',
+  'test/**/*.rb',
   'examples/**/*',
   'rakelib/*.rake'
 ] + SOURCES
