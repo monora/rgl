@@ -129,7 +129,7 @@ finished_vertex: 2
   end
 
   def test_bfs_search_tree
-	assert_equal("(1-2)(1-6)(2-3)(2-4)(4-5)",@dg.bfs_search_tree_from(1).edges.sort.to_s)
+	assert_equal("(1-2)(1-6)(2-3)(2-4)(4-5)",@dg.bfs_search_tree_from(1).edges.sort.join)
   end
   
   def aux(it)

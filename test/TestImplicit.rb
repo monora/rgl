@@ -28,25 +28,25 @@ class TestImplicit < Test::Unit::TestCase
   def test_cycle
 	assert(!@cycle.empty?)
 	assert_equal([0, 1, 2, 3, 4],@cycle.vertices.sort)
-	assert_equal("(0-1)(1-2)(2-3)(3-4)(4-0)",@cycle.edges.sort.to_s)
+	assert_equal("(0-1)(1-2)(2-3)(3-4)(4-0)",@cycle.edges.sort.join)
   end
   
   def test_vertex_filtered_graph
 	fg = @cycle.vertices_filtered_by {|v| v%2 == 0}
 	assert_equal([0, 2, 4],fg.vertices.sort)
-	assert_equal("(4-0)",fg.edges.sort.to_s)
+	assert_equal("(4-0)",fg.edges.sort.join)
 	assert(fg.directed?)
 
 	fg = @dg.vertices_filtered_by {|v| v%2 == 0}
 	assert_equal([2, 4, 6],fg.vertices.sort)
-	assert_equal("(2-4)(6-4)",fg.edges.sort.to_s)
+	assert_equal("(2-4)(6-4)",fg.edges.sort.join)
 	assert(fg.directed?)
   end
 
   def test_edge_filtered_graph
 	fg = @cycle.edges_filtered_by {|u,v| u+v > 3}
 	assert_equal(@cycle.vertices.sort,fg.vertices.sort)
-	assert_equal("(2-3)(3-4)(4-0)",fg.edges.sort.to_s)
+	assert_equal("(2-3)(3-4)(4-0)",fg.edges.sort.join)
 	assert(fg.directed?)
   end
 end
