@@ -40,7 +40,7 @@ class TestDirectedGraph < Test::Unit::TestCase
     
     assert_equal([1,2],dg.vertices.sort)
     assert([DirectedEdge.new(1,2)].eql?(dg.edges))
-    assert_equal("(1-2)",dg.edges.to_s)
+    assert_equal("(1-2)",dg.edges.join)
     
     assert_equal([2],dg.adjacent_vertices(1))
     assert_equal([],dg.adjacent_vertices(2))
@@ -80,7 +80,7 @@ class TestDirectedGraph < Test::Unit::TestCase
     @dg.remove_vertex 3
     assert !@dg.has_vertex?(3)
     assert !@dg.has_edge?(2,3)
-    assert_equal("(2-4)",@dg.to_s)
+    assert_equal('(2-4)',@dg.edges.join)
   end
   
   def test_add_vertices
@@ -94,8 +94,8 @@ class TestDirectedGraph < Test::Unit::TestCase
   
   def test_creating_from_array
     dg = DirectedAdjacencyGraph[1, 2, 3, 4]
-    assert_equal(dg.vertices.sort, [1,2,3,4])
-    assert_equal(dg.edges.to_s, "(1-2)(3-4)")
+    assert_equal([1,2,3,4], dg.vertices.sort)
+    assert_equal('(1-2)(3-4)', dg.edges.join)
   end
   
   def test_reverse
@@ -115,11 +115,11 @@ class TestDirectedGraph < Test::Unit::TestCase
     end
     
     assert(reverted.has_vertex?(42),
-           "Reverted graph should contain isolated Vertex 42")
+           'Reverted graph should contain isolated Vertex 42')
   end
   
   def test_to_undirected
     undirected = @dg.to_undirected
-    assert_equal undirected.edges.sort.to_s, "(1=2)(2=3)(2=4)"
+    assert_equal '(1=2)(2=3)(2=4)', undirected.edges.sort.join
   end
 end

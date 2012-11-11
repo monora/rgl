@@ -42,7 +42,7 @@ class TestUnDirectedGraph < Test::Unit::TestCase
 
 	assert_equal([1,2],dg.vertices.sort)
 	assert([DirectedEdge.new(1,2)].eql?(dg.edges))
-	assert_equal("(1=2)",dg.edges.to_s)
+	assert_equal("(1=2)",dg.edges.join)
 
 	assert_equal([2],dg.adjacent_vertices(1))
 	assert_equal([1],dg.adjacent_vertices(2))

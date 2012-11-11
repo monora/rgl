@@ -19,8 +19,8 @@ class TestGraphXML < Test::Unit::TestCase
   end
 
   def test_graphxml
-	@dg = DirectedAdjacencyGraph.new.from_graphxml(@stream).to_s
-	assert_equal("(n0-n1)(n0-n2)(n0-n9)(n3-n4)(n4-n5)(n5-n7)(n8-n0)(n8-n3)(n8-n4)(n8-n5)(n8-n6)",@dg.to_s)
+	@dg = DirectedAdjacencyGraph.new.from_graphxml(@stream).edges.sort.join
+	assert_equal("(n0-n1)(n0-n2)(n0-n9)(n3-n4)(n4-n5)(n5-n7)(n8-n0)(n8-n3)(n8-n4)(n8-n5)(n8-n6)",@dg)
   end
 
   def test_north_graphs
