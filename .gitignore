@@ -4,3 +4,4 @@ rgl/
 wiki*
 graph.dot
 .project
+Gemfile.lock
