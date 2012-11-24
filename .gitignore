@@ -1,4 +1,6 @@
-pkg
-rgl
+coverage/
+pkg/
+rgl/
 wiki*
-coverage
+graph.dot
+.project
