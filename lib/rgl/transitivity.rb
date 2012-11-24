@@ -5,10 +5,12 @@ require 'rgl/base'
 require 'rgl/condensation'
 
 module RGL
+
   module Graph
+
     # Returns an RGL::DirectedAdjacencyGraph which is the transitive closure of
-    # this graph.  Meaning, for each path u -> ... -> v in this graph, the path
-    # is copied and the edge u -> v is added.  This method supports working with
+    # this graph. Meaning, for each path u -> ... -> v in this graph, the path
+    # is copied and the edge u -> v is added. This method supports working with
     # cyclic graphs by ensuring that edges are created between every pair of
     # vertices in the cycle, including self-referencing edges.
     #
@@ -16,17 +18,18 @@ module RGL
     # of vertices and edges respectively.
     #
     # Raises RGL::NotDirectedError if run on an undirected graph.
+    #
     def transitive_closure
       raise NotDirectedError,
-        "transitive_closure only supported for directed graphs" unless directed?
+            "transitive_closure only supported for directed graphs" unless directed?
 
       # Compute a condensation graph in order to hide cycles.
       cg = condensation_graph
 
       # Use a depth first search to calculate the transitive closure over the
-      # condensation graph.  This ensures that as we traverse up the graph we
+      # condensation graph. This ensures that as we traverse up the graph we
       # know the transitive closure of each subgraph rooted at each node
-      # starting at the leaves.  Subsequent root nodes which consume these
+      # starting at the leaves. Subsequent root nodes which consume these
       # subgraphs by way of the nodes' immediate successors can then immediately
       # add edges to the roots of the subgraphs and to every successor of those
       # roots.
@@ -52,7 +55,7 @@ module RGL
       # For each NON-trivial strongly connected component in the condensed
       # graph, add each node it contains to the new graph and add edges to
       # every node in the strongly connected component, including self
-      # referential edges.  Then for each edge of the original graph from any
+      # referential edges. Then for each edge of the original graph from any
       # of the contained nodes, add edges from each of the contained nodes to
       # all the edge targets.
       g = DirectedAdjacencyGraph.new
@@ -61,7 +64,7 @@ module RGL
           # Add edges between all members of non-trivial strongly connected
           # components (size > 1) and ensure that self referential edges are
           # added when necessary for trivial strongly connected components.
-          if scc.size > 1 || has_edge?(v, v) then
+          if scc.size > 1 || has_edge?(v, v)
             scc.each do |w|
               g.add_edge(v, w)
             end
@@ -86,8 +89,8 @@ module RGL
     end
 
     # Returns an RGL::DirectedAdjacencyGraph which is the transitive reduction
-    # of this graph.  Meaning, that each edge u -> v is omitted if path
-    # u -> ... -> v exists.  This method supports working with cyclic graphs;
+    # of this graph. Meaning, that each edge u -> v is omitted if path
+    # u -> ... -> v exists. This method supports working with cyclic graphs;
     # however, cycles are arbitrarily simplified which may lead to variant,
     # although equally valid, results on equivalent graphs.
     #
@@ -95,17 +98,18 @@ module RGL
     # of vertices and edges respectively.
     #
     # Raises RGL::NotDirectedError if run on an undirected graph.
+    #
     def transitive_reduction
       raise NotDirectedError,
-        "transitive_reduction only supported for directed graphs" unless directed?
+            "transitive_reduction only supported for directed graphs" unless directed?
 
       # Compute a condensation graph in order to hide cycles.
       cg = condensation_graph
 
       # Use a depth first search to compute the transitive reduction over the
-      # condensed graph.  This is similar to the computation of the transitive
+      # condensed graph. This is similar to the computation of the transitive
       # closure over the graph in that for any node of the graph all nodes
-      # reachable from the node are tracked.  Using a depth first search ensures
+      # reachable from the node are tracked. Using a depth first search ensures
       # that all nodes reachable from a target node are known when considering
       # whether or not to add an edge pointing to that target.
       tr_cg = DirectedAdjacencyGraph.new
@@ -114,11 +118,9 @@ module RGL
         paths_from[v] = Set.new
         cg.each_adjacent(v) do |w|
           # Only add the edge v -> w if there is no other edge v -> x such that
-          # w is reachable from x.  Make sure to completely skip the case where
+          # w is reachable from x. Make sure to completely skip the case where
           # x == w.
-          unless Enumerator.new(cg, :each_adjacent, v).any? do |x|
-            x != w && paths_from[x].include?(w)
-          end then
+          unless Enumerator.new(cg, :each_adjacent, v).any? { |x| x != w && paths_from[x].include?(w) }
             tr_cg.add_edge(v, w)
 
             # For each vertex v, track all nodes reachable from v by adding node
@@ -138,7 +140,7 @@ module RGL
       # edge the node begins in the original graph.
       # For each NON-trivial strongly connected component in the condensed
       # graph, add each node it contains to the new graph and add arbitrary
-      # edges between the nodes to form a simple cycle.  Then for each strongly
+      # edges between the nodes to form a simple cycle. Then for each strongly
       # connected component adjacent to the current one, find and add the first
       # edge which exists in the original graph, starts in the first strongly
       # connected component, and ends in the second strongly connected
@@ -148,7 +150,7 @@ module RGL
         # Make a cycle of the contents of non-trivial strongly connected
         # components.
         scc_arr = scc.to_a
-        if scc.size > 1 || has_edge?(scc_arr.first, scc_arr.first) then
+        if scc.size > 1 || has_edge?(scc_arr.first, scc_arr.first)
           0.upto(scc_arr.size - 2) do |idx|
             g.add_edge(scc_arr[idx], scc_arr[idx + 1])
           end
@@ -160,9 +162,9 @@ module RGL
         edges = Enumerator.new(self, :each_edge)
         tr_cg.each_adjacent(scc) do |scc2|
           g.add_edge(
-            *edges.find do |v, w|
-              scc.member?(v) && scc2.member?(w)
-            end
+              *edges.find do |v, w|
+                scc.member?(v) && scc2.member?(w)
+              end
           )
         end
 
@@ -175,5 +177,7 @@ module RGL
       # Finally, the transitive reduction...
       g
     end
-  end                           # module Graph
-end                             # module RGL
+
+  end # module Graph
+
+end # module RGL

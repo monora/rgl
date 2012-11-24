@@ -40,7 +40,7 @@ task :default => :test
 
 Rake::TestTask.new { |t|
   t.libs << "test"
-  t.pattern = 'test/Test*.rb'
+  t.pattern = 'test/*_test.rb'
   t.verbose = true
 }
 
@@ -52,7 +52,7 @@ task :testall => [:test ]
 
 desc "Do code coverage with rcov"
 task :rcov do
-  begin 
+  begin
     sh 'rcov -Ilib:test --exclude "test/.*[tT]est.*.rb,usr.local" test/Test*rb'
   rescue Exception
     nil
@@ -104,11 +104,11 @@ if ! defined?(Gem)
   puts "Package Target requires RubyGems"
 else
   spec = Gem::Specification.new do |s|
-    
+
     s.name = 'rgl'
     s.version = rgl_version
     s.summary = SUMMARY
-    
+
     s.description = <<-EOF
     RGL is a framework for graph data structures and algorithms.
 
@@ -117,52 +117,52 @@ else
 
     RGL currently contains a core set of algorithm patterns:
 
-     * Breadth First Search 
-     * Depth First Search 
+     * Breadth First Search
+     * Depth First Search
 
     The algorithm patterns by themselves do not compute any meaningful quantities
     over graphs, they are merely building blocks for constructing graph
     algorithms. The graph algorithms in RGL currently include:
 
-     * Topological Sort 
-     * Connected Components 
-     * Strongly Connected Components 
+     * Topological Sort
+     * Connected Components
+     * Strongly Connected Components
      * Transitive Closure
      * Transitive Reduction
      * Graph Condensation
      * Search cycles (contributed by Shawn Garbett)
     EOF
-    
+
     #### Dependencies and requirements.
-    
+
     s.add_dependency('stream', '>= 0.5')
     s.add_dependency 'rake'
     s.requirements << "Stream library, v0.5 or later"
-    
+
     #### Which files are to be included in this gem?  Everything!  (Except CVS directories.)
     s.files = PKG_FILES.to_a
-    
+
     #### Load-time details: library and application (you will need one or both).
-    
+
     s.require_path = 'lib'                         # Use these for libraries.
     s.autorequire = 'rgl/base'
-    
+
     #### Documentation and testing.
-    
+
     s.has_rdoc = true
     s.extra_rdoc_files = ['README']
     s.rdoc_options <<
       '--title' <<  'RGL - Ruby Graph Library' <<
       '--main' << 'README' <<
       '--line-numbers'
-    
+
     #### Author and project details.
     s.author = "Horst Duchene"
     s.email = "monora@gmail.com"
     s.homepage = "http://rgl.rubyforge.org"
     s.rubyforge_project = "rgl"
   end
-  
+
   Gem::PackageTask.new(spec) do |pkg|
     #pkg.need_zip = true
     pkg.need_tar = true

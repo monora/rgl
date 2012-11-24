@@ -48,7 +48,7 @@ end
 def module_graph
   RGL::ImplicitGraph.new { |g|
 	g.vertex_iterator { |b|
-	  ObjectSpace.each_object(Module, &b) 
+	  ObjectSpace.each_object(Module, &b)
 	}
 	g.adjacent_iterator { |x, b|
 	  x.ancestors.each { |y|
@@ -70,7 +70,7 @@ def divisors(n)
   }
 end
 
-def bfs_example(g=cycle(5), start=g.detect {|x| true})
+def bfs_example(g = cycle(5), start = g.detect { |x| true })
   require 'rgl/traversal'
 
   g.bfs_search_tree_from(start)

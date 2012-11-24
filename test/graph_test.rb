@@ -11,9 +11,9 @@ class TestGraph < Test::Unit::TestCase
   end
 
   def setup
-    @dg1 = DirectedAdjacencyGraph.new
-    @edges = [[1,2],[2,3],[2,4],[4,5],[1,6],[6,4]]
-    @edges.each do |(src,target)|
+    @dg1   = DirectedAdjacencyGraph.new
+    @edges = [[1, 2], [2, 3], [2, 4], [4, 5], [1, 6], [6, 4]]
+    @edges.each do |(src, target)|
       @dg1.add_edge(src, target)
     end
     @loan_vertices = [7, 8, 9]
@@ -58,7 +58,7 @@ class TestGraph < Test::Unit::TestCase
   end
 
   def test_set_edgelist_class
-    edges = @dg1.edges
+    edges              = @dg1.edges
     @dg1.edgelist_class=Array
     assert_equal edges, @dg1.edges
   end
