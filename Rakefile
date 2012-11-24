@@ -53,7 +53,7 @@ task :testall => [:test ]
 desc "Do code coverage with rcov"
 task :rcov do
   begin
-    sh 'rcov -Ilib:test --exclude "test/.*[tT]est.*.rb,usr.local" test/Test*rb'
+    sh 'rcov -Ilib:test --exclude "test/,gems/" test/*_test.rb'
   rescue Exception
     nil
   end
