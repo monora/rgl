@@ -1,23 +1,21 @@
-# Rakefile for RGL        -*- ruby -*-
+# -*- ruby -*-
 
 require 'rubygems'
+require 'bundler'
+
 require 'rubygems/package_task'
-require 'rake/clean'
+
+require 'rcov/rcovtask'
+
 require 'rake/testtask'
 require 'rdoc'
 require 'rdoc/task'
 
-# Determine the current version of the software
-rgl_version =
-if %x(ruby -Ilib -rrgl/base -e'puts RGL_VERSION') =~ /\S+$/
-  $&
-else
-  "0.0.0"
-end
+$:.unshift File.join(File.dirname(__FILE__), 'lib')
+require 'rgl/base' # require base module to get RGL_VERSION
 
 SUMMARY = "Ruby Graph Library"
 SOURCES = FileList['lib/**/*.rb']
-CLOBBER.include('TAGS', 'coverage')
 RDOC_DIR = './rgl'
 
 # The location for published documents to be copied.
@@ -38,136 +36,42 @@ task :default => :test
 
 # Define a test task.
 
-Rake::TestTask.new { |t|
-  t.libs << "test"
-  t.pattern = 'test/Test*.rb'
+Rake::TestTask.new do |t|
+  t.libs << 'test'
+  t.pattern = 'test/*_test.rb'
   t.verbose = true
-}
-
-task :test
-
-# Define a test that will run all the test targets.
-desc "Run all test targets"
-task :testall => [:test ]
-
-desc "Do code coverage with rcov"
-task :rcov do
-  begin 
-    sh 'rcov -Ilib:test --exclude "test/.*[tT]est.*.rb,usr.local" test/Test*rb'
-  rescue Exception
-    nil
-  end
 end
 
-# Install rgl using the standard install.rb script.
-
-desc "Install the library"
-task :install do
-  ruby "install.rb"
+desc "Calculate code coverage with rcov"
+Rcov::RcovTask.new(:rcov) do |t|
+  t.libs << 'test'
+  t.pattern = 'test/*_test.rb'
+  t.verbose = true
+  t.rcov_opts += ['--exclude', 'test/,gems/']
 end
 
-# CVS Tasks ----------------------------------------------------------
+# Git tagging
 
-desc "Tag all the CVS files with the latest release number (TAG=x)"
+desc "Commit all changes as a new version commit. Tag the commit with v<version> tag"
 task :tag do
-  rel = "REL_" + rgl_version.gsub(/\./, '_')
-  rel << ENV['TAG'] if ENV['TAG']
-  puts rel
-  # FIXME: How do we do this in git?
-  sh %{echo FIXME: cvs commit -m 'pre-tag commit'}
-  sh %{echo FIXME: cvs tag #{rel}}
+  puts "Committing and tagging version #{RGL_VERSION}"
+  `git commit -am 'Version #{RGL_VERSION}'`
+  `git tag 'v#{RGL_VERSION}'`
 end
 
 # Create a task to build the RDOC documentation tree.
 
-rd = Rake::RDocTask.new("rdoc") { |rdoc|
+Rake::RDocTask.new("rdoc") do |rdoc|
   rdoc.rdoc_dir = RDOC_DIR
   rdoc.template = 'doc/jamis.rb'
   rdoc.title    = SUMMARY
   rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README'
   rdoc.rdoc_files.include(SOURCES, 'README', 'ChangeLog', 'examples/examples.rb', 'rakelib/*.rake')
-}
-
-# ====================================================================
-# Create a task that will package the rgl software into distributable
-# tar, zip and gem files.
-
-PKG_FILES = FileList[
-  'install.rb',
-  '[A-Z]*',
-  'test/**/*.rb',
-  'examples/**/*',
-  'rakelib/*.rake'
-] + SOURCES
-
-if ! defined?(Gem)
-  puts "Package Target requires RubyGems"
-else
-  spec = Gem::Specification.new do |s|
-    
-    s.name = 'rgl'
-    s.version = rgl_version
-    s.summary = SUMMARY
-    
-    s.description = <<-EOF
-    RGL is a framework for graph data structures and algorithms.
-
-    The design of the library is much influenced by the Boost Graph Library (BGL)
-    which is written in C++ heavily using its template mechanism.
-
-    RGL currently contains a core set of algorithm patterns:
-
-     * Breadth First Search 
-     * Depth First Search 
-
-    The algorithm patterns by themselves do not compute any meaningful quantities
-    over graphs, they are merely building blocks for constructing graph
-    algorithms. The graph algorithms in RGL currently include:
-
-     * Topological Sort 
-     * Connected Components 
-     * Strongly Connected Components 
-     * Transitive Closure
-     * Transitive Reduction
-     * Graph Condensation
-     * Search cycles (contributed by Shawn Garbett)
-    EOF
-    
-    #### Dependencies and requirements.
-    
-    s.add_dependency('stream', '>= 0.5')
-    s.add_dependency 'rake'
-    s.requirements << "Stream library, v0.5 or later"
-    
-    #### Which files are to be included in this gem?  Everything!  (Except CVS directories.)
-    s.files = PKG_FILES.to_a
-    
-    #### Load-time details: library and application (you will need one or both).
-    
-    s.require_path = 'lib'                         # Use these for libraries.
-    s.autorequire = 'rgl/base'
-    
-    #### Documentation and testing.
-    
-    s.has_rdoc = true
-    s.extra_rdoc_files = ['README']
-    s.rdoc_options <<
-      '--title' <<  'RGL - Ruby Graph Library' <<
-      '--main' << 'README' <<
-      '--line-numbers'
-    
-    #### Author and project details.
-    s.author = "Horst Duchene"
-    s.email = "monora@gmail.com"
-    s.homepage = "http://rgl.rubyforge.org"
-    s.rubyforge_project = "rgl"
-  end
-  
-  Gem::PackageTask.new(spec) do |pkg|
-    #pkg.need_zip = true
-    pkg.need_tar = true
-  end
 end
+
+# Tasks for building and installing RGL gem.
+
+Bundler::GemHelper.install_tasks
 
 # TAGS ---------------------------------------------------------------
 
