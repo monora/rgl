@@ -9,9 +9,6 @@ Gem::Specification.new do |s|
   s.description = <<-EOF
     RGL is a framework for graph data structures and algorithms.
 
-    The design of the library is much influenced by the Boost Graph Library (BGL)
-    which is written in C++ heavily using its template mechanism.
-
     RGL currently contains a core set of algorithm patterns:
 
      * Breadth First Search
@@ -27,7 +24,7 @@ Gem::Specification.new do |s|
      * Transitive Closure
      * Transitive Reduction
      * Graph Condensation
-     * Search cycles (contributed by Shawn Garbett)
+     * Search cycles
   EOF
 
   #### Dependencies and requirements.
@@ -35,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'stream', '>= 0.5'
   s.add_dependency 'rake'
 
-  #### Which files are to be included in this gem?  Everything!  (Except CVS directories.)
+  #### Which files are to be included in this gem?
 
   s.files = Dir[
       'lib/**/*.rb',
@@ -67,6 +64,6 @@ Gem::Specification.new do |s|
 
   s.author            = "Horst Duchene"
   s.email             = "monora@gmail.com"
-  s.homepage          = "http://rgl.rubyforge.org"
+  s.homepage          = "http://rubygems.org/gems/rgl"
   s.rubyforge_project = "rgl"
 end
