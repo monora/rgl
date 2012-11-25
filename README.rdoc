@@ -41,7 +41,7 @@ genericity:
 The first is easily achieved in RGL using mixins, which of course is not as
 efficient than C++ templates (but much more readable :-). The second one is
 even more easily implemented using standard iterators with blocks or using the
-Stream[http://rgl.rubyforge.org/stream/files/README.html] module. The third one
+Stream[link:stream/README.rdoc] module. The third one
 is no issue since Ruby is dynamically typed: Each object can be a graph
 vertex. There is no need for a vertex (or even edge type). In the current
 version of RGL properties of vertices are simply attached using hashes. At
@@ -99,7 +99,7 @@ After that you can run the tests:
 
  % rake test
 
-To see tests coverage run rcov[http://eigenclass.org/hiki.rb?rcov] rake task:
+To see tests coverage run rcov[http://github.com/relevance/rcov] rake task:
 
  % rake rcov
 
@@ -116,7 +116,7 @@ This command will generate tests coverage report in coverage/ directory.
   irb> dg.write_to_graphic_file('jpg')
   "graph.jpg"
 
-The result: link:../examples/example.jpg
+The result: link:rgl/examples/example.jpg
 
   irb> dg.directed?
   true
@@ -190,10 +190,10 @@ Create the graphics with DOT:
 
   g.write_to_graphic_file
 
-produces module_graph.jpg: link:../examples/module_graph.jpg
+produces module_graph.jpg: link:rgl/examples/module_graph.jpg
 
 Look for more in the examples directory (i.e.
-examples.rb[link:files/examples/examples_rb.html]).
+examples.rb[link:rgl/examples/examples.rb]).
 
 == My del.icio.us links concerning RGL
 
