@@ -41,7 +41,7 @@ genericity:
 The first is easily achieved in RGL using mixins, which of course is not as
 efficient than C++ templates (but much more readable :-). The second one is
 even more easily implemented using standard iterators with blocks or using the
-Stream[link:stream/README.rdoc] module. The third one
+Stream[link:stream] module. The third one
 is no issue since Ruby is dynamically typed: Each object can be a graph
 vertex. There is no need for a vertex (or even edge type). In the current
 version of RGL properties of vertices are simply attached using hashes. At
