@@ -68,8 +68,8 @@ Rake::RDocTask.new("rdoc") do |rdoc|
   rdoc.rdoc_dir = RDOC_DIR
   rdoc.template = 'doc/jamis.rb'
   rdoc.title    = SUMMARY
-  rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README'
-  rdoc.rdoc_files.include(SOURCES, 'README', 'ChangeLog', 'examples/examples.rb', 'rakelib/*.rake')
+  rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README.rdoc'
+  rdoc.rdoc_files.include(SOURCES, 'README.rdoc', 'ChangeLog', 'examples/examples.rb', 'rakelib/*.rake')
 end
 
 # Tasks for building and installing RGL gem.

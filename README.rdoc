@@ -98,7 +98,7 @@ Download the GEM file and install it with ..
 
   % gem install rgl-VERSION.gem
 
-or directly with 
+or directly with
 
   % gem install rgl
 
@@ -107,7 +107,7 @@ privileges to install.
 
 === Running tests
 
-RGL comes with a Rakefile which automatically runs the tests. Goto the
+RGL comes with a Rakefile which automatically runs the tests. Go to the
 installation directory and start rake:
 
  % gem env
@@ -122,14 +122,14 @@ installation directory and start rake:
  % cd /usr/lib/ruby/gems/1.8/gems/rgl-0.3.0/
  % rake
  (in /usr/lib/ruby/gems/1.8/gems/rgl-0.3.0)
- /usr/bin/ruby1.8 -Ilib:tests "/usr/lib/ruby/gems/1.8/gems/rake-0.7.3/lib/rake/rake_test_loader.rb" "tests/TestTransitiveClosure.rb" "tests/TestComponents.rb" "tests/TestCycles.rb" "tests/TestDirectedGraph.rb" "tests/TestEdge.rb" "tests/TestGraph.rb" "tests/TestGraphXML.rb" "tests/TestImplicit.rb" "tests/TestUnDirectedGraph.rb" "tests/TestTraversal.rb" "tests/TestDot.rb" "tests/TestRdot.rb" 
+ /usr/bin/ruby1.8 -Ilib:tests "/usr/lib/ruby/gems/1.8/gems/rake-0.7.3/lib/rake/rake_test_loader.rb" "tests/TestTransitiveClosure.rb" "tests/TestComponents.rb" "tests/TestCycles.rb" "tests/TestDirectedGraph.rb" "tests/TestEdge.rb" "tests/TestGraph.rb" "tests/TestGraphXML.rb" "tests/TestImplicit.rb" "tests/TestUnDirectedGraph.rb" "tests/TestTraversal.rb" "tests/TestDot.rb" "tests/TestRdot.rb"
  Loaded suite /usr/lib/ruby/gems/1.8/gems/rake-0.7.3/lib/rake/rake_test_loader
  Started
  ......................................................................................................................................................
  Finished in 0.750958 seconds.
 
  86 tests, 625 assertions, 0 failures, 0 errors
- 
+
 === Code coverage
 
 Running rcov[http://eigenclass.org/hiki.rb?rcov] on the test suite generates this[link:coverage/index.html] result.
@@ -153,9 +153,9 @@ from its distribution directory. To uninstall it use
   irb> require 'rgl/dot'
   irb> dg.write_to_graphic_file('jpg')
   "graph.jpg"
-  
-The result: link:../examples/example.jpg  
-  
+
+The result: link:../examples/example.jpg
+
   irb> dg.directed?
   true
   irb> dg.vertices
@@ -198,17 +198,17 @@ Add inverse edge (4-2) to directed graph:
 A more elaborated example showing <em>implicit graphs</em>:
 
   def module_graph
-	RGL::ImplicitGraph.new { |g|
-	  g.vertex_iterator { |b|
-		ObjectSpace.each_object(Module, &b) 
-	  }
-	  g.adjacent_iterator { |x, b|
-		x.ancestors.each { |y|
-		  b.call(y) unless x == y || y == Kernel || y == Object
-		}
-	  }
-	  g.directed = true
-	}
+    RGL::ImplicitGraph.new { |g|
+      g.vertex_iterator { |b|
+        ObjectSpace.each_object(Module, &b)
+      }
+      g.adjacent_iterator { |x, b|
+        x.ancestors.each { |y|
+          b.call(y) unless x == y || y == Kernel || y == Object
+        }
+      }
+      g.directed = true
+    }
   end
 
 This function creates a directed graph, with vertices being all loaded modules:
@@ -274,5 +274,3 @@ redistributed under the terms specified in the README file of the Ruby distribut
 Please contact me at mailto:monora@gmail.com with bug reports
 suggestions, and other comments. If you send patches, it would help if
 they were in-line (not attachments) and generated using "diff -u".
-
-
