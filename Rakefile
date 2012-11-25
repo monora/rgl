@@ -82,7 +82,7 @@ file 'tags' => SOURCES do
 end
 
 file 'TAGS' => SOURCES do
-  sh %{ctags -e #{SOURCES.join(' ')}}          # emacs TAGS
+  sh %{etags #{SOURCES.join(' ')}}          # emacs TAGS
 end
 
 # Misc tasks =========================================================
