@@ -1,4 +1,4 @@
-= Ruby Graph Library (RGL)
+= Ruby Graph Library (RGL) {<img src="https://secure.travis-ci.org/monora/rgl.png?branch=master" alt="Build Status" />}[https://travis-ci.org/monora/rgl]
 
 RGL is a framework for graph data structures and algorithms.
 
@@ -87,63 +87,25 @@ http://www.boost.org/libs/graph/doc/graph_concepts.html.
 
 == Installation
 
-RGL is depended on the
-stream[http://rgl.rubyforge.org/stream/files/README.html] library which can
-also be downloaded from http://rubyforge.org/frs/?group_id=110. If you use gem
-to install RGL the stream library will be installed as a prerequisite.
-
-=== GEM Installation
-
-Download the GEM file and install it with ..
-
-  % gem install rgl-VERSION.gem
-
-or directly with 
-
   % gem install rgl
 
-Use the correct version number for VERSION (e.g. 0.2.x).  You may need root
-privileges to install.
+== Running tests
 
-=== Running tests
+Checkout RGL repository and go to the project directory. First, install RGL dependencies with bundler:
 
-RGL comes with a Rakefile which automatically runs the tests. Goto the
-installation directory and start rake:
+ % bundle install
 
- % gem env
- Rubygems Environment:
-  - VERSION: 0.9.0 (0.9.0)
-  - INSTALLATION DIRECTORY: /usr/lib/ruby/gems/1.8
-  - GEM PATH:
-     - /usr/lib/ruby/gems/1.8
-  - REMOTE SOURCES:
-     - http://gems.rubyforge.org
+After that you can run the tests:
 
- % cd /usr/lib/ruby/gems/1.8/gems/rgl-0.3.0/
- % rake
- (in /usr/lib/ruby/gems/1.8/gems/rgl-0.3.0)
- /usr/bin/ruby1.8 -Ilib:tests "/usr/lib/ruby/gems/1.8/gems/rake-0.7.3/lib/rake/rake_test_loader.rb" "tests/TestTransitiveClosure.rb" "tests/TestComponents.rb" "tests/TestCycles.rb" "tests/TestDirectedGraph.rb" "tests/TestEdge.rb" "tests/TestGraph.rb" "tests/TestGraphXML.rb" "tests/TestImplicit.rb" "tests/TestUnDirectedGraph.rb" "tests/TestTraversal.rb" "tests/TestDot.rb" "tests/TestRdot.rb" 
- Loaded suite /usr/lib/ruby/gems/1.8/gems/rake-0.7.3/lib/rake/rake_test_loader
- Started
- ......................................................................................................................................................
- Finished in 0.750958 seconds.
+ % rake test
 
- 86 tests, 625 assertions, 0 failures, 0 errors
- 
-=== Code coverage
+To see tests coverage run rcov[http://eigenclass.org/hiki.rb?rcov] rake task:
 
-Running rcov[http://eigenclass.org/hiki.rb?rcov] on the test suite generates this[link:coverage/index.html] result.
+ % rake rcov
 
-=== Normal Installation
+This command will generate tests coverage report in coverage/ directory.
 
-You have to install stream library before. You can than install RGL with the
-following command:
-
-  % ruby install.rb
-
-from its distribution directory. To uninstall it use
-
-  % ruby install.rb -u
+<em>Node: rcov is not compatible with Ruby >= 1.9, so this rake task is available only on Ruby 1.8.</em>
 
 == Example irb session with RGL
 
@@ -153,9 +115,9 @@ from its distribution directory. To uninstall it use
   irb> require 'rgl/dot'
   irb> dg.write_to_graphic_file('jpg')
   "graph.jpg"
-  
-The result: link:../examples/example.jpg  
-  
+
+The result: link:../examples/example.jpg
+
   irb> dg.directed?
   true
   irb> dg.vertices
@@ -198,17 +160,17 @@ Add inverse edge (4-2) to directed graph:
 A more elaborated example showing <em>implicit graphs</em>:
 
   def module_graph
-	RGL::ImplicitGraph.new { |g|
-	  g.vertex_iterator { |b|
-		ObjectSpace.each_object(Module, &b) 
-	  }
-	  g.adjacent_iterator { |x, b|
-		x.ancestors.each { |y|
-		  b.call(y) unless x == y || y == Kernel || y == Object
-		}
-	  }
-	  g.directed = true
-	}
+    RGL::ImplicitGraph.new { |g|
+      g.vertex_iterator { |b|
+        ObjectSpace.each_object(Module, &b)
+      }
+      g.adjacent_iterator { |x, b|
+        x.ancestors.each { |y|
+          b.call(y) unless x == y || y == Kernel || y == Object
+        }
+      }
+      g.directed = true
+    }
   end
 
 This function creates a directed graph, with vertices being all loaded modules:
@@ -274,5 +236,3 @@ redistributed under the terms specified in the README file of the Ruby distribut
 Please contact me at mailto:monora@gmail.com with bug reports
 suggestions, and other comments. If you send patches, it would help if
 they were in-line (not attachments) and generated using "diff -u".
-
-
