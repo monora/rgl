@@ -259,8 +259,10 @@ and matz for Ruby. Dave included in the latest version of RDoc (alpha9) the
 module dot/dot.rb which I use instead of Roberts module to visualize graphs
 (see rgl/dot.rb).
 
-Jeremy Bopp, John Carter, Sascha Doerdelmann and Shawn Garbett for contributing
-additions, test cases and bugfixes.
+Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett and Andreas Schörk
+for contributing additions, test cases and bugfixes.
+
+Kirill Lashuk who started to take over further development in November 2012.
 
 == Copying
 
