@@ -5,27 +5,7 @@ Gem::Specification.new do |s|
   s.name    = 'rgl'
   s.version = RGL_VERSION
   s.summary = "Ruby Graph Library"
-
-  s.description = <<-EOF
-    RGL is a framework for graph data structures and algorithms.
-
-    RGL currently contains a core set of algorithm patterns:
-
-     * Breadth First Search
-     * Depth First Search
-
-    The algorithm patterns by themselves do not compute any meaningful quantities
-    over graphs, they are merely building blocks for constructing graph
-    algorithms. The graph algorithms in RGL currently include:
-
-     * Topological Sort
-     * Connected Components
-     * Strongly Connected Components
-     * Transitive Closure
-     * Transitive Reduction
-     * Graph Condensation
-     * Search cycles
-  EOF
+  s.description = "RGL is a framework for graph data structures and algorithms"
 
   #### Dependencies and requirements.
 
@@ -54,7 +34,7 @@ Gem::Specification.new do |s|
   #### Documentation and testing.
 
   s.has_rdoc = true
-  s.extra_rdoc_files = ['README']
+  s.extra_rdoc_files = ['README.rdoc']
   s.rdoc_options += [
       '--title', 'RGL - Ruby Graph Library',
       '--main', 'README',
