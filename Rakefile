@@ -1,14 +1,11 @@
 # -*- ruby -*-
 
 require 'rubygems'
-require 'bundler'
+require 'bundler/setup'
 
 require 'rubygems/package_task'
 
-require 'rcov/rcovtask'
-
 require 'rake/testtask'
-require 'rdoc'
 require 'rdoc/task'
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
@@ -42,12 +39,18 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
-desc "Calculate code coverage with rcov"
-Rcov::RcovTask.new(:rcov) do |t|
-  t.libs << 'test'
-  t.pattern = 'test/*_test.rb'
-  t.verbose = true
-  t.rcov_opts += ['--exclude', 'test/,gems/']
+begin
+  require 'rcov/rcovtask'
+
+  desc "Calculate code coverage with rcov"
+  Rcov::RcovTask.new(:rcov) do |t|
+    t.libs << 'test'
+    t.pattern = 'test/*_test.rb'
+    t.verbose = true
+    t.rcov_opts += ['--exclude', 'test/,gems/']
+  end
+rescue LoadError
+  nil # rdoc is available only on Ruby 1.8
 end
 
 # Git tagging
@@ -65,8 +68,8 @@ Rake::RDocTask.new("rdoc") do |rdoc|
   rdoc.rdoc_dir = RDOC_DIR
   rdoc.template = 'doc/jamis.rb'
   rdoc.title    = SUMMARY
-  rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README'
-  rdoc.rdoc_files.include(SOURCES, 'README', 'ChangeLog', 'examples/examples.rb', 'rakelib/*.rake')
+  rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README.rdoc'
+  rdoc.rdoc_files.include(SOURCES, 'README.rdoc', 'ChangeLog', 'examples/examples.rb', 'rakelib/*.rake')
 end
 
 # Tasks for building and installing RGL gem.
