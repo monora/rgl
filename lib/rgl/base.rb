@@ -6,7 +6,7 @@
 
 require 'rgl/enumerable_ext'
 
-RGL_VERSION = "0.4.0"
+RGL_VERSION = "0.4.1"
 
 module RGL
 
