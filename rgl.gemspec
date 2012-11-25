@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
       'ChangeLog',
       'examples/**/*',
       'Gemfile',
-      'README',
+      'README.rdoc',
       'Rakefile',
       'rakelib/*.rake',
       'test/**/*.rb',
@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README.rdoc']
   s.rdoc_options += [
       '--title', 'RGL - Ruby Graph Library',
-      '--main', 'README',
+      '--main', 'README.rdoc',
       '--line-numbers'
   ]
 
