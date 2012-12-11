@@ -6,7 +6,7 @@ include RGL
 
 Dir['north/*.graphml'].each do |filename|
   File.open(filename) { |file|
-	graph = DirectedAdjacencyGraph.from_graphxml(file)
-	graph.write_to_graphic_file('jpg',filename)
+    graph = DirectedAdjacencyGraph.from_graphxml(file)
+    graph.write_to_graphic_file('jpg', filename)
   }
 end
