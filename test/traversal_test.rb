@@ -68,12 +68,12 @@ forward_edge   : 5-3
 finished_vertex: 5
 END
 
-    s        = ''
+    s = ''
     @dg.add_edge 5, 3 # for the forward_edge 5-3
-    @bfs.set_examine_vertex_event_handler { |v| s << "examine_vertex : #{v}\n" }
+    @bfs.set_examine_vertex_event_handler  { |v| s << "examine_vertex : #{v}\n" }
     @bfs.set_examine_edge_event_handler { |u, v| s << "examine_edge   : #{u}-#{v}\n" }
-    @bfs.set_tree_edge_event_handler { |u, v| s << "tree_edge      : #{u}-#{v}\n" }
-    @bfs.set_back_edge_event_handler { |u, v| s << "back_edge      : #{u}-#{v}\n" }
+    @bfs.set_tree_edge_event_handler    { |u, v| s << "tree_edge      : #{u}-#{v}\n" }
+    @bfs.set_back_edge_event_handler    { |u, v| s << "back_edge      : #{u}-#{v}\n" }
     @bfs.set_forward_edge_event_handler { |u, v| s << "forward_edge   : #{u}-#{v}\n" }
 
     @bfs.each { |v| s << "finished_vertex: #{v}\n" }
@@ -119,10 +119,10 @@ END
 
     s        = ''
     @dg.add_edge 5, 3
-    @dfs.set_examine_vertex_event_handler { |v| s << "examine_vertex : #{v}\n" }
+    @dfs.set_examine_vertex_event_handler  { |v| s << "examine_vertex : #{v}\n" }
     @dfs.set_examine_edge_event_handler { |u, v| s << "examine_edge   : #{u}-#{v}\n" }
-    @dfs.set_tree_edge_event_handler { |u, v| s << "tree_edge      : #{u}-#{v}\n" }
-    @dfs.set_back_edge_event_handler { |u, v| s << "back_edge      : #{u}-#{v}\n" }
+    @dfs.set_tree_edge_event_handler    { |u, v| s << "tree_edge      : #{u}-#{v}\n" }
+    @dfs.set_back_edge_event_handler    { |u, v| s << "back_edge      : #{u}-#{v}\n" }
     @dfs.set_forward_edge_event_handler { |u, v| s << "forward_edge   : #{u}-#{v}\n" }
 
     @dfs.each { |v| s << "finished_vertex: #{v}\n" }
@@ -195,10 +195,10 @@ END
   end
 
   def test_dfs_visit_with_parens
-    a   = ""
+    a = ""
     vis = DFSVisitor.new(@dg)
     vis.set_examine_vertex_event_handler { |v| a << "(#{v} " }
-    vis.set_finish_vertex_event_handler { |v| a << " #{v})" }
+    vis.set_finish_vertex_event_handler  { |v| a << " #{v})" }
     @dg.depth_first_visit(1, vis) { |x| }
     assert_equal("(1 (2 (3  3)(4 (5  5) 4) 2)(6  6) 1)", a)
   end
@@ -209,14 +209,13 @@ END
     # order of the each iterator in the hash map of the adjacency graph. Therefor we
     # wrap the graph with an implicit graph that simply ensures a sort order on
     # the vertices.
-    dg  = @dg.implicit_graph {
-        |g|
+    dg  = @dg.implicit_graph { |g|
       g.vertex_iterator { |b| @dg.vertices.sort.each(&b) }
     }
-    a   = ""
+    a = ""
     vis = DFSVisitor.new(dg)
     vis.set_examine_vertex_event_handler { |v| a << "(#{v} " }
-    vis.set_finish_vertex_event_handler { |v| a << " #{v})" }
+    vis.set_finish_vertex_event_handler  { |v| a << " #{v})" }
     dg.depth_first_search(vis) { |x| }
     assert_equal("(1 (2 (3  3)(4 (5  5) 4) 2)(6  6) 1)(10 (11  11) 10)", a)
   end
