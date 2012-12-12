@@ -249,34 +249,58 @@ module RGL
       edges.sort.to_s
     end
 
-    # Equality is defined to be same set of edges and directed?
+    # Two graphs are equal iff they have equal directed? property as well as vertices and edges sets.
     #
-    def eql?(g)
-      # TODO: break this mehtod into multiple smaller methods or at least re-format it.
-      equal?(g) or
-        begin
-          g.is_a?(Graph) and directed? == g.directed? and
-            g.inject(0) { |n, v| has_vertex?(v) or return false; n+1} ==
-            num_vertices and begin
-                               ng = 0
-                               g.each_edge {|u,v| has_edge? u,v or return false; ng += 1}
-                               ng == num_edges
-                             end
-        end
+    def eql?(other)
+      equal?(other) || eql_graph?(other)
     end
 
     alias == eql?
 
     private
 
+    def eql_graph?(other)
+      other.is_a?(Graph) && directed? == other.directed? && eql_vertices_set?(other) && eql_edges_set?(other)
+    end
+
+    def eql_vertices_set?(other)
+      other_num_vertices = 0
+
+      other.each_vertex do |v|
+        if has_vertex?(v)
+          other_num_vertices += 1
+        else
+          return false
+        end
+      end
+
+      other_num_vertices == num_vertices
+    end
+
+    def eql_edges_set?(other)
+      other_num_edges = 0
+
+      other.each_edge do |u, v|
+        if has_edge?(u, v)
+          other_num_edges += 1
+        else
+          return false
+        end
+      end
+
+      other_num_edges == num_edges
+    end
+
     def each_edge_aux
       # needed in each_edge
       visited = Hash.new
+
       each_vertex do |u|
         each_adjacent(u) do |v|
-          edge = UnDirectedEdge.new u, v
-          unless visited.has_key? edge
-            visited[edge]=true
+          edge = UnDirectedEdge.new(u, v)
+
+          unless visited.has_key?(edge)
+            visited[edge] = true
             yield u, v
           end
         end
