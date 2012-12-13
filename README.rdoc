@@ -151,7 +151,7 @@ Add inverse edge (4-2) to directed graph:
   irb> dg.remove_edge 4,2
   true
 
-<em>Topological sort</em> is realized with as iterator:
+<em>Topological sort</em> is implemented as an iterator:
 
   require 'rgl/topsort'
   irb> dg.topsort_iterator.to_a
