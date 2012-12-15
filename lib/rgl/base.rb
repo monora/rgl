@@ -16,7 +16,7 @@ module RGL
   class NoVertexError < IndexError; end
   class NoEdgeError < IndexError; end
 
-  # Module Edge includes classes for representing egdes of directed and
+  # Module Edge includes classes for representing edges of directed and
   # undirected graphs. There is no need for a Vertex class, because every ruby
   # object can be a vertex of a graph.
   #
@@ -25,7 +25,7 @@ module RGL
     # Simply a directed pair (source -> target). Most library functions try do
     # omit to instantiate edges. They instead use two vertex parameters for
     # representing edges (see each_edge). If a client wants to store edges
-    # explicitly DirecteEdge or UnDirectedEdge instances are returned
+    # explicitly DirectedEdge or UnDirectedEdge instances are returned
     # (i.e. Graph#edges).
     #
     class DirectedEdge
