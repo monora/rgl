@@ -10,7 +10,8 @@
 # in a slightly modified fashion (especially for the RGL::DFSIterator).
 
 require 'rgl/base'
-require 'rubygems' rescue LoadError # If using stream gem
+
+require 'rubygems'
 require 'stream'
 
 module RGL
