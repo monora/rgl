@@ -338,17 +338,4 @@ module RGL
 
   end # module Graph
 
-=begin
-  def acyclic?
-    has_cycle = false
-    dfs = DFSIterator.new(self)
-    dfs.set_back_edge_event {has_cycle = true}
-    dfs_each(dfs) do |x|
-      puts x,has_cycle,dfs.inspect
-      return false if has_cycle
-    end
-    true
-  end
-=end
-
 end # module RGL
