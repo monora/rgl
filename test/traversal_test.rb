@@ -1,10 +1,9 @@
-require 'test/unit'
+require 'test_helper'
+
 require 'rgl/adjacency'
 require 'rgl/traversal'
 require 'rgl/topsort'
 require 'rgl/implicit'
-
-require 'test_helper'
 
 include RGL
 

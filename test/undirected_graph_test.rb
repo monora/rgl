@@ -1,4 +1,5 @@
-require 'test/unit'
+require 'test_helper'
+
 require 'rgl/adjacency'
 
 include RGL
