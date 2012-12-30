@@ -1,6 +1,7 @@
 require 'test_helper'
 
 require 'rgl/dot'
+require 'rgl/adjacency'
 
 class TestDot < Test::Unit::TestCase
 

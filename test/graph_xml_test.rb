@@ -4,7 +4,6 @@ require 'rgl/graphxml'
 require 'rgl/adjacency'
 require 'rgl/topsort'
 require 'rgl/connected_components'
-require 'rgl/dot'
 
 include RGL
 
