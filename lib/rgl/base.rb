@@ -233,7 +233,7 @@ module RGL
       inject(0) { |n, v| n + 1 }
     end
 
-    alias :num_vertices :size
+    alias num_vertices size
 
     # Returns the number of edges.
     #
