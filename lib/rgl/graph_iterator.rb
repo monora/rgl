@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'stream'
 
 require 'rgl/graph_wrapper'
