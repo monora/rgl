@@ -15,11 +15,11 @@ module RGL
   # set of event points. The following are common to both DFS and BFS search.
   #
   #  * examine_vertex
-  #  * finish_vertex
   #  * examine_edge
   #  * tree_edge
   #  * back_edge
   #  * forward_edge
+  #  * finish_vertex
   #
   # These methods are all called handle_* and can be set to appropriate blocks,
   # using the methods set_*_event_handler, which are defined for each event
@@ -57,6 +57,12 @@ module RGL
       @color_map[v] == :BLACK
     end
 
+    # Shall we follow the edge (u,v); i.e. v has color :WHITE
+    #
+    def follow_edge?(u, v) # :nodoc:
+      @color_map[v] == :WHITE
+    end
+
     # Attach a map to the visitor which records the distance of a visited
     # vertex to the start vertex.
     #
@@ -67,47 +73,67 @@ module RGL
     # distance_to_root, which answers the distance to the start vertex.
     #
     def attach_distance_map(map = Hash.new(0))
-      @dist_map = map
+      @distance_map = map
 
-      class << self
-        def handle_tree_edge(u, v)
-          super
-          @dist_map[v] = @dist_map[u] + 1
-        end
-
-        # Answer the distance to the start vertex.
-
-        def distance_to_root(v)
-          @dist_map[v]
-        end
-      end # class
+      # add distance map support to the current visitor instance
+      extend(DistanceMapSupport)
     end
 
-    # Shall we follow the edge (u,v); i.e. v has color :WHITE
-    #
-    def follow_edge?(u, v) # :nodoc:
-      @color_map[v] == :WHITE
-    end
+    module DistanceMapSupport
 
-    # == Visitor Event Points
-    #
-    def self.def_event_handler(m)
-      params = m =~ /edge/ ? "u,v" : "u"
-      self.class_eval %{
-        def handle_#{m} (#{params})
-          @#{m}_event_handler.call(#{params}) if defined? @#{m}_event_handler
+      def handle_tree_edge(u, v)
+        super
+        @distance_map[v] = @distance_map[u] + 1
+      end
+
+      # Answer the distance to the start vertex.
+
+      def distance_to_root(v)
+        @distance_map[v]
+      end
+
+    end # module DistanceMapSupport
+
+    module ClassMethods
+
+      # Defines an event handler.
+      #
+      def def_event_handlers(*events)
+        events.each do |event|
+          params = event.to_s.include?('edge') ? 'u, v' : 'u'
+
+          handler = "@#{event}_event_handler"
+
+          # TODO: should "set_#{event}_event_handler" be replaced with "#{event}_event_handler=" ?
+          #
+          class_eval <<-END
+            def handle_#{event}(#{params})
+              #{handler}.call(#{params}) if defined? #{handler}
+            end
+
+            def set_#{event}_event_handler(&block)
+              #{handler} = block
+            end
+          END
         end
+      end
 
-        def set_#{m}_event_handler (&b)
-          @#{m}_event_handler = b
-        end
-      }
+      alias def_event_handler def_event_handlers
+
+    end # module ClassMethods
+
+    extend ClassMethods # add class methods to GraphVisitor class itself
+
+    def self.included(base)
+      base.extend ClassMethods # when GraphVisitor is included into a class/module, add class methods as well
     end
 
-    %w[examine_vertex finish_vertex examine_edge tree_edge back_edge
-       forward_edge].each do |m|
-      def_event_handler(m)
-    end
+    def_event_handlers :examine_vertex,
+                       :examine_edge,
+                       :tree_edge,
+                       :back_edge,
+                       :forward_edge,
+                       :finish_vertex
 
   end # module GraphVisitor
 

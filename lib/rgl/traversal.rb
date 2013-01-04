@@ -153,7 +153,7 @@ module RGL
 
     include GraphVisitor
 
-    GraphVisitor.def_event_handler("start_vertex")
+    def_event_handler 'start_vertex'
 
   end # class DFSVisitor
 
