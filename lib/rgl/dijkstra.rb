@@ -24,6 +24,8 @@ module RGL
 
     def_event_handlers :edge_relaxed, :edge_not_relaxed
 
+    # Returns visitor into initial state.
+    #
     def reset
       super
 
@@ -31,6 +33,8 @@ module RGL
       @parent_map   = {}
     end
 
+    # Returns true if the _vertex_ can be reached from the source.
+    #
     def reachable?(vertex)
       distance_map[vertex] < INFINITY
     end
@@ -39,11 +43,13 @@ module RGL
 
   class DijkstraAlgorithm
 
+    # Initializes Dijkstra algorithm for a _graph_ with provided edges weights map.
+    #
     def initialize(graph, edge_weights_map, visitor)
       @graph            = graph
       @edge_weights_map = edge_weights_map
       @visitor          = visitor
-      @queue            = DijkstraQueue.new
+      @queue            = Queue.new
     end
 
     # Finds the shortest path from the _source_ to the _target_ in the graph.
@@ -178,7 +184,7 @@ module RGL
 
     end
 
-    class DijkstraQueue < SimpleDelegator
+    class Queue < SimpleDelegator
 
       def initialize
         @heap = Containers::Heap.new { |a, b| a.distance < b.distance }
@@ -205,10 +211,20 @@ module RGL
 
   module Graph
 
+    # Finds the shortest path from the _source_ to the _target_ in the graph.
+    #
+    # If the path exists, returns it as an Array of vertices. Otherwise, returns nil.
+    #
     def dijkstra_shortest_path(edge_weights_map, source, target, visitor = DijkstraVisitor.new(self))
       DijkstraAlgorithm.new(self, edge_weights_map, visitor).shortest_path(source, target)
     end
 
+    # Finds the shortest paths from the _source_ to each vertex of the graph.
+    #
+    # Returns a Hash that maps each vertex of the graph to an Array of vertices that represents the shortest path
+    # from the _source_ to the vertex. If the path doesn't exist, the corresponding hash value is nil. For the _source_
+    # vertex returned hash contains a trivial one-vertex path - [source].
+    #
     def dijkstra_shortest_paths(edge_weights_map, source, visitor = DijkstraVisitor.new(self))
       DijkstraAlgorithm.new(self, edge_weights_map, visitor).shortest_paths(source)
     end
