@@ -97,6 +97,8 @@ module RGL
         @visitor.handle_examine_vertex(u)
 
         @graph.each_adjacent(u) do |v|
+          next if @visitor.finished_vertex?(v)
+
           if relax_edge(u, v)
             @visitor.handle_edge_relaxed(u, v)
           else
@@ -155,7 +157,7 @@ module RGL
       path_builder.paths
     end
 
-    class PathBuilder
+    class PathBuilder # :nodoc:
 
       attr_reader :paths
 
@@ -184,7 +186,7 @@ module RGL
 
     end
 
-    class Queue < SimpleDelegator
+    class Queue < SimpleDelegator # :nodoc:
 
       def initialize
         @heap = Containers::Heap.new { |a, b| a.distance < b.distance }
