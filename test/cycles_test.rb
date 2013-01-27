@@ -1,7 +1,6 @@
-$LOAD_PATH << "../lib"
-require 'test/unit'
-require 'rgl/adjacency'
 require 'test_helper'
+
+require 'rgl/adjacency'
 
 include RGL
 

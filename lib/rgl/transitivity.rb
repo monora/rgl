@@ -1,7 +1,7 @@
 require 'enumerator'
 
-require 'rgl/adjacency'
 require 'rgl/base'
+require 'rgl/adjacency'
 require 'rgl/condensation'
 
 module RGL

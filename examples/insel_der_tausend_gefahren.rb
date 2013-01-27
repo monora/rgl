@@ -1,7 +1,6 @@
 # Die Insel der 1000 Gefahren
 # http://www.amazon.de/1000-Gefahren-Die-Insel/dp/3473520225/ref=pd_sim_b?ie=UTF8&qid=1203279845&sr=8-3
 
-require 'rubygems' rescue nil
 require 'rgl/adjacency'
 require 'rgl/implicit'
 require 'rgl/dot'

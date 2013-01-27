@@ -1,9 +1,7 @@
-require 'test/unit'
+require 'test_helper'
 
-require 'rgl/traversal'
 require 'rgl/connected_components'
 require 'rgl/adjacency'
-require 'test_helper'
 
 include RGL
 

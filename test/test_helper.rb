@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'test/unit'
+
 # Some helper utilities used in test classes
 
 class Array
