@@ -59,6 +59,42 @@ class TestDijkstra < Test::Unit::TestCase
     )
   end
 
+  def test_visitor
+    visitor = DijkstraVisitor.new(@graph)
+
+    events = []
+
+    %w[examine_vertex examine_edge edge_relaxed edge_not_relaxed finish_vertex].each do |event|
+      visitor.send("set_#{event}_event_handler") { |*args| events << { event.to_sym => args } }
+    end
+
+    @graph.dijkstra_shortest_paths(@edge_weights, 1, visitor)
+
+    assert_equal(
+        [
+            { :examine_vertex => [1] },
+            { :examine_edge   => [1, 2] },
+            { :edge_relaxed   => [1, 2] },
+            { :examine_edge   => [1, 3] },
+            { :edge_relaxed   => [1, 3] },
+            { :finish_vertex  => [1] },
+            { :examine_vertex => [3] },
+            { :examine_edge   => [3, 2] },
+            { :edge_relaxed   => [3, 2] },
+            { :examine_edge   => [3, 4] },
+            { :edge_relaxed   => [3, 4] },
+            { :finish_vertex  => [3] },
+            { :examine_vertex => [2] },
+            { :examine_edge   => [2, 4] },
+            { :edge_relaxed   => [2, 4] },
+            { :finish_vertex  => [2] },
+            { :examine_vertex => [4] },
+            { :finish_vertex  => [4] },
+        ],
+        events
+    )
+  end
+
   private
 
   def shortest_path(source, target)

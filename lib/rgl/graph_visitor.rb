@@ -104,8 +104,6 @@ module RGL
 
           handler = "@#{event}_event_handler"
 
-          # TODO: should "set_#{event}_event_handler" be replaced with "#{event}_event_handler=" ?
-          #
           class_eval <<-END
             def handle_#{event}(#{params})
               #{handler}.call(#{params}) if defined? #{handler}
