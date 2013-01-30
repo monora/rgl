@@ -1,6 +1,6 @@
-require 'test/unit'
-require 'rgl/transitivity'
 require 'test_helper'
+
+require 'rgl/transitivity'
 
 include RGL
 

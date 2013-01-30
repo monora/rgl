@@ -1,6 +1,6 @@
 # topsort.rb
 
-require 'rgl/traversal'
+require 'rgl/graph_iterator'
 
 module RGL
 
