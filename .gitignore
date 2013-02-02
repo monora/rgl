@@ -1,9 +1,9 @@
-coverage/
-pkg/
-rgl/
-wiki*
+/coverage
+/doc
+/pkg
+/rgl
+/TAGS
+/tags
 graph.dot
 .project
 Gemfile.lock
-/TAGS
-/tags

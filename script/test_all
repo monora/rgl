@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Ideas taken from https://github.com/rspec/rspec-core/blob/635baca47c63ce8b18e8b67e304c3980630543fd/script/test_all.
+
+function print_and_run {
+  echo $1
+  ($1)
+}
+
+function print_separator {
+  echo
+  echo "===================================================================="
+  echo
+}
+
+set -e
+
+# Run all tests at once
+echo "Running all tests..."
+print_and_run "rake test"
+
+# Run tests one by one
+for file in `find test -iname '*_test.rb'`; do
+  print_separator
+  echo "Running tests from $file"
+  print_and_run "ruby -Ilib:test $file"
+done
+

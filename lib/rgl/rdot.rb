@@ -333,7 +333,7 @@ module RGL
         self
       end
 
-      alias :push :<<
+      alias push <<
 
       # Removes the most recently added node, edge, or subgraph from this graph
       # and returns it.
