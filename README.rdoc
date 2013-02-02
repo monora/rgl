@@ -39,13 +39,13 @@ genericity:
 * Vertex and Edge Property Multi-Parameterization
 
 The first is easily achieved in RGL using mixins, which of course is not as
-efficient than C++ templates (but much more readable :-). The second one is
-even more easily implemented using standard iterators with blocks or using the
-Stream[link:stream] module. The third one
-is no issue since Ruby is dynamically typed: Each object can be a graph
-vertex. There is no need for a vertex (or even edge type). In the current
-version of RGL properties of vertices are simply attached using hashes. At
-first there seems to be not much need for the graph property machinery.
+efficient than C++ templates (but much more readable :-). The second one is even
+more easily implemented using standard iterators with blocks or using the
+Stream[link:stream] module. The third one is no issue since Ruby is dynamically
+typed: Each object can be a graph vertex. There is no need for a vertex (or even
+edge type). In the current version of RGL properties of vertices are simply
+attached using hashes. At first there seems to be not much need for the graph
+property machinery.
 
 === Algorithms
 
@@ -91,7 +91,8 @@ http://www.boost.org/libs/graph/doc/graph_concepts.html.
 
 == Running tests
 
-Checkout RGL repository and go to the project directory. First, install RGL dependencies with bundler:
+Checkout RGL repository and go to the project directory. First, install RGL
+dependencies with bundler:
 
  % bundle install
 
@@ -105,7 +106,8 @@ To see tests coverage run rcov[http://github.com/relevance/rcov] rake task:
 
 This command will generate tests coverage report in coverage/ directory.
 
-<em>Node: rcov is not compatible with Ruby >= 1.9, so this rake task is available only on Ruby 1.8.</em>
+<em>Node: rcov is not compatible with Ruby >= 1.9, so this rake task is
+available only on Ruby 1.8.</em>
 
 == Example irb session with RGL
 
@@ -221,18 +223,14 @@ and matz for Ruby. Dave included in the latest version of RDoc (alpha9) the
 module dot/dot.rb which I use instead of Roberts module to visualize graphs
 (see rgl/dot.rb).
 
-Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett and Andreas Schörk
-for contributing additions, test cases and bugfixes.
+Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas Schörk
+and Kirill Lashuk for contributing additions, test cases and bugfixes.
 
 Kirill Lashuk who started to take over further development in November 2012.
 
 == Copying
 
-RGL is Copyright (c) 2002,2004,2005,2008 by Horst Duchene.  It is free software, and may be
-redistributed under the terms specified in the README file of the Ruby distribution.
+RGL is Copyright (c) 2002,2004,2005,2008,2013 by Horst Duchene. It is free software,
+and may be redistributed under the terms specified in the README file of the
+Ruby distribution.
 
-== Support
-
-Please contact me at mailto:monora@gmail.com with bug reports
-suggestions, and other comments. If you send patches, it would help if
-they were in-line (not attachments) and generated using "diff -u".
