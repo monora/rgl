@@ -64,7 +64,7 @@ module RGL
 
     # Finds the shortest path form the _source_ to every other vertex of the graph.
     #
-    # Returns parents map that can be used to restore the shortest path, if it exists, from the _source_ to any vertext.
+    # Returns parents map that can be used to restore the shortest path, if it exists, from the _source_ to any vertex.
     #
     def shortest_paths(source)
       init(source)
