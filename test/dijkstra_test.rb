@@ -113,6 +113,21 @@ class TestDijkstra < Test::Unit::TestCase
     )
   end
 
+  def test_negative_edge_weight
+    @edge_weights[[2, 3]] = -7
+    assert_raises(ArgumentError, 'weight of edge (2, 3) is negative') { shortest_path(1, 5) }
+  end
+
+  def test_negative_edge_weight_with_lambda
+    @edge_weights[[2, 3]] = -7
+    assert_raises(ArgumentError, 'weight of edge (2, 3) is negative') { shortest_path(1, 5, @edge_weights_lambda) }
+  end
+
+  def test_missing_edge_weight
+    @edge_weights.delete([2, 3])
+    assert_raises(ArgumentError, 'weight of edge (2, 3) is not defined') { shortest_path(1, 5) }
+  end
+
   private
 
   def shortest_path(source, target, edge_weights = @edge_weights)
