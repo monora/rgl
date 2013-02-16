@@ -17,10 +17,16 @@ class TestDijkstra < Test::Unit::TestCase
         [2, 4] => 1,
         [3, 4] => 10
     }
+
+    @edge_weights_lambda = lambda { |edge| @edge_weights[edge] }
   end
 
   def test_shortest_path_search
     assert_equal([1, 3, 2, 4], shortest_path(1, 4))
+  end
+
+  def test_shortest_path_search_with_lambda
+    assert_equal([1, 3, 2, 4], shortest_path(1, 4, @edge_weights_lambda))
   end
 
   def test_shortest_path_to_the_source
@@ -41,6 +47,18 @@ class TestDijkstra < Test::Unit::TestCase
             4 => [1, 3, 2, 4]
         },
         shortest_paths(1)
+    )
+  end
+
+  def test_shortest_paths_search_with_lambda
+    assert_equal(
+        {
+            1 => [1],
+            2 => [1, 3, 2],
+            3 => [1, 3],
+            4 => [1, 3, 2, 4]
+        },
+        shortest_paths(1, @edge_weights_lambda)
     )
   end
 
@@ -95,14 +113,29 @@ class TestDijkstra < Test::Unit::TestCase
     )
   end
 
-  private
-
-  def shortest_path(source, target)
-    @graph.dijkstra_shortest_path(@edge_weights, source, target)
+  def test_negative_edge_weight
+    @edge_weights[[2, 3]] = -7
+    assert_raises(ArgumentError, 'weight of edge (2, 3) is negative') { shortest_path(1, 5) }
   end
 
-  def shortest_paths(source)
-    @graph.dijkstra_shortest_paths(@edge_weights, source)
+  def test_negative_edge_weight_with_lambda
+    @edge_weights[[2, 3]] = -7
+    assert_raises(ArgumentError, 'weight of edge (2, 3) is negative') { shortest_path(1, 5, @edge_weights_lambda) }
+  end
+
+  def test_missing_edge_weight
+    @edge_weights.delete([2, 3])
+    assert_raises(ArgumentError, 'weight of edge (2, 3) is not defined') { shortest_path(1, 5) }
+  end
+
+  private
+
+  def shortest_path(source, target, edge_weights = @edge_weights)
+    @graph.dijkstra_shortest_path(edge_weights, source, target)
+  end
+
+  def shortest_paths(source, edge_weights = @edge_weights)
+    @graph.dijkstra_shortest_paths(edge_weights, source)
   end
 
 end

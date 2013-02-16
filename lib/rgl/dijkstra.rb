@@ -46,6 +46,8 @@ module RGL
     # Initializes Dijkstra algorithm for a _graph_ with provided edges weights map.
     #
     def initialize(graph, edge_weights_map, visitor)
+      check_weights(edge_weights_map)
+
       @graph            = graph
       @edge_weights_map = edge_weights_map
       @visitor          = visitor
@@ -64,7 +66,7 @@ module RGL
 
     # Finds the shortest path form the _source_ to every other vertex of the graph.
     #
-    # Returns parents map that can be used to restore the shortest path, if it exists, from the _source_ to any vertext.
+    # Returns parents map that can be used to restore the shortest path, if it exists, from the _source_ to any vertex.
     #
     def shortest_paths(source)
       init(source)
@@ -136,11 +138,13 @@ module RGL
     end
 
     def edge_weight(u, v)
-      if @graph.directed?
+      weight = if @graph.directed?
         @edge_weights_map[[u, v]]
       else
         @edge_weights_map[[u, v]] || @edge_weights_map[[v, u]]
       end
+
+      validate_weight(weight, u, v)
     end
 
     def restore_path(source, target)
@@ -155,6 +159,25 @@ module RGL
       end
 
       path_builder.paths
+    end
+
+    def check_weights(edge_weights_map)
+       edge_weights_map.each { |(u, v), weight| validate_weight(weight, u, v) } if edge_weights_map.respond_to?(:each)
+    end
+
+    def validate_weight(weight, u, v)
+      report_missing_weight(weight, u, v)
+      report_negative_weight(weight, u, v)
+
+      weight
+    end
+
+    def report_missing_weight(weight, u, v)
+      raise ArgumentError.new("weight of edge (#{u}, #{v}) is not defined") unless weight
+    end
+
+    def report_negative_weight(weight, u, v)
+      raise ArgumentError.new("weight of edge (#{u}, #{v}) is negative") if weight < 0
     end
 
     class PathBuilder # :nodoc:
@@ -217,6 +240,8 @@ module RGL
     #
     # If the path exists, returns it as an Array of vertices. Otherwise, returns nil.
     #
+    # Raises ArgumentError if edge weight is negative or undefined.
+    #
     def dijkstra_shortest_path(edge_weights_map, source, target, visitor = DijkstraVisitor.new(self))
       DijkstraAlgorithm.new(self, edge_weights_map, visitor).shortest_path(source, target)
     end
@@ -226,6 +251,8 @@ module RGL
     # Returns a Hash that maps each vertex of the graph to an Array of vertices that represents the shortest path
     # from the _source_ to the vertex. If the path doesn't exist, the corresponding hash value is nil. For the _source_
     # vertex returned hash contains a trivial one-vertex path - [source].
+    #
+    # Raises ArgumentError if edge weight is negative or undefined.
     #
     def dijkstra_shortest_paths(edge_weights_map, source, visitor = DijkstraVisitor.new(self))
       DijkstraAlgorithm.new(self, edge_weights_map, visitor).shortest_paths(source)
