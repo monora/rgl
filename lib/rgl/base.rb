@@ -16,6 +16,8 @@ module RGL
   class NoVertexError < IndexError; end
   class NoEdgeError < IndexError; end
 
+  INFINITY = 1.0 / 0.0 # positive infinity
+
   # Module Edge includes classes for representing edges of directed and
   # undirected graphs. There is no need for a Vertex class, because every ruby
   # object can be a vertex of a graph.
