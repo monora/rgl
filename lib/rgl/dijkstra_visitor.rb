@@ -37,12 +37,6 @@ module RGL
       distance_map[source] = 0
     end
 
-    # Returns true if the _vertex_ can be reached from the source.
-    #
-    def reachable?(vertex)
-      distance_map[vertex] < INFINITY
-    end
-
   end # DijkstraVisitor
 
 end # RGL
