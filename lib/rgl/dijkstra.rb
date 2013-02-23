@@ -1,57 +1,20 @@
-require 'rgl/base'
-require 'rgl/graph_visitor'
+require 'rgl/dijkstra_visitor'
+require 'rgl/edge_weights_map'
+require 'rgl/path_builder'
 
 require 'delegate'
 require 'algorithms'
 
 module RGL
 
-  # Dijkstra shortest path algorithm has the following event points:
-  #
-  #  * examine_vertex
-  #  * examine_edge
-  #  * edge_relaxed
-  #  * edge_not_relaxed
-  #  * finish_vertex
-  #
-  class DijkstraVisitor
-
-    INFINITY = 1.0 / 0.0 # positive infinity
-
-    include GraphVisitor
-
-    attr_accessor :distance_map, :parent_map
-
-    def_event_handlers :edge_relaxed, :edge_not_relaxed
-
-    # Returns visitor into initial state.
-    #
-    def reset
-      super
-
-      @distance_map = Hash.new(INFINITY)
-      @parent_map   = {}
-    end
-
-    # Returns true if the _vertex_ can be reached from the source.
-    #
-    def reachable?(vertex)
-      distance_map[vertex] < INFINITY
-    end
-
-  end
-
   class DijkstraAlgorithm
 
     # Initializes Dijkstra algorithm for a _graph_ with provided edges weights map.
     #
     def initialize(graph, edge_weights_map, visitor)
-      check_weights(edge_weights_map)
-
       @graph            = graph
-      @edge_weights_map = edge_weights_map
+      @edge_weights_map = NonNegativeEdgeWeightsMap.new(edge_weights_map, @graph.directed?)
       @visitor          = visitor
-      @queue            = Queue.new
     end
 
     # Finds the shortest path from the _source_ to the _target_ in the graph.
@@ -61,32 +24,26 @@ module RGL
     def shortest_path(source, target)
       init(source)
       relax_edges(target, true)
-      restore_path(source, target)
+      PathBuilder.new(source, @visitor.parents_map).path(target)
     end
 
     # Finds the shortest path form the _source_ to every other vertex of the graph.
     #
-    # Returns parents map that can be used to restore the shortest path, if it exists, from the _source_ to any vertex.
+    # Returns the shortest paths map that contains the shortest path (if it exists) from the source to any vertex of the
+    # graph.
     #
     def shortest_paths(source)
       init(source)
       relax_edges
-      restore_paths(source)
+      PathBuilder.new(source, @visitor.parents_map).paths(@graph.vertices)
     end
 
     private
 
-    def reset
-      @visitor.reset
-      @queue.clear
-    end
-
     def init(source)
-      reset
+      @visitor.set_source(source)
 
-      @visitor.color_map[source]    = :GRAY
-      @visitor.distance_map[source] = 0
-
+      @queue = Queue.new
       @queue.push(source, @visitor.distance_map[source])
     end
 
@@ -99,13 +56,7 @@ module RGL
         @visitor.handle_examine_vertex(u)
 
         @graph.each_adjacent(u) do |v|
-          next if @visitor.finished_vertex?(v)
-
-          if relax_edge(u, v)
-            @visitor.handle_edge_relaxed(u, v)
-          else
-            @visitor.handle_edge_not_relaxed(u, v)
-          end
+          relax_edge(u, v) unless @visitor.finished_vertex?(v)
         end
 
         @visitor.color_map[u] = :BLACK
@@ -116,13 +67,13 @@ module RGL
     def relax_edge(u, v)
       @visitor.handle_examine_edge(u, v)
 
-      new_v_distance = @visitor.distance_map[u] + edge_weight(u, v)
+      new_v_distance = @visitor.distance_map[u] + @edge_weights_map.edge_weight(u, v)
 
       if new_v_distance < @visitor.distance_map[v]
         old_v_distance = @visitor.distance_map[v]
 
         @visitor.distance_map[v] = new_v_distance
-        @visitor.parent_map[v]   = u
+        @visitor.parents_map[v]  = u
 
         if @visitor.color_map[v] == :WHITE
           @visitor.color_map[v] = :GRAY
@@ -131,82 +82,10 @@ module RGL
           @queue.decrease_key(v, old_v_distance, new_v_distance)
         end
 
-        true
+        @visitor.handle_edge_relaxed(u, v)
       else
-        false
+        @visitor.handle_edge_not_relaxed(u, v)
       end
-    end
-
-    def edge_weight(u, v)
-      weight = if @graph.directed?
-        @edge_weights_map[[u, v]]
-      else
-        @edge_weights_map[[u, v]] || @edge_weights_map[[v, u]]
-      end
-
-      validate_weight(weight, u, v)
-    end
-
-    def restore_path(source, target)
-      PathBuilder.new(source, @visitor.parent_map).path(target)
-    end
-
-    def restore_paths(source)
-      path_builder = PathBuilder.new(source, @visitor.parent_map)
-
-      @graph.each_vertex do |vertex|
-        path_builder.path(vertex)
-      end
-
-      path_builder.paths
-    end
-
-    def check_weights(edge_weights_map)
-       edge_weights_map.each { |(u, v), weight| validate_weight(weight, u, v) } if edge_weights_map.respond_to?(:each)
-    end
-
-    def validate_weight(weight, u, v)
-      report_missing_weight(weight, u, v)
-      report_negative_weight(weight, u, v)
-
-      weight
-    end
-
-    def report_missing_weight(weight, u, v)
-      raise ArgumentError.new("weight of edge (#{u}, #{v}) is not defined") unless weight
-    end
-
-    def report_negative_weight(weight, u, v)
-      raise ArgumentError.new("weight of edge (#{u}, #{v}) is negative") if weight < 0
-    end
-
-    class PathBuilder # :nodoc:
-
-      attr_reader :paths
-
-      def initialize(source, parent_map)
-        @source     = source
-        @parent_map = parent_map
-        @paths      = {}
-      end
-
-      def path(target)
-        if @paths.has_key?(target)
-          @paths[target]
-        else
-          @paths[target] = restore_path(target)
-        end
-      end
-
-      private
-
-      def restore_path(target)
-        return [@source] if target == @source
-
-        parent = @parent_map[target]
-        path(parent) + [target] if parent
-      end
-
     end
 
     class Queue < SimpleDelegator # :nodoc:
