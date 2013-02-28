@@ -41,37 +41,39 @@ genericity:
 The first is easily achieved in RGL using mixins, which of course is not as
 efficient than C++ templates (but much more readable :-). The second one is even
 more easily implemented using standard iterators with blocks or using the
-Stream[link:stream] module. The third one is no issue since Ruby is dynamically
-typed: Each object can be a graph vertex. There is no need for a vertex (or even
-edge type). In the current version of RGL properties of vertices are simply
-attached using hashes. At first there seems to be not much need for the graph
-property machinery.
+{http://www.rubydoc.info/github/monora/stream stream module}. The third one is
+no issue since Ruby is dynamically typed: Each object can be a graph vertex.
+There is no need for a vertex (or even edge type). In the current version of RGL
+properties of vertices are simply attached using hashes. At first there seems to
+be not much need for the graph property machinery.
 
 === Algorithms
 
-The first version of RGL only contains a core set of algorithm patterns:
+RGL current contains a core set of algorithm patterns:
 
-* Breadth First Search (RGL::BFSIterator)
-* Depth First Search (RGL::DFSIterator)
+* Breadth First Search {RGL::BFSIterator}
+* Depth First Search {RGL::DFSIterator}
 
 The algorithm patterns by themselves do not compute any meaningful quantities
 over graphs, they are merely building blocks for constructing graph
 algorithms. The graph algorithms in RGL currently include:
 
-* Topological Sort (RGL::TopsortIterator)
-* Connected Components (RGL::Graph#each_connected_component)
-* Strongly Connected Components (RGL::Graph#strongly_connected_components)
-* Transitive Closure (RGL::Graph#transitive_closure)
+* Topological Sort {RGL::TopsortIterator}
+* Connected Components {RGL::Graph#each_connected_component}
+* Strongly Connected Components {RGL::Graph#strongly_connected_components}
+* Transitive Closure {RGL::Graph#transitive_closure}
+* Dijkstras Shortest Path Algorithm {RGL::DijkstraAlgorithm}
+* Bellman Ford Algorithm {RGL::BellmanFordAlgorithm}
 
 === Data Structures
 
 RGL currently provides two graph classes that implement a generalized adjacency
 list and an edge list adaptor.
 
-* RGL::AdjacencyGraph
-* RGL::ImplicitGraph
+* {RGL::AdjacencyGraph}
+* {RGL::ImplicitGraph}
 
-The AdjacencyGraph class is the general purpose *swiss army knife* of graph
+The AdjacencyGraph class is the general purpose _swiss army knife_ of graph
 classes. It is highly parameterized so that it can be optimized for different
 situations: the graph is directed or undirected, allow or disallow parallel
 edges, efficient access to just the out-edges, fast vertex insertion and removal
@@ -89,9 +91,11 @@ http://www.boost.org/libs/graph/doc/graph_concepts.html.
 
   % gem install rgl
 
+or download the latest sources from the git repository http://github.com/monora/rgl.
+
 == Running tests
 
-Checkout RGL repository and go to the project directory. First, install RGL
+Checkout RGL git repository and go to the project directory. First, install RGL
 dependencies with bundler:
 
  % bundle install
@@ -111,6 +115,7 @@ available only on Ruby 1.8.</em>
 
 == Example irb session with RGL
 
+
   irb> require 'rgl/adjacency'
   irb> dg=RGL::DirectedAdjacencyGraph[1,2 ,2,3 ,2,4, 4,5, 6,4, 1,6]
   # Use DOT to visualize this graph:
@@ -118,7 +123,9 @@ available only on Ruby 1.8.</em>
   irb> dg.write_to_graphic_file('jpg')
   "graph.jpg"
 
-The result: link:rgl/blob/master/examples/examples.jpg
+The result:
+
+link:images/example.jpg
 
   irb> dg.directed?
   true
@@ -161,6 +168,7 @@ Add inverse edge (4-2) to directed graph:
 
 A more elaborated example showing <em>implicit graphs</em>:
 
+  require 'rgl/implicit'
   def module_graph
     RGL::ImplicitGraph.new { |g|
       g.vertex_iterator { |b|
@@ -179,23 +187,26 @@ This function creates a directed graph, with vertices being all loaded modules:
 
   g = module_graph
 
-We only want to see the ancestors of RGL::AdjacencyGraph:
+We only want to see the ancestors of {RGL::AdjacencyGraph}:
 
-  tree = bfs_search_tree_from(g,RGL::AdjacencyGraph)
+  require 'rgl/traversal'
+  tree = g.bfs_search_tree_from(RGL::AdjacencyGraph)
 
 Now we want to visualize this component of g with DOT.  We therefore create a
 subgraph of the original graph, using a filtered graph:
 
   g = g.vertices_filtered_by {|v| tree.has_vertex? v}
+  g.write_to_graphic_file('jpg')
 
-Create the graphics with DOT:
+creates the following graph image with DOT:
 
-  g.write_to_graphic_file
+link:images/module_graph.jpg.
 
-produces module_graph.jpg: link:rgl/blob/master/examples/module_graph.jpg
+This graph shows all loaded RGL modules:
 
-Look for more in the examples directory (i.e.
-examples.rb[link:rgl/blob/master/examples/examples.rb]).
+link:images/rgl_modules.png
+
+Look for more in _examples_ directory (i.e. {file:examples/examples.rb}).
 
 == My del.icio.us links concerning RGL
 
@@ -227,6 +238,8 @@ Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas Schörk
 and Kirill Lashuk for contributing additions, test cases and bugfixes.
 
 Kirill Lashuk who started to take over further development in November 2012.
+
+See also http://github.com/monora/rgl/contributors.
 
 == Copying
 

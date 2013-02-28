@@ -112,7 +112,7 @@ module RGL
     # vertices u and v in U, we have both a path from u to v and a path
     # from v to u. That is to say, u and v are reachable from each other.
     #
-    # @Article{Tarjan:1972:DFS,
+    # @Article!{Tarjan:1972:DFS,
     #   author =       "R. E. Tarjan",
     #   key =          "Tarjan",
     #   title =        "Depth First Search and Linear Graph Algorithms",

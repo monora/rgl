@@ -6,4 +6,5 @@
 /tags
 graph.dot
 .project
+.yardoc
 Gemfile.lock
