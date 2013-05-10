@@ -9,12 +9,18 @@ module RGL
 
   class DijkstraAlgorithm
 
-    # Initializes Dijkstra algorithm for a _graph_ with provided edges weights map.
+    # Distance combinator is a lambda that accepts the distance (usually from the source) to vertex _u_ and the weight
+    # of the edge connecting vertex _u_ to another vertex _v_ and returns the distance to vertex _v_ if it's reached
+    # through the vertex _u_. By default, the distance to vertex _u_ and the edge's weight are summed.
+    DEFAULT_DISTANCE_COMBINATOR = lambda { |distance, edge_weight| distance + edge_weight }
+
+    # Initializes Dijkstra's algorithm for a _graph_ with provided edges weights map.
     #
-    def initialize(graph, edge_weights_map, visitor)
-      @graph            = graph
-      @edge_weights_map = NonNegativeEdgeWeightsMap.new(edge_weights_map, @graph.directed?)
-      @visitor          = visitor
+    def initialize(graph, edge_weights_map, visitor, distance_combinator = nil)
+      @graph               = graph
+      @edge_weights_map    = build_edge_weights_map(edge_weights_map)
+      @visitor             = visitor
+      @distance_combinator = distance_combinator || DEFAULT_DISTANCE_COMBINATOR
     end
 
     # Finds the shortest path from the _source_ to the _target_ in the graph.
@@ -27,15 +33,21 @@ module RGL
       PathBuilder.new(source, @visitor.parents_map).path(target)
     end
 
-    # Finds the shortest path form the _source_ to every other vertex of the graph.
+    # Finds the shortest path form the _source_ to every other vertex of the graph and builds shortest paths map.
     #
     # Returns the shortest paths map that contains the shortest path (if it exists) from the source to any vertex of the
     # graph.
     #
     def shortest_paths(source)
+      find_shortest_paths(source)
+      PathBuilder.new(source, @visitor.parents_map).paths(@graph.vertices)
+    end
+
+    # Finds the shortest path from the _source_ to every other vertex.
+    #
+    def find_shortest_paths(source)
       init(source)
       relax_edges
-      PathBuilder.new(source, @visitor.parents_map).paths(@graph.vertices)
     end
 
     private
@@ -44,7 +56,7 @@ module RGL
       @visitor.set_source(source)
 
       @queue = Queue.new
-      @queue.push(source, @visitor.distance_map[source])
+      @queue.push(source, 0)
     end
 
     def relax_edges(target = nil, break_on_target = false)
@@ -67,7 +79,7 @@ module RGL
     def relax_edge(u, v)
       @visitor.handle_examine_edge(u, v)
 
-      new_v_distance = @visitor.distance_map[u] + @edge_weights_map.edge_weight(u, v)
+      new_v_distance = @distance_combinator.call(@visitor.distance_map[u], @edge_weights_map.edge_weight(u, v))
 
       if new_v_distance < @visitor.distance_map[v]
         old_v_distance = @visitor.distance_map[v]
@@ -86,6 +98,10 @@ module RGL
       else
         @visitor.handle_edge_not_relaxed(u, v)
       end
+    end
+
+    def build_edge_weights_map(edge_weights_map)
+      edge_weights_map.is_a?(EdgeWeightsMap) ? edge_weights_map : NonNegativeEdgeWeightsMap.new(edge_weights_map, @graph.directed?)
     end
 
     class Queue < SimpleDelegator # :nodoc:

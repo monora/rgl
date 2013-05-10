@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rdoc'
+  s.add_development_dependency 'yard'
 
   #### Which files are to be included in this gem?
 
