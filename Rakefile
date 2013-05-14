@@ -7,6 +7,7 @@ require 'rubygems/package_task'
 
 require 'rake/testtask'
 require 'rdoc/task'
+require 'yard'
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'rgl/base' # require base module to get RGL_VERSION
@@ -50,7 +51,7 @@ begin
     t.rcov_opts += ['--exclude', 'test/,gems/']
   end
 rescue LoadError
-  nil # rdoc is available only on Ruby 1.8
+  nil # rcov is available only on Ruby 1.8
 end
 
 # Git tagging
@@ -62,7 +63,7 @@ task :tag do
   `git tag 'v#{RGL_VERSION}'`
 end
 
-# Create a task to build the RDOC documentation tree.
+# Tasks for generating docs.
 
 Rake::RDocTask.new("rdoc") do |rdoc|
   rdoc.rdoc_dir = RDOC_DIR
@@ -71,6 +72,8 @@ Rake::RDocTask.new("rdoc") do |rdoc|
   rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'README.rdoc'
   rdoc.rdoc_files.include(SOURCES, 'README.rdoc', 'ChangeLog', 'examples/examples.rb', 'rakelib/*.rake')
 end
+
+YARD::Rake::YardocTask.new
 
 # Tasks for building and installing RGL gem.
 

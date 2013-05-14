@@ -128,6 +128,13 @@ class TestDijkstra < Test::Unit::TestCase
     assert_raises(ArgumentError, 'weight of edge (2, 3) is not defined') { shortest_path(1, 5) }
   end
 
+  def test_edge_weights_map_object_in_argument
+    weights_map = EdgeWeightsMap.new(@edge_weights, @graph.directed?)
+    dijkstra    = DijkstraAlgorithm.new(@graph, weights_map, DijkstraVisitor.new(@graph))
+
+    assert_equal([1, 3, 2, 4], dijkstra.shortest_path(1, 4))
+  end
+
   private
 
   def shortest_path(source, target, edge_weights = @edge_weights)
