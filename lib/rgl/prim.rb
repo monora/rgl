@@ -16,7 +16,7 @@ module RGL
     #
     def initialize(graph, edge_weights_map, visitor)
       @graph            = graph
-      @edge_weights_map = EdgeWeightsMap.new(edge_weights_map, @graph.directed?)
+      @edge_weights_map = EdgePropertiesMap.new(edge_weights_map, @graph.directed?)
       @visitor          = visitor
       @dijkstra         = DijkstraAlgorithm.new(@graph, @edge_weights_map, @visitor, DISTANCE_COMBINATOR)
     end
