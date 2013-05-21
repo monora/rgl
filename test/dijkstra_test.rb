@@ -129,7 +129,7 @@ class TestDijkstra < Test::Unit::TestCase
   end
 
   def test_edge_weights_map_object_in_argument
-    weights_map = EdgeWeightsMap.new(@edge_weights, @graph.directed?)
+    weights_map = EdgePropertiesMap.new(@edge_weights, @graph.directed?)
     dijkstra    = DijkstraAlgorithm.new(@graph, weights_map, DijkstraVisitor.new(@graph))
 
     assert_equal([1, 3, 2, 4], dijkstra.shortest_path(1, 4))

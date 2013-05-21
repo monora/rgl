@@ -1,5 +1,5 @@
 require 'rgl/dijkstra_visitor'
-require 'rgl/edge_weights_map'
+require 'rgl/edge_properties_map'
 require 'rgl/path_builder'
 
 require 'delegate'
@@ -36,7 +36,7 @@ module RGL
     #
     def initialize(graph, edge_weights_map, visitor)
       @graph            = graph
-      @edge_weights_map = EdgeWeightsMap.new(edge_weights_map, @graph.directed?)
+      @edge_weights_map = EdgePropertiesMap.new(edge_weights_map, @graph.directed?)
       @visitor          = visitor
     end
 
@@ -66,7 +66,7 @@ module RGL
       end
 
       @graph.each_edge do |u, v|
-        if @visitor.distance_map[u] + @edge_weights_map.edge_weight(u, v) < @visitor.distance_map[v]
+        if @visitor.distance_map[u] + @edge_weights_map.edge_property(u, v) < @visitor.distance_map[v]
           @visitor.handle_edge_not_minimized(u, v)
         else
           @visitor.handle_edge_minimized(u, v)
@@ -77,7 +77,7 @@ module RGL
     def relax_edge(u, v)
       @visitor.handle_examine_edge(u, v)
 
-      new_v_distance = @visitor.distance_map[u] + @edge_weights_map.edge_weight(u, v)
+      new_v_distance = @visitor.distance_map[u] + @edge_weights_map.edge_property(u, v)
 
       if new_v_distance < @visitor.distance_map[v]
         @visitor.distance_map[v] = new_v_distance

@@ -1,5 +1,5 @@
 require 'rgl/dijkstra_visitor'
-require 'rgl/edge_weights_map'
+require 'rgl/edge_properties_map'
 require 'rgl/path_builder'
 
 require 'delegate'
@@ -79,7 +79,7 @@ module RGL
     def relax_edge(u, v)
       @visitor.handle_examine_edge(u, v)
 
-      new_v_distance = @distance_combinator.call(@visitor.distance_map[u], @edge_weights_map.edge_weight(u, v))
+      new_v_distance = @distance_combinator.call(@visitor.distance_map[u], @edge_weights_map.edge_property(u, v))
 
       if new_v_distance < @visitor.distance_map[v]
         old_v_distance = @visitor.distance_map[v]
@@ -101,7 +101,7 @@ module RGL
     end
 
     def build_edge_weights_map(edge_weights_map)
-      edge_weights_map.is_a?(EdgeWeightsMap) ? edge_weights_map : NonNegativeEdgeWeightsMap.new(edge_weights_map, @graph.directed?)
+      edge_weights_map.is_a?(EdgePropertiesMap) ? edge_weights_map : NonNegativeEdgePropertiesMap.new(edge_weights_map, @graph.directed?)
     end
 
     class Queue < SimpleDelegator # :nodoc:
