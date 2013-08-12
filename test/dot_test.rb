@@ -21,6 +21,6 @@ class TestDot < Test::Unit::TestCase
 
   def test_to_dot_graph
     graph = RGL::AdjacencyGraph[1, 2]
-    dot   = graph.dotty
+    dot   = graph.write_to_graphic_file
   end
 end
