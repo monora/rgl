@@ -248,7 +248,7 @@ module RGL
     # Utility method to show a string representation of the edges of the graph.
     #
     def to_s
-      edges.sort.to_s
+      edges.collect {|e| e.to_s}.sort.join
     end
 
     # Two graphs are equal iff they have equal directed? property as well as vertices and edges sets.
