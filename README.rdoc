@@ -125,7 +125,7 @@ available only on Ruby 1.8.</em>
 
 The result:
 
-link:images/example.jpg
+link:examples/images/example.jpg
 
   irb> dg.directed?
   true
@@ -200,11 +200,11 @@ subgraph of the original graph, using a filtered graph:
 
 creates the following graph image with DOT:
 
-link:images/module_graph.jpg.
+link:examples/images/module_graph.jpg
 
 This graph shows all loaded RGL modules:
 
-link:images/rgl_modules.png
+link:examples/images/rgl_modules.png
 
 Look for more in _examples_ directory (i.e. {file:examples/examples.rb}).
 
