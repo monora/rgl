@@ -9,11 +9,12 @@ require 'rgl/enumerable_ext'
 RGL_VERSION = "0.4.1"
 
 module RGL
-
   class NotDirectedError < RuntimeError; end
+
   class NotUndirectedError < RuntimeError; end
 
   class NoVertexError < IndexError; end
+
   class NoEdgeError < IndexError; end
 
   INFINITY = 1.0 / 0.0 # positive infinity
@@ -23,7 +24,6 @@ module RGL
   # object can be a vertex of a graph.
   #
   module Edge
-
     # Simply a directed pair (source -> target). Most library functions try do
     # omit to instantiate edges. They instead use two vertex parameters for
     # representing edges (see each_edge). If a client wants to store edges
@@ -33,7 +33,6 @@ module RGL
     class DirectedEdge
 
       attr_accessor :source, :target
-
       # Can be used to create an edge from a two element array.
       #
       def self.[](*a)
@@ -54,6 +53,10 @@ module RGL
       end
 
       alias == eql?
+
+      def hash
+        source.hash ^ target.hash
+      end
 
       # Returns (v,u) if self == (u,v).
       #
@@ -92,13 +95,8 @@ module RGL
     # undirected graphs. UnDirectedEdge[u,v] == UnDirectedEdge[v,u]
     #
     class UnDirectedEdge < DirectedEdge
-
       def eql?(edge)
         super || ((target == edge.source) && (source == edge.target))
-      end
-
-      def hash
-        source.hash ^ target.hash
       end
 
       # UnDirectedEdge[1,2].to_s == "(1=2)"
@@ -130,7 +128,6 @@ module RGL
 
     include Enumerable
     include Edge
-
     # The each_vertex iterator defines the set of vertices. This method must be
     # defined by concrete graph classes. It defines the BGL VertexListGraph
     # concept.
