@@ -210,8 +210,7 @@ Look for more in _examples_ directory (i.e. {file:examples/examples.rb}).
 
 == My del.icio.us links concerning RGL
 
-I collect some links to stuff around RGL at http://del.icio.us/monora/rgl. I
-registered RGL at SWiK[http://swik.net/rgl].
+I collect some links to stuff around RGL at http://del.icio.us/monora/rgl.
 
 == Credits
 
