@@ -1,3 +1,22 @@
+2014-12 Release 0.5.0
+
+This release mainly contains the contributions of Kirill, who added many algorithms to the library. Thank you Kirill!
+
+ * @matiaskorhonen: Fixes the image paths in the README (#14)
+ * @monora: Implicit graph example fails (#13)
+ * @KL-7: Implement Graph#bipartite_sets. (#12)
+ * @monora:  syntax error in dot file for undirected graph (#11)
+ * @KL-7: Edmonds-Karp algorithm for maximum flow (#10)
+ * @KL-7: Prim's algorithm for minimum spanning tree (#9)
+ * @carlosantoniodasilva: Run tests on Ruby 2.0 and remove deprecation warning (#8)
+ * @KL-7: Bellman-Ford shortest paths algorithm (#7)
+ * @KL-7: Minor improvements (asserts) for Dijkstra algorithm (#6)
+ * @KL-7: Add Dijkstra shortest path algorithm. (#5)
+ * @KL-7: Indentation and whitespaces clean up of examples (#4)
+ * @KL-7: Travis configuration and README updates (#3)
+ * @KL-7: Code clean up and configuration updates (#2)
+ * @aschoerk: Renamed test-directory, (includes Rakefile), fixed TestComponents (#1)
+
 2008-08-27 23:30  javanthropus
 
 	* lib/rgl/base.rb: Preparing for 0.4.0 release
@@ -467,4 +486,3 @@
 2002-08-19 21:58  monora
 
 	* README (tags: V0_2): Added link to SF.
-

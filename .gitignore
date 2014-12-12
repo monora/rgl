@@ -8,3 +8,5 @@ graph.dot
 .project
 .yardoc
 Gemfile.lock
+/.buildpath
+/dep_graph.dot

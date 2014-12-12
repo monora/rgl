@@ -1,7 +1,3 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gemspec
-
-group :test do
-  gem 'rcov', :platform => :mri_18
-end

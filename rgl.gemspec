@@ -46,8 +46,11 @@ Gem::Specification.new do |s|
 
   #### Author and project details.
 
-  s.author            = "Horst Duchene"
+  s.authors           = [
+    "Horst Duchene",
+    "Kirill Lashuk"
+  ]
+
   s.email             = "monora@gmail.com"
-  s.homepage          = "http://rubygems.org/gems/rgl"
-  s.rubyforge_project = "rgl"
+  s.homepage          = "https://github.com/monora/rgl"
 end
