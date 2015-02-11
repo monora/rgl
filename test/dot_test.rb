@@ -13,10 +13,15 @@ class TestDot < Test::Unit::TestCase
     graph = RGL::DirectedAdjacencyGraph[1, 2]
     dot   = graph.to_dot_graph.to_s
 
+    first_vertex_id = 1.object_id
+    second_vertex_id = 2.object_id
+    
     assert_match(dot, /\{[^}]*\}/) # {...}
-    assert_match(dot, /1\s*\[/)    # node 1
-    assert_match(dot, /2\s*\[/)    # node 2
-    assert_match(dot, /1\s*->\s*2/) # edge
+    assert_match(dot, /#{first_vertex_id}\s*\[/)  # node 1
+    assert_match(dot, /label\s*=\s*1/)            # node 1 label
+    assert_match(dot, /#{second_vertex_id}\s*\[/) # node 2
+    assert_match(dot, /label\s*=\s*2/)            # node 2 label
+    assert_match(dot, /#{first_vertex_id}\s*->\s*#{second_vertex_id}/) # edge
   end
 
   def test_to_dot_graph
