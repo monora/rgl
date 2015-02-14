@@ -11,7 +11,7 @@ class TestTraversal < Test::Unit::TestCase
 
   def setup
     @dg   = DirectedAdjacencyGraph.new(Array)
-    edges = [[1, 2], [2, 3], [2, 4], [4, 5], [1, 6], [6, 4]]
+    edges = [[1, 2], [1, 6], [2, 3], [2, 4], [4, 5], [6, 4]]
     edges.each do |(src, target)|
       @dg.add_edge(src, target)
     end
