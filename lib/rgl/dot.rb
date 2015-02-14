@@ -12,6 +12,11 @@ module RGL
 
   module Graph
 
+    # Returns a label for vertex v. Default is v.to_s
+    def vertex_label(v)
+      v.to_s
+    end
+
     # Return a RGL::DOT::Digraph for directed graphs or a DOT::Graph for an
     # undirected Graph. _params_ can contain any graph property specified in
     # rdot.rb.
@@ -26,7 +31,7 @@ module RGL
         graph << DOT::Node.new(
             'name'     => v.object_id,
             'fontsize' => fontsize,
-            'label'    => v.to_s
+            'label'    => vertex_label(v)
         )
       end
 

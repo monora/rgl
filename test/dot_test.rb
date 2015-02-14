@@ -15,7 +15,7 @@ class TestDot < Test::Unit::TestCase
 
     first_vertex_id = 1.object_id
     second_vertex_id = 2.object_id
-    
+
     assert_match(dot, /\{[^}]*\}/) # {...}
     assert_match(dot, /#{first_vertex_id}\s*\[/)  # node 1
     assert_match(dot, /label\s*=\s*1/)            # node 1 label
@@ -26,6 +26,9 @@ class TestDot < Test::Unit::TestCase
 
   def test_to_dot_graph
     graph = RGL::AdjacencyGraph[1, 2]
-    dot   = graph.write_to_graphic_file
+    def graph.vertex_label(v)
+      "label-"+v.to_s
+    end
+    dot = graph.write_to_graphic_file
   end
 end
