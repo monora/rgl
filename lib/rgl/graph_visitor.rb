@@ -3,7 +3,7 @@ require 'rgl/graph_wrapper'
 module RGL
 
   # Module GraphVisitor defines the BGL
-  # BFS[http://www.boost.org/libs/graph/doc/BFSVisitor.html] Visitor Concept).
+  # BFS[http://www.boost.org/libs/graph/doc/BFSVisitor.html] Visitor Concept.
   #
   # Visitors provide a mechanism for extending an algorithm (i.e., for
   # customizing what is done at each step of the algorithm). They allow users
