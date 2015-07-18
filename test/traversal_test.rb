@@ -155,7 +155,7 @@ END
     ts_order = ts_it.to_a # do the traversal
     assert_equal(@dg.num_vertices, ts_order.size)
 
-    # Check topsort contraint:
+    # Check topsort constraint:
     @dg.each_edge { |u, v|
       assert(ts_order.index(u) < ts_order.index(v))
     }
