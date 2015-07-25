@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README.rdoc']
   s.rdoc_options += [
       '--title', 'RGL - Ruby Graph Library',
-      '--main', 'README.adoc',
+      '--main', 'README.rdoc',
       '--line-numbers'
   ]
 
