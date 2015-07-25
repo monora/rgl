@@ -13,7 +13,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'algorithms', '~> 0.6.1'
 
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'rdoc'
   s.add_development_dependency 'yard'
   s.add_development_dependency 'test-unit'
 
@@ -41,7 +40,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ['README.rdoc']
   s.rdoc_options += [
       '--title', 'RGL - Ruby Graph Library',
-      '--main', 'README.rdoc',
+      '--main', 'README.adoc',
       '--line-numbers'
   ]
 

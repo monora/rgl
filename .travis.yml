@@ -1,4 +1,7 @@
 language: ruby
+branches:
+  only:
+    - master
 rvm:
   - 1.8.7
   - 1.9.3
@@ -7,4 +10,4 @@ rvm:
   - 2.2.2
   - jruby-1.7.19
   - jruby-9.0.0.0.rc2
-script: "script/test_all 2>&1"
+script: "COVERAGE=true script/test_all 2>&1"
