@@ -18,10 +18,10 @@ Ruby. The main design goals directly taken from the BGL design are:
 
 * An interface for how the structure of a graph can be accessed using a generic
   interface that hides the details of the graph data structure
-  implementation. This interface is defined by the module Graph, which should be
+  implementation. This interface is defined by the module {Graph}, which should be
   included in concrete classes.
 
-* A standardized generic interface for traversing graphs (RGL::GraphIterator)
+* A standardized generic interface for traversing graphs {RGL::GraphIterator}
 
 RGL provides some general purpose graph classes that conform to this interface,
 but they are not meant to be the *only* graph classes. As in BGL I believe that
@@ -125,7 +125,7 @@ available only on Ruby 1.8.</em>
 
 The result:
 
-link:examples/images/example.jpg
+link:images/example.jpg
 
   irb> dg.directed?
   true
@@ -200,11 +200,11 @@ subgraph of the original graph, using a filtered graph:
 
 creates the following graph image with DOT:
 
-link:examples/images/module_graph.jpg
+link:images/module_graph.jpg
 
 This graph shows all loaded RGL modules:
 
-link:examples/images/rgl_modules.png
+link:images/rgl_modules.png
 
 Look for more in _examples_ directory (i.e. {file:examples/examples.rb}).
 
@@ -242,7 +242,7 @@ See also http://github.com/monora/rgl/contributors.
 
 == Copying
 
-RGL is Copyright (c) 2002,2004,2005,2008,2013 by Horst Duchene. It is free software,
+RGL is Copyright (c) 2002,2004,2005,2008,2013,2015 by Horst Duchene. It is free software,
 and may be redistributed under the terms specified in the README file of the
 Ruby distribution.
 
