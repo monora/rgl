@@ -110,7 +110,7 @@ To see tests coverage run rcov[http://github.com/relevance/rcov] rake task:
 
 This command will generate tests coverage report in coverage/ directory.
 
-<em>Node: rcov is not compatible with Ruby >= 1.9, so this rake task is
+<em>Note: rcov is not compatible with Ruby >= 1.9, so this rake task is
 available only on Ruby 1.8.</em>
 
 == Example irb session with RGL
