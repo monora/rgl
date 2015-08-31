@@ -17,6 +17,10 @@ module RGL
       v.to_s
     end
 
+    def vertex_id(v)
+      v
+    end
+
     # Return a RGL::DOT::Digraph for directed graphs or a DOT::Graph for an
     # undirected Graph. _params_ can contain any graph property specified in
     # rdot.rb.
@@ -29,7 +33,7 @@ module RGL
 
       each_vertex do |v|
         graph << DOT::Node.new(
-            'name'     => v.object_id,
+            'name'     => vertex_id(v),
             'fontsize' => fontsize,
             'label'    => vertex_label(v)
         )
@@ -37,8 +41,8 @@ module RGL
 
       each_edge do |u, v|
         graph << edge_class.new(
-            'from'     => u.object_id,
-            'to'       => v.object_id,
+            'from'     => vertex_id(u),
+            'to'       => vertex_id(v),
             'fontsize' => fontsize
         )
       end
