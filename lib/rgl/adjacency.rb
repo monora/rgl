@@ -207,4 +207,191 @@ module RGL
 
   end # module Graph
 
+  # A bidirectional version of the adjacency graph
+  class BidirectionalDirectedAdjacencyGraph
+    include MutableGraph
+
+    # Shortcut for creating a DirectedAdjacencyGraph:
+    #
+    #  RGL::DirectedAdjacencyGraph[1,2, 2,3, 2,4, 4,5].edges.to_a.to_s =>
+    #    "(1-2)(2-3)(2-4)(4-5)"
+    #
+    def self.[](*a)
+      result = new
+      a.each_slice(2) do |u, v|
+        result.add_edge(u, v)
+      end
+      result
+    end
+
+    # Returns a new empty DirectedAdjacencyGraph which has as its edgelist
+    # class the given class. The default edgelist class is Set, to ensure
+    # set semantics for edges and vertices.
+    #
+    # If other graphs are passed as parameters their vertices and edges are
+    # added to the new graph.
+    #
+    def initialize(edgelist_class = Set, *other_graphs)
+      @edgelist_class = edgelist_class
+      @vertices_dict = Hash.new
+      other_graphs.each do |g|
+        g.each_vertex { |v| add_vertex v }
+        g.each_edge { |v, w| add_edge v, w }
+      end
+    end
+
+    # Copy internal vertices_dict
+    #
+    def initialize_copy(orig)
+      super
+      @vertices_dict = @vertices_dict.dup
+      @vertices_dict.keys.each do |v|
+        out_edges, in_edges = @vertices_dict[v]
+        @vertices_dict[v] = [out_edges.dup, in_edges.dup]
+      end
+    end
+
+    # Iterator for the keys of the vertices list hash.
+    #
+    def each_vertex(&b)
+      @vertices_dict.each_key(&b)
+    end
+
+    def to_a
+      @vertices_dict.keys
+    end
+
+    def each_in_neighbour(v, &b)
+      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
+      adjacency_list[1].each(&b)
+    end
+
+    def in_neighbours(v)
+      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
+      adjacency_list[1].dup
+    end
+
+    def adjacent_vertices(v)
+      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
+      adjacency_list[0].dup
+    end
+
+    def in_degree(v)
+      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
+      adjacency_list[1].size
+    end
+
+    def out_degree(v)
+      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
+      adjacency_list[0].size
+    end
+
+    def each_adjacent(v, &b) # :nodoc:
+      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
+      adjacency_list[0].each(&b)
+    end
+
+    def vertices
+      @vertices_dict.keys
+    end
+
+    def num_vertices
+      @vertices_dict.size
+    end
+
+    def num_edges
+      @vertices_dict.each_value.inject(0) do |count, (out_edges, _)|
+          count + out_edges.size
+      end
+    end
+
+    # Returns true.
+    #
+    def directed?
+      true
+    end
+
+    # Complexity is O(1), because the vertices are kept in a Hash containing
+    # as values the lists of adjacent vertices of _v_.
+    #
+    def has_vertex? (v)
+      @vertices_dict.has_key?(v)
+    end
+
+    # Complexity is O(1), if a Set is used as adjacency list. Otherwise,
+    # complexity is O(out_degree(v)).
+    #
+    # ---
+    # MutableGraph interface.
+    #
+    def has_edge? (u, v)
+      has_vertex?(u) && @vertices_dict[u][0].include?(v)
+    end
+
+    # See MutableGraph#add_vertex.
+    #
+    # If the vertex is already in the graph (using eql?), the method does
+    # nothing.
+    #
+    def add_vertex(v)
+        @vertices_dict[v] ||= [@edgelist_class.new, @edgelist_class.new]
+    end
+
+    # See MutableGraph#add_edge.
+    #
+    def add_edge(u, v)
+      add_vertex(u) # ensure key
+      add_vertex(v) # ensure key
+      basic_add_edge(u, v)
+    end
+
+    # See MutableGraph#remove_vertex.
+    #
+    def remove_vertex(v)
+      out_edges, in_edges = @vertices_dict.delete(v)
+      in_edges.each do |parent|
+        @vertices_dict[parent][0].delete(v)
+      end
+    end
+
+    # See MutableGraph::remove_edge.
+    #
+    def remove_edge(u, v)
+      if @vertices_dict[u] && @vertices_dict[u][0].delete?(v)
+        @vertices_dict[v][1].delete(u)
+      end
+    end
+
+    # Converts the adjacency list of each vertex to be of type _klass_. The
+    # class is expected to have a new constructor which accepts an enumerable as
+    # parameter.
+    #
+    def edgelist_class=(klass)
+      @vertices_dict.keys.each do |v|
+        out_edges, in_edges = @vertices_dict[v]
+        @vertices_dict[v] = [klass.new(out_edges.to_a), klass.new(in_edges.to_a)]
+      end
+    end
+
+    def reverse
+      result = dup
+      result.reverse!
+      result
+    end
+
+    def reverse!
+      @vertices_dict.keys.each do |v|
+        in_edges, out_edges = @vertices_dict[v]
+        @vertices_dict[v] = out_edges, in_edges
+      end
+    end
+
+    protected
+
+    def basic_add_edge(u, v)
+      @vertices_dict[u][0].add(v)
+      @vertices_dict[v][1].add(u)
+    end
+  end
+
 end # module RGL
