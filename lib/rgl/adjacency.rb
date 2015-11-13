@@ -261,6 +261,23 @@ module RGL
       @vertices_dict.keys
     end
 
+    def each_out_neighbour(v, &b)
+      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
+      adjacency_list[0].each(&b)
+    end
+    alias :each_adjacent :each_out_neighbour
+
+    def out_neighbours(v)
+      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
+      adjacency_list[0].to_a
+    end
+    alias :adjacent_vertices :out_neighbours
+
+    def out_degree(v)
+      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
+      adjacency_list[0].size
+    end
+
     def each_in_neighbour(v, &b)
       adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
       adjacency_list[1].each(&b)
@@ -268,27 +285,12 @@ module RGL
 
     def in_neighbours(v)
       adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
-      adjacency_list[1].dup
-    end
-
-    def adjacent_vertices(v)
-      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
-      adjacency_list[0].dup
+      adjacency_list[1].to_a
     end
 
     def in_degree(v)
       adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
       adjacency_list[1].size
-    end
-
-    def out_degree(v)
-      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
-      adjacency_list[0].size
-    end
-
-    def each_adjacent(v, &b) # :nodoc:
-      adjacency_list = (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")
-      adjacency_list[0].each(&b)
     end
 
     def vertices
