@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   #### Dependencies and requirements.
 
   s.add_dependency 'stream',     '~> 0.5.0'
-  s.add_dependency 'algorithms', '~> 0.6.1'
+  s.add_dependency 'lazy_priority_queue', '~> 0.1.0'
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'yard'
