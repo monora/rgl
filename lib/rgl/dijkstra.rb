@@ -2,8 +2,7 @@ require 'rgl/dijkstra_visitor'
 require 'rgl/edge_properties_map'
 require 'rgl/path_builder'
 
-require 'delegate'
-require 'algorithms'
+require 'lazy_priority_queue'
 
 module RGL
 
@@ -55,7 +54,7 @@ module RGL
     def init(source)
       @visitor.set_source(source)
 
-      @queue = Queue.new
+      @queue = MinPriorityQueue.new
       @queue.push(source, 0)
     end
 
@@ -82,8 +81,6 @@ module RGL
       new_v_distance = @distance_combinator.call(@visitor.distance_map[u], @edge_weights_map.edge_property(u, v))
 
       if new_v_distance < @visitor.distance_map[v]
-        old_v_distance = @visitor.distance_map[v]
-
         @visitor.distance_map[v] = new_v_distance
         @visitor.parents_map[v]  = u
 
@@ -91,7 +88,7 @@ module RGL
           @visitor.color_map[v] = :GRAY
           @queue.push(v, new_v_distance)
         elsif @visitor.color_map[v] == :GRAY
-          @queue.decrease_key(v, old_v_distance, new_v_distance)
+          @queue.decrease_key(v, new_v_distance)
         end
 
         @visitor.handle_edge_relaxed(u, v)
@@ -102,29 +99,6 @@ module RGL
 
     def build_edge_weights_map(edge_weights_map)
       edge_weights_map.is_a?(EdgePropertiesMap) ? edge_weights_map : NonNegativeEdgePropertiesMap.new(edge_weights_map, @graph.directed?)
-    end
-
-    class Queue < SimpleDelegator # :nodoc:
-
-      def initialize
-        @heap = Containers::Heap.new { |a, b| a.distance < b.distance }
-        super(@heap)
-      end
-
-      def push(vertex, distance)
-        @heap.push(vertex_key(vertex, distance), vertex)
-      end
-
-      def decrease_key(vertex, old_distance, new_distance)
-        @heap.change_key(vertex_key(vertex, old_distance), vertex_key(vertex, new_distance))
-      end
-
-      def vertex_key(vertex, distance)
-        VertexKey.new(vertex, distance)
-      end
-
-      VertexKey = Struct.new(:vertex, :distance)
-
     end
 
   end # class DijkstraAlgorithm
