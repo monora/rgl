@@ -17,7 +17,7 @@ class TestDijkstraIssue24 < Test::Unit::TestCase
   end
 
   def shortest_path(v,w)
-    @graph.dijkstra_shortest_path(Hash.new(1), v, w).inspect
+    @graph.dijkstra_shortest_path(Hash.new(1), v, w)
   end
 
 end
