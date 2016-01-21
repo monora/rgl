@@ -1,0 +1,9 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby
+exclude_paths:
+- examples/**/*
+- script/**/*
