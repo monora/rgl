@@ -17,3 +17,6 @@ matrix:
       - rvm: ruby-head
       - rvm: jruby-head
 script: "COVERAGE=true script/test_all 2>&1"
+addons:
+  code_climate:
+    repo_token: 9b56bc5e14a34f1925548f4e0c61b9afe6b6d6da6227738218c4a99c88c10c65
