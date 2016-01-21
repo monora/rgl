@@ -1,4 +1,4 @@
-= Ruby Graph Library (RGL) {<img src="https://secure.travis-ci.org/monora/rgl.png?branch=master" alt="Build Status" />}[https://travis-ci.org/monora/rgl]
+= Ruby Graph Library (RGL) {<img src="https://secure.travis-ci.org/monora/rgl.png?branch=master" alt="Build Status" />}[https://travis-ci.org/monora/rgl] {<img src="https://codeclimate.com/github/monora/rgl/badges/gpa.svg" />}[https://codeclimate.com/github/monora/rgl] {<img src="https://codeclimate.com/github/monora/rgl/badges/issue_count.svg" />}[https://codeclimate.com/github/monora/rgl] {<img src="https://codeclimate.com/github/monora/rgl/badges/coverage.svg" />}[https://codeclimate.com/github/monora/rgl/coverage]
 
 RGL is a framework for graph data structures and algorithms.
 
