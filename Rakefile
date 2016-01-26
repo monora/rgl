@@ -26,20 +26,6 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
-begin
-  require 'rcov/rcovtask'
-
-  desc "Calculate code coverage with rcov"
-  Rcov::RcovTask.new(:rcov) do |t|
-    t.libs << 'test'
-    t.pattern = 'test/*_test.rb'
-    t.verbose = true
-    t.rcov_opts += ['--exclude', 'test/,gems/']
-  end
-rescue LoadError
-  nil # rcov is available only on Ruby 1.8
-end
-
 # Git tagging
 
 desc "Commit all changes as a new version commit. Tag the commit with v<version> tag"

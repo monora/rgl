@@ -1,6 +1,6 @@
 --readme README.rdoc
 --title 'RGL API Documentation'
 --charset utf-8
---asset examples/images:images
+--asset images
 --embed-mixins
 'lib/**/*.rb' - '*.rdoc' 'examples/*.rb' 'rakelib/dep_graph.rake'

@@ -3,13 +3,18 @@
 RGL is a framework for graph data structures and algorithms.
 
 The design of the library is much influenced by the Boost Graph Library (BGL)
-which is written in C++ heavily using its template mechanism. Refer to
-http://www.boost.org/libs/graph/doc for further links and documentation on graph
-data structures and algorithms and the design rationales of BGL.
+which is written in C++. Refer to http://www.boost.org/libs/graph/doc for
+further links and documentation on graph data structures and algorithms and the
+design rationales of BGL.
 
-A comprehensive summary of graph terminology can be found in the the graph
-section of the <em>Dictionary of Algorithms and Data Structures</em> at
-http://www.nist.gov/dads/HTML/graph.html.
+A comprehensive summary of graph terminology can be found in the graph section
+of the <em>Dictionary of Algorithms and Data Structures</em> at
+http://www.nist.gov/dads/HTML/graph.html or
+Wikipedia[https://en.wikipedia.org/wiki/Graph_%28discrete_mathematics%29].
+
+== Documentation
+
+* RGL's {API Reference}[http://www.rubydoc.info/github/monora/rgl] at http://rubydoc.info
 
 == Design principles
 
@@ -18,7 +23,7 @@ Ruby. The main design goals directly taken from the BGL design are:
 
 * An interface for how the structure of a graph can be accessed using a generic
   interface that hides the details of the graph data structure
-  implementation. This interface is defined by the module {Graph}, which should be
+  implementation. This interface is defined by the module {RGL::Graph}, which should be
   included in concrete classes.
 
 * A standardized generic interface for traversing graphs {RGL::GraphIterator}
@@ -103,15 +108,6 @@ dependencies with bundler:
 After that you can run the tests:
 
  % rake test
-
-To see tests coverage run rcov[http://github.com/relevance/rcov] rake task:
-
- % rake rcov
-
-This command will generate tests coverage report in coverage/ directory.
-
-<em>Note: rcov is not compatible with Ruby >= 1.9, so this rake task is
-available only on Ruby 1.8.</em>
 
 == Example irb session with RGL
 
@@ -206,7 +202,7 @@ This graph shows all loaded RGL modules:
 
 link:images/rgl_modules.png
 
-Look for more in _examples_ directory (i.e. {file:examples/examples.rb}).
+Look for more in {examples}[link:examples/examples.rb] directory.
 
 == My del.icio.us links concerning RGL
 
@@ -224,7 +220,7 @@ GraphViz[http://www.research.att.com/sw/tools/graphviz/download.html] is much
 more elaborated than the minimal support in dot.rb.
 
 Jeremy Siek one of the authors of the nice book "The Boost Graph Library (BGL)"
-(http://www.boost.org/libs/graph/doc) kindly allowed to use the
+[http://www.boost.org/libs/graph/doc] kindly allowed to use the
 BGL documentation as a _cheap_ reference for RGL. He and Robert also gave
 feedback and many ideas for RGL.
 
