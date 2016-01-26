@@ -219,10 +219,10 @@ succeed. Especially his work to output graphs for
 GraphViz[http://www.research.att.com/sw/tools/graphviz/download.html] is much
 more elaborated than the minimal support in dot.rb.
 
-Jeremy Siek one of the authors of the nice book "The Boost Graph Library (BGL)"
-[http://www.boost.org/libs/graph/doc] kindly allowed to use the
-BGL documentation as a _cheap_ reference for RGL. He and Robert also gave
-feedback and many ideas for RGL.
+Jeremy Siek one of the authors of the nice book {The Boost Graph
+Library}[http://www.boost.org/libs/graph/doc] kindly allowed to use the BGL
+documentation as a _cheap_ reference for RGL. He and Robert also gave feedback
+and many ideas for RGL.
 
 Dave Thomas for RDoc[http://rdoc.sourceforge.net] which generated what you read
 and matz for Ruby. Dave included in the latest version of RDoc (alpha9) the
