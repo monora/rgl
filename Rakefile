@@ -6,12 +6,12 @@ require 'bundler/setup'
 require 'rubygems/package_task'
 
 require 'rake/testtask'
+require 'rake/clean'
 require 'yard'
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
 require 'rgl/base' # require base module to get RGL_VERSION
 
-SUMMARY = "Ruby Graph Library"
 SOURCES = FileList['lib/**/*.rb']
 
 # The default task is run if rake is given no explicit arguments.

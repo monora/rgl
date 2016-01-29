@@ -1,4 +1,4 @@
-= Ruby Graph Library (RGL) {<img src="https://secure.travis-ci.org/monora/rgl.png?branch=master" alt="Build Status" />}[https://travis-ci.org/monora/rgl] {<img src="https://codeclimate.com/github/monora/rgl/badges/gpa.svg" />}[https://codeclimate.com/github/monora/rgl] {<img src="https://codeclimate.com/github/monora/rgl/badges/issue_count.svg" />}[https://codeclimate.com/github/monora/rgl] {<img src="https://codeclimate.com/github/monora/rgl/badges/coverage.svg" />}[https://codeclimate.com/github/monora/rgl/coverage]
+= Ruby Graph Library (RGL) {<img src="https://secure.travis-ci.org/monora/rgl.png?branch=master" alt="Build Status" />}[https://travis-ci.org/monora/rgl] {<img src="https://codeclimate.com/github/monora/rgl/badges/coverage.svg" />}[https://codeclimate.com/github/monora/rgl/coverage]
 
 RGL is a framework for graph data structures and algorithms.
 
@@ -121,7 +121,7 @@ After that you can run the tests:
 
 The result:
 
-link:images/example.jpg
+https://github.com/monora/rgl/raw/master/images/example.jpg
 
   irb> dg.directed?
   true
@@ -196,13 +196,14 @@ subgraph of the original graph, using a filtered graph:
 
 creates the following graph image with DOT:
 
-link:images/module_graph.jpg
+https://github.com/monora/rgl/raw/master/images/module_graph.jpg
 
 This graph shows all loaded RGL modules:
 
-link:images/rgl_modules.png
+https://github.com/monora/rgl/raw/master/images/rgl_modules.png
 
-Look for more in {examples}[link:examples/examples.rb] directory.
+Look for more in {examples}[https://github.com/monora/rgl/tree/master/examples]
+directory.
 
 == My del.icio.us links concerning RGL
 
