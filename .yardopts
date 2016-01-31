@@ -1,5 +1,5 @@
---readme README.rdoc
+--readme README.md
 --title 'RGL API Documentation'
 --charset utf-8
 --embed-mixins
-'lib/**/*.rb' - '*.rdoc' 'examples/*.rb' 'rakelib/dep_graph.rake'
+'lib/**/*.rb' - 'examples/*.rb' 'rakelib/dep_graph.rake'
