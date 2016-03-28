@@ -169,6 +169,10 @@ module RGL
     # it is called on each _finish_vertex_ event. See
     # strongly_connected_components for an example usage.
     #
+    # Note that this traversal does not garantee, that roots are at the top of
+    # each spanning subtree induced by the DFS search on a directed graph (see
+    # also the discussion in issue #20[https://github.com/monora/rgl/issues/20]).
+    #
     def depth_first_search(vis = DFSVisitor.new(self), &b)
       each_vertex do |u|
         unless vis.finished_vertex?(u)
