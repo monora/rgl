@@ -77,6 +77,9 @@ module RGL
         "(#{source}-#{target})"
       end
 
+      # Since Ruby 2.0 #inspect no longer calls #to_s. So we alias it to to_s (fixes #22)
+      alias inspect to_s
+
       # Returns the array [source,target].
       #
       def to_a
