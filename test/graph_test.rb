@@ -63,6 +63,11 @@ class TestGraph < Test::Unit::TestCase
     assert_equal edges, @dg1.edges
   end
 
+  # Test for issue #22
+  def test_edges_to_s
+    assert_equal @dg1.edges.sort.to_s, "[(1-2), (1-6), (2-3), (2-4), (4-5), (6-4)]"
+  end
+
   def test_not_implemented
     graph = NotImplementedGraph.new
     assert_raise(NotImplementedError) { graph.each_vertex }
