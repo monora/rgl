@@ -1,3 +1,16 @@
+2016-05 Release 0.5.2
+
+Horst Duchene <monora@gmail.com>
+ * Issue #21: Use new method vertex_id instead of object_id to identify vertices in dot export. (fa7592)
+ * Integrate Code Climate's test coverage reporting (0ab722)
+ * Clarify traversal order of DFS search (see #20). (afa788)
+Chase Gilliam <chase.gilliam@gmail.com>
+ * drop 1.9.3 add newer jruby and rubinius (fad333)
+Matías Battocchia <matias@riseup.net>
+ * Switched to a different heap implementation. (bd7c13)
+gorn <j@kub.cz>
+ * Adding failing test for issue #24 (1f6204)
+
 2015-12 Release 0.5.1
 
 Horst Duchene <monora@gmail.com>
@@ -21,7 +34,7 @@ Chase <chase.gilliam@gmail.com>
   * updated algorithms to 6.1 and added test unit to support newer rubies (fbd874)
 Louis Rose <louismrose@gmail.com>
   * Fix #15. Use object IDs rather than labels to identify vertexs in DOT graph to ensure that distinct nodes that share a label are shown. (33206f)
-	* Issue #15. Fix tests. (4fc455)
+  * Issue #15. Fix tests. (4fc455)
 
 
 2014-12 Release 0.5.0
@@ -29,13 +42,13 @@ Horst Duchene <monora@gmail.com>
   * Changed edge sequence to match example picture (daa88e)
   * Fixed comment (6a6c93)
   * Fixed spelling (7ca281)
-Horst Duchêne <monora@gmail.com>
 Chase <chase.gilliam@gmail.com>
   * updated algorithms to 6.1 and added test unit to support newer rubies (fbd874)
 Louis Rose <louismrose@gmail.com>
-  * Fix #15. Use object IDs rather than labels to identify vertexs in DOT graph to ensure that distinct nodes that share a label are shown. (33206f)
-	* Issue #15. Fix tests. (4fc455)
-
+  * Fix #15. Use object IDs rather than labels to identify vertexs
+	in DOT graph to ensure that distinct nodes that share a label are
+	shown. (33206f)
+  * Issue #15. Fix tests. (4fc455)
 
 2014-12 Release 0.5.0
 
