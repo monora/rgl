@@ -6,7 +6,7 @@
 
 require 'rgl/enumerable_ext'
 
-RGL_VERSION = "0.5.2"
+RGL_VERSION = "0.5.3"
 
 module RGL
   class NotDirectedError < RuntimeError; end

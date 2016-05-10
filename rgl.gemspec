@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
       'ChangeLog',
       'examples/**/*',
       'Gemfile',
-      'README.rdoc',
+      'README.md',
       'Rakefile',
       'rakelib/*.rake',
       'test/**/*.rb',
