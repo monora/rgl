@@ -108,6 +108,8 @@ the base module Graph. The complexity guarantees can not necessarily provided.
 or download the latest sources from the git repository
 http://github.com/monora/rgl.
 
+If you are going to use the drawing functionalities install [Graphviz](http://www.graphviz.org/).
+
 ## Running tests
 
 Checkout RGL git repository and go to the project directory. First, install
