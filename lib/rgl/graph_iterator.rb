@@ -10,6 +10,10 @@ module RGL
   module GraphIterator
     include Stream
     include GraphWrapper
+
+    def length
+      inject(0) { |sum| sum + 1 }
+    end
   end
 
 end # RGL
