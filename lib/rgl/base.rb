@@ -4,8 +4,6 @@
 # library. The main module is RGL::Graph which defines the abstract behavior of
 # all graphs in the library.
 
-require 'rgl/enumerable_ext'
-
 RGL_VERSION = "0.5.3"
 
 module RGL
