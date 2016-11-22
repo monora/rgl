@@ -33,6 +33,6 @@ class TestDot < Test::Unit::TestCase
     def graph.vertex_id(v)
       "id-"+v.to_s
     end
-    dot = graph.write_to_graphic_file
+    graph.write_to_graphic_file
   end
 end

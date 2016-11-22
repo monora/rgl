@@ -22,7 +22,7 @@ module RGL
         next if bfs.finished_vertex?(u)
 
         bfs.reset_start(u)
-        bfs.move_forward_until { @found_odd_cycle }
+        bfs.move_forward_until { bfs.found_odd_cycle }
 
         return if bfs.found_odd_cycle
       end

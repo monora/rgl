@@ -61,7 +61,7 @@ i -> h j e c
 
     assert_equal(4, vis.num_comp)
 
-    res = vis.comp_map.to_a.sort.reduce({}) { |res, a|
+    result = vis.comp_map.to_a.sort.reduce({}) { |res, a|
       if res.key?(a[1])
         res[a[1]] << a[0]
       else
@@ -70,7 +70,7 @@ i -> h j e c
       res
     }
 
-    std_res = res.to_a.map {
+    std_res = result.to_a.map {
         |a|
       [a[1][0], a[1]]
     }.sort

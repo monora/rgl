@@ -31,7 +31,7 @@ class TestGraphXML < Test::Unit::TestCase
         name, nnodes, nedges = $1, $2.to_i, $3.to_i
       end
       if name && /directed: (\w+).*acyclic: (\w+).*connected: (\w+).*biconnected: (\w+)\s+/ =~ line
-        directed, acyclic, connected, biconnected = $1, $2, $3, $4
+        directed, acyclic, connected = $1, $2, $3
         File.open(NORTH_DIR + name + '.graphml') {
             |file|
           print '.'; $stdout.flush
@@ -44,12 +44,6 @@ class TestGraphXML < Test::Unit::TestCase
           num_comp = 0
           graph.to_undirected.each_connected_component { |x| num_comp += 1 }
           assert_equal(connected, (num_comp == 1).to_s)
-
-# 		  if graph.directed?
-# 			num_comp = graph.strongly_connected_components.num_comp
-# 			#puts num_comp
-# 			assert_equal(biconnected, (num_comp == 1).to_s)
-# 		  end
         }
       end
     }

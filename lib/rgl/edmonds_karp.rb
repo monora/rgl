@@ -46,9 +46,9 @@ module RGL
             min_residual_capacity = [min_residual_capacity, @residual_capacity_map[u, v]].min
           end
 
-          augmenting_path.each_cons(2) do |(u, v)|
-            @flow_map[[u, v]] += min_residual_capacity
-            @flow_map[[v, u]] -= min_residual_capacity
+          augmenting_path.each_cons(2) do |(uu, vv)|
+            @flow_map[[uu, vv]] += min_residual_capacity
+            @flow_map[[vv, uu]] -= min_residual_capacity
           end
         end
       end

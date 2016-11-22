@@ -100,9 +100,8 @@ task :changelog, :since_c, :until_c do |t,args|
   changelog_content = String.new
 
   cmd.split("\n").each do |entry|
-    date, author, subject, hash = entry.chomp.split("::")
+    _, author, subject, hash = entry.chomp.split("::")
     entries[author] = Array.new unless entries[author]
-    day = date.split(" ").first
     entries[author] << "#{subject} (#{hash[0..5]})" unless subject =~ /Merge/
   end
 
