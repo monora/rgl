@@ -5,6 +5,9 @@
 # Minimal Dot support, based on Dave Thomas's dot module (included in rdoc).
 # rdot.rb is a modified version which also contains support for undirected
 # graphs.
+#
+# You need to have [GraphViz](http://www.graphviz.org) installed, because the
+# functions in this modul execute the GraphViz executables _dot_ or _dotty_.
 
 require 'rgl/rdot'
 
@@ -64,7 +67,9 @@ module RGL
       File.open(dotfile, "w") do |f|
         print_dotted_on(params, f)
       end
-      system("dotty", dotfile)
+      unless system("dotty", dotfile)
+        raise "Error executing dotty. Did you install GraphViz?"
+      end
     end
 
     # Use dot[http://www.graphviz.org] to create a graphical representation of
@@ -78,7 +83,9 @@ module RGL
         f << self.to_dot_graph.to_s << "\n"
       end
 
-      system("dot -T#{fmt} #{src} -o #{dot}")
+      unless system("dot -T#{fmt} #{src} -o #{dot}")
+        raise "Error executing dot. Did you install GraphViz?"
+      end
       dot
     end
 

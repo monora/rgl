@@ -227,8 +227,8 @@ graph resources.
 
 Robert kindly allowed to integrate his work on graphr, which I did not yet
 succeed. Especially his work to output graphs for
-[GraphViz](http://www.research.att.com/sw/tools/graphviz/download.html) is
-much more elaborated than the minimal support in dot.rb.
+[GraphViz](http://www.graphviz.org) is much more elaborated than the minimal
+support in dot.rb.
 
 Jeremy Siek one of the authors of the nice book [The Boost Graph
 Library](http://www.boost.org/libs/graph/doc) kindly allowed to use the BGL
