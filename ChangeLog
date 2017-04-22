@@ -1,50 +1,59 @@
+2016-05 Release 0.5.3
+
+Horst Duchene
+ * Issue #38: Add error handling or dot functions. (719e38, 5a3423)
+Thomas Orozco
+ * Remove Enumerable Extension (fde8a5)
+ * Update to codeclimate-test-reporter 1.x (25fdb5)
+Mario Daskalov
+ * Clarify that you need graphviz in the README (35a4b4)
+
 2016-05 Release 0.5.2
 
-Horst Duchene <monora@gmail.com>
+Horst Duchene
  * Issue #21: Use new method vertex_id instead of object_id to identify vertices in dot export. (fa7592)
  * Integrate Code Climate's test coverage reporting (0ab722)
  * Clarify traversal order of DFS search (see #20). (afa788)
-Chase Gilliam <chase.gilliam@gmail.com>
+Chase Gilliam
  * drop 1.9.3 add newer jruby and rubinius (fad333)
-Matías Battocchia <matias@riseup.net>
+Matías Battocchia
  * Switched to a different heap implementation. (bd7c13)
-gorn <j@kub.cz>
+gorn
  * Adding failing test for issue #24 (1f6204)
 
 2015-12 Release 0.5.1
 
-Horst Duchene <monora@gmail.com>
+Horst Duchene
  * Changed edge sequence to match example picture (daa88e)
 
-Chase <chase.gilliam@gmail.com>
+Chase
  * updated algorithms to 6.1 and added test unit to support newer rubies (fbd874)
 
-Louis Rose <louismrose@gmail.com>
+Louis Rose
  * Fix #15. Use object IDs rather than labels to identify vertexs in DOT graph
    to ensure that distinct nodes that share a label are shown. (33206f, 4fc455)
 
 2014-12 Release 0.5.0
 
-Horst Duchene <monora@gmail.com>
+Horst Duchene
   * Changed edge sequence to match example picture (daa88e)
   * Fixed comment (6a6c93)
   * Fixed spelling (7ca281)
-Horst Duchêne <monora@gmail.com>
-Chase <chase.gilliam@gmail.com>
+Horst Duchêne
+Chase
   * updated algorithms to 6.1 and added test unit to support newer rubies (fbd874)
-Louis Rose <louismrose@gmail.com>
+Louis Rose
   * Fix #15. Use object IDs rather than labels to identify vertexs in DOT graph to ensure that distinct nodes that share a label are shown. (33206f)
   * Issue #15. Fix tests. (4fc455)
 
-
 2014-12 Release 0.5.0
-Horst Duchene <monora@gmail.com>
+Horst Duchene
   * Changed edge sequence to match example picture (daa88e)
   * Fixed comment (6a6c93)
   * Fixed spelling (7ca281)
-Chase <chase.gilliam@gmail.com>
+Chase
   * updated algorithms to 6.1 and added test unit to support newer rubies (fbd874)
-Louis Rose <louismrose@gmail.com>
+Louis Rose
   * Fix #15. Use object IDs rather than labels to identify vertexs
 	in DOT graph to ensure that distinct nodes that share a label are
 	shown. (33206f)
