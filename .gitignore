@@ -10,3 +10,4 @@ graph.dot
 Gemfile.lock
 /.buildpath
 /dep_graph.dot
+/graph.*
