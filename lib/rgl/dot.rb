@@ -33,21 +33,25 @@ module RGL
       fontsize       = params['fontsize'] ? params['fontsize'] : '8'
       graph          = (directed? ? DOT::Digraph : DOT::Graph).new(params)
       edge_class     = directed? ? DOT::DirectedEdge : DOT::Edge
+      vertex_options = params['vertex'] || {}
+      edge_options   = params['edge'] || {}
 
       each_vertex do |v|
-        graph << DOT::Node.new(
-            'name'     => vertex_id(v),
-            'fontsize' => fontsize,
-            'label'    => vertex_label(v)
-        )
+        default_vertex_options =  {
+          'name'     => vertex_id(v),
+          'fontsize' => fontsize,
+          'label'    => vertex_label(v)
+        }
+        graph << DOT::Node.new(default_vertex_options.merge!(vertex_options))
       end
 
       each_edge do |u, v|
-        graph << edge_class.new(
-            'from'     => vertex_id(u),
-            'to'       => vertex_id(v),
-            'fontsize' => fontsize
-        )
+        default_edge_options = {
+          'from'     => vertex_id(u),
+          'to'       => vertex_id(v),
+          'fontsize' => fontsize
+        }
+        graph << edge_class.new(default_edge_options.merge!(edge_options))
       end
 
       graph
@@ -75,12 +79,12 @@ module RGL
     # Use dot[http://www.graphviz.org] to create a graphical representation of
     # the graph. Returns the filename of the graphics file.
     #
-    def write_to_graphic_file(fmt='png', dotfile="graph")
+    def write_to_graphic_file(fmt='png', dotfile="graph", options={})
       src = dotfile + ".dot"
       dot = dotfile + "." + fmt
 
       File.open(src, 'w') do |f|
-        f << self.to_dot_graph.to_s << "\n"
+        f << self.to_dot_graph(options).to_s << "\n"
       end
 
       unless system("dot -T#{fmt} #{src} -o #{dot}")
