@@ -42,7 +42,9 @@ module RGL
           'fontsize' => fontsize,
           'label'    => vertex_label(v)
         }
-        graph << DOT::Node.new(default_vertex_options.merge!(vertex_options))
+        each_vertex_options = default_vertex_options.merge(vertex_options)
+        vertex_options.each{|option, val| each_vertex_options[option] = val.call(u, v) if val.is_a?(Proc)}
+        graph << DOT::Node.new(each_vertex_options)
       end
 
       each_edge do |u, v|
@@ -51,7 +53,9 @@ module RGL
           'to'       => vertex_id(v),
           'fontsize' => fontsize
         }
-        graph << edge_class.new(default_edge_options.merge!(edge_options))
+        each_edge_options = default_edge_options.merge(edge_options)
+        edge_options.each{|option, val| each_edge_options[option] = val.call(u, v) if val.is_a?(Proc)}
+        graph << edge_class.new(each_edge_options)
       end
 
       graph
