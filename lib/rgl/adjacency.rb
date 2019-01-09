@@ -77,7 +77,7 @@ module RGL
     # Complexity is O(1), because the vertices are kept in a Hash containing
     # as values the lists of adjacent vertices of _v_.
     #
-    def has_vertex? (v)
+    def has_vertex?(v)
       @vertices_dict.has_key?(v)
     end
 
@@ -87,7 +87,7 @@ module RGL
     # ---
     # MutableGraph interface.
     #
-    def has_edge? (u, v)
+    def has_edge?(u, v)
       has_vertex?(u) && @vertices_dict[u].include?(v)
     end
 

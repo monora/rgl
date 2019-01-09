@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   #### Dependencies and requirements.
 
-  s.add_dependency 'stream',     '~> 0.5.0'
+  s.add_dependency 'stream',     '~> 0.5.2'
   s.add_dependency 'lazy_priority_queue', '~> 0.1.0'
 
   s.add_development_dependency 'rake'
@@ -36,7 +36,6 @@ Gem::Specification.new do |s|
 
   #### Documentation and testing.
 
-  s.has_rdoc = true
   s.extra_rdoc_files = ['README.md']
   s.rdoc_options += [
       '--title', 'RGL - Ruby Graph Library',
