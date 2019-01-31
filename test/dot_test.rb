@@ -38,12 +38,22 @@ class TestDot < Test::Unit::TestCase
         key              = "#{b}-#{e}"
         edge_labels[key] = "#{b} to #{e}"
       end
-      label_setting = Proc.new{|b, e| edge_labels["#{b}-#{e}"]}
-      dot_options   = {'edge' => {'color' => 'red', 'label' => label_setting}}
-      dot           = graph.to_dot_graph(dot_options).to_s
+      
+      vertex_fontcolors = {
+        'a' => 'green',
+        'b' => 'blue'
+      }
+      vertex_fontcolor_setting = Proc.new{|v| vertex_fontcolors[v]}
+      vertex_settings          = {'fontcolor' => vertex_fontcolor_setting, 'fontsize' => 12}
+      
+      edge_label_setting = Proc.new{|b, e| edge_labels["#{b}-#{e}"]}
+      edge_settings      = {'color' => 'red', 'label' => edge_label_setting}
+      dot_options        = {'edge' => edge_settings,'vertex' => vertex_settings}
+      dot                = graph.to_dot_graph(dot_options).to_s
 
-      assert_match(dot, /color\s*=\s*red/)
-      assert_match(dot, /a to b/)
+      assert_match(dot, /a \[\n\s*fontcolor = green,\n\s*fontsize = 12,\n\s*label = a\n\s*/)
+      assert_match(dot, /b \[\n\s*fontcolor = blue,\n\s*fontsize = 12,\n\s*label = a\n\s*/)
+      assert_match(dot, /a -> b \[\n\s*color = red,\n\s*fontsize = 8,\n\s*label = \"a to b\"\n/)
     rescue
       puts "Graphviz not installed?"
     end

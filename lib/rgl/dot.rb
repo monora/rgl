@@ -43,7 +43,7 @@ module RGL
           'label'    => vertex_label(v)
         }
         each_vertex_options = default_vertex_options.merge(vertex_options)
-        vertex_options.each{|option, val| each_vertex_options[option] = val.call(u, v) if val.is_a?(Proc)}
+        vertex_options.each{|option, val| each_vertex_options[option] = val.call(v) if val.is_a?(Proc)}
         graph << DOT::Node.new(each_vertex_options)
       end
 
