@@ -1,4 +1,15 @@
-2016-05 Release 0.5.3
+2019-01 Release 0.5.4
+
+Lia Skalkos
+ * Enable options to be passed to #write_to_graphic_file (4ca972). For details see PR #41
+Horst Duchene
+ * Fix travis-ci errors
+ * Add new ruby versions
+ * Fix gemspec errors
+ * Fix lint warnings
+ * Use version stream 0.5.2
+
+2017-04 Release 0.5.3
 
 Horst Duchene
  * Issue #38: Add error handling or dot functions. (719e38, 5a3423)

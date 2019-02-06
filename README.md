@@ -134,6 +134,10 @@ The result:
 
 ![Example](https://github.com/monora/rgl/raw/master/images/example.jpg)
 
+You can control the graph layout by passing layout parameters to `write_to_graphic_file`. See
+`TestDot::test_to_dot_digraph_with_options` for an example using a feature implemented by Lia
+Skalkos (see [PR #41](https://github.com/monora/rgl/pull/41)).
+
     irb> dg.directed?
     true
     irb> dg.vertices
@@ -249,6 +253,6 @@ See also http://github.com/monora/rgl/contributors.
 
 ## Copying
 
-RGL is Copyright (c) 2002,2004,2005,2008,2013,2015 by Horst Duchene. It is
+RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019 by Horst Duchene. It is
 free software, and may be redistributed under the terms specified in the
 README file of the Ruby distribution.
