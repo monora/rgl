@@ -218,4 +218,30 @@ END
     dg.depth_first_search(vis) { |x| }
     assert_equal("(1 (2 (3  3)(4 (5  5) 4) 2)(6  6) 1)(10 (11  11) 10)", a)
   end
+
+  def test_bfs_stream_protocol
+    it = @dg.bfs_iterator(1)
+    assert_true(it.at_beginning?)
+
+    it.set_to_end()
+    assert_true(it.at_end?)
+
+    it.set_to_begin()
+    assert_true(it.at_beginning?)
+
+    assert_equal(it.to_a(), [1, 2, 6, 3, 4, 5])
+  end
+
+  def test_dfs_stream_protocol
+    it = @dg.dfs_iterator(1)
+    assert_true(it.at_beginning?)
+
+    it.set_to_end()
+    assert_true(it.at_end?)
+
+    it.set_to_begin()
+    assert_true(it.at_beginning?)
+
+    assert_equal(it.to_a(), [1, 6, 4, 5, 2, 3])
+  end
 end

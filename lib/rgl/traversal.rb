@@ -58,9 +58,12 @@ module RGL
     # Reset the iterator to the initial state (i.e. at_beginning? == true).
     #
     def set_to_begin
+      # Reset color_map
+      @color_map = Hash.new(:WHITE)
       color_map[@start_vertex] = :GRAY
-      @waiting = [@start_vertex] # a queue
+      @waiting = [@start_vertex]           # a queue
       handle_tree_edge(nil, @start_vertex) # discovers start vertex
+      self
     end
 
     def basic_forward # :nodoc:
