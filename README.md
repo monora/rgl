@@ -171,6 +171,13 @@ Add inverse edge (4-2) to directed graph:
     irb> dg.remove_edge 4,2
     true
 
+Check whether a path exists between vertices 1 and 5
+
+    irb> require 'rgl/traversal'
+    irb> it = dg.bfs_iterator(1)
+    irb> it.any?(5)
+    true
+
 *Topological sort* is implemented as an iterator:
 
     require 'rgl/topsort'
