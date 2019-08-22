@@ -2,9 +2,11 @@ sudo: false
 language: ruby
 script: "bundle exec rake"
 
+# Build all branches
 branches:
   only:
-    - master
+    - /.*/
+
 rvm:
   - 2.0
   - 2.1
