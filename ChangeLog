@@ -1,3 +1,10 @@
+2019-01 Release 0.5.5
+
+Artemy Kirienko <art-kirienko@ya.ru>
+ * PR #42 Add method Graph#path?(u, v) to check if a path exists between two vertices
+Horst Duchene <monora@gmail.com>
+ * Fix #47 set_to_begin for graph iterator (881aa8)
+
 2019-01 Release 0.5.4
 
 Lia Skalkos
