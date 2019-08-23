@@ -4,7 +4,7 @@
 # library. The main module is RGL::Graph which defines the abstract behavior of
 # all graphs in the library.
 
-RGL_VERSION = "0.5.4"
+RGL_VERSION = "0.5.6"
 
 module RGL
   class NotDirectedError < RuntimeError; end
