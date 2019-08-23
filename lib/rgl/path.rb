@@ -11,7 +11,7 @@ module RGL
       return false unless has_vertex?(source)
 
       bfs_iterator = bfs_iterator(source)
-      bfs_iterator.any?(target)
+      bfs_iterator.include?(target)
     end
   end
 end
