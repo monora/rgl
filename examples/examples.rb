@@ -77,7 +77,7 @@ def bfs_example(g = cycle(5), start = g.detect { |x| true })
 end
 
 # Would like to have GraphXML here
-def graph_from_dotfile (file)
+def graph_from_dotfile(file)
   g = RGL::AdjacencyGraph.new
   pattern = /\s*([^\"]+)[\"\s]*--[\"\s]*([^\"\[\;]+)/ # ugly but works
   IO.foreach(file) { |line|
@@ -94,21 +94,23 @@ def graph_from_dotfile (file)
   g
 end
 
-# ruby -Ilib -r examples/examples.rb -rrgl/dot -e'bfs_example(module_graph,RGL::AdjacencyGraph).dotty'
-
+# ruby -Ilib examples/examples.rb
 if $0 == __FILE__
   require 'rgl/dot'
 
   dg = RGL::DirectedAdjacencyGraph[1,2, 2,3, 2,4, 4,5, 6,4, 1,6]
-  dg.dotty
   dg.write_to_graphic_file
-  bfs_example(dg, 1).dotty
-  bfs_example(graph_from_dotfile('dot/unix.dot'), 'Interdata').dotty({ 'label' => 'Interdata Nachfolger', 'fontsize' => 12 })
 
+  # BFS tree from 1 of dg:
+  bfs_example(dg, 1).write_to_graphic_file('png', 'bfs_example')
+
+  # Unix history as a graph:
+  g = bfs_example(graph_from_dotfile('examples/unix.dot'), 'Interdata')
+  g.write_to_graphic_file('png', 'unix', { 'label' => 'Interdata Nachfolger', 'fontsize' => 12 })
+
+  # Modules included by AdjacencyGraph:
   g = module_graph
   tree = bfs_example(module_graph, RGL::AdjacencyGraph)
   g = g.vertices_filtered_by { |v| tree.has_vertex? v }
-  g.write_to_graphic_file
-  g.dotty
+  g.write_to_graphic_file('png', 'module_graph')
 end
-
