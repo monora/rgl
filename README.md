@@ -123,6 +123,8 @@ After that you can run the tests:
 
 ## Example irb session with RGL
 
+    % irb -Ilib
+
     irb> require 'rgl/adjacency'
     irb> dg=RGL::DirectedAdjacencyGraph[1,2 ,2,3 ,2,4, 4,5, 6,4, 1,6]
     # Use DOT to visualize this graph:
