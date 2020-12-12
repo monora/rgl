@@ -1,7 +1,7 @@
 # graphxml.rb
 #
 # This file contains minimal support for creating RGL graphs from the GraphML
-# format (see http://www.graphdrawing.org/graphml). The main purpose is to
+# format (see http://graphml.graphdrawing.org/). The main purpose is to
 # have a rich set of example graphs to have some more tests.
 #
 # See the examples directory, which contains a subdirectory _north_ with the
@@ -48,7 +48,7 @@ module RGL
     end # class MutableGraphParser
 
     # Initializes an RGL graph from a subset of the GraphML format given in
-    # +source+ (see http://www.graphdrawing.org/graphml).
+    # +source+ (see http://graphml.graphdrawing.org/).
     #
     def from_graphxml(source)
       listener = MutableGraphParser.new(self)
