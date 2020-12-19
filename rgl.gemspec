@@ -6,6 +6,7 @@ Gem::Specification.new do |s|
   s.version = RGL_VERSION
   s.summary = "Ruby Graph Library"
   s.description = "RGL is a framework for graph data structures and algorithms"
+  s.license = "ruby"
 
   #### Dependencies and requirements.
 
