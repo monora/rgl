@@ -1,3 +1,19 @@
+2019-01 Release 0.5.7
+
+Horst Duchene
+ * Fully automate dev setup with Gitpod (41dd00)
+ * Add Dockerfile to install graphviz (2bd738)
+ * Examples do not call dotty (6bba96)
+ * Add ruby license file (a21aa5)
+ujihisa <ujihisa@users.noreply.github.com>
+ * Test against Ruby 2.6 and 2.7 as well (50ac7c)
+ * Fix dead links (9184f3)
+Harry Lascelles <hlascelles@users.noreply.github.com>
+ * Update .travis.yml (45b9a2)
+ * Make the links more explicit (95dc3b)
+Harry Lascelles
+ * Add explicit license to gemspec (de3647)
+
 2019-01 Release 0.5.6
 
 Artemy Kirienko
