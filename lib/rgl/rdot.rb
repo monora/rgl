@@ -328,7 +328,7 @@ module RGL
       # :call-seq:
       #   graph << element -> graph
       #
-      def << (element)
+      def <<(element)
         @elements << element
         self
       end

@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.version = RGL_VERSION
   s.summary = "Ruby Graph Library"
   s.description = "RGL is a framework for graph data structures and algorithms"
-  s.license = "ruby"
+  s.licenses = ['ruby']
 
   #### Dependencies and requirements.
 
-  s.add_dependency 'stream',     '~> 0.5.2'
+  s.add_dependency 'stream',     '~> 0.5.3'
   s.add_dependency 'lazy_priority_queue', '~> 0.1.0'
 
   s.add_development_dependency 'rake'

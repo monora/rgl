@@ -261,6 +261,7 @@ See also http://github.com/monora/rgl/contributors.
 
 ## Copying
 
-RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019 by Horst Duchene. It is
-free software, and may be redistributed under the [Ruby license](https://en.wikipedia.org/wiki/Ruby_License) and terms specified in the
-[COPYING](https://github.com/ruby/ruby/blob/master/COPYING) file of the Ruby language distribution.
+RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019,2020 by Horst
+Duchene. It is free software, and may be redistributed under the [Ruby
+license](https://en.wikipedia.org/wiki/Ruby_License) and terms specified in
+the LICENSE file.

@@ -15,7 +15,7 @@ require 'rgl/base' # require base module to get RGL_VERSION
 SOURCES = FileList['lib/**/*.rb']
 
 # The default task is run if rake is given no explicit arguments.
-desc "Default Task"
+desc 'Default Task'
 task :default => :test
 
 # Define a test task.
@@ -28,7 +28,7 @@ end
 
 # Git tagging
 
-desc "Commit all changes as a new version commit. Tag the commit with v<version> tag"
+desc 'Commit all changes as a new version commit. Tag the commit with v<version> tag'
 task :tag do
   puts "Committing and tagging version #{RGL_VERSION}"
   `git commit -am 'Version #{RGL_VERSION}'`
@@ -44,13 +44,13 @@ Bundler::GemHelper.install_tasks
 # TAGS ---------------------------------------------------------------
 
 file 'tags' => SOURCES do
-  print "Running ctags..."
-  sh %{ctags #{SOURCES.join(' ')}}             # vi tags
-  puts "done."
+  print 'Running ctags...'
+  sh %(ctags #{SOURCES.join(' ')}) # vi tags
+  puts 'done.'
 end
 
 file 'TAGS' => SOURCES do
-  sh %{etags #{SOURCES.join(' ')}}          # emacs TAGS
+  sh %(etags #{SOURCES.join(' ')}) # emacs TAGS
 end
 
 # Misc tasks =========================================================
@@ -73,34 +73,34 @@ def show_line(msg, lines, loc)
   printf "%6s %6s   %s\n", lines.to_s, loc.to_s, msg
 end
 
-desc "Count lines in the main files"
+desc 'Count lines in the main files'
 task :lines do
   total_lines = 0
   total_code = 0
-  show_line("File Name", "LINES", "LOC")
+  show_line('File Name', 'LINES', 'LOC')
   SOURCES.each do |fn|
     lines, codelines = count_lines(fn)
     show_line(fn, lines, codelines)
     total_lines += lines
-    total_code  += codelines
+    total_code += codelines
   end
-  show_line("TOTAL", total_lines, total_code)
+  show_line('TOTAL', total_lines, total_code)
 end
 
 # simple rake task to output a changelog between two commits, tags ...
 # output is formatted simply, commits are grouped under each author name
 #
-desc "generate changelog with nice clean output"
-task :changelog, :since_c, :until_c do |t,args|
+desc 'generate changelog with nice clean output'
+task :changelog, :since_c, :until_c do |t, args|
   since_c = args[:since_c] || `git tag | tail -1`.chomp
   until_c = args[:until_c]
-  cmd=`git log --pretty='format:%ci::%an <%ae>::%s::%H' #{since_c}..#{until_c}`
+  cmd = `git log --pretty='format:%ci::%an <%ae>::%s::%H' #{since_c}..#{until_c}`
 
   entries = Hash.new
   changelog_content = String.new
 
   cmd.split("\n").each do |entry|
-    _, author, subject, hash = entry.chomp.split("::")
+    _, author, subject, hash = entry.chomp.split('::')
     entries[author] = Array.new unless entries[author]
     entries[author] << "#{subject} (#{hash[0..5]})" unless subject =~ /Merge/
   end
