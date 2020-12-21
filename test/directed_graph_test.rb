@@ -5,16 +5,18 @@ require 'rgl/adjacency'
 include RGL
 include RGL::Edge
 
-class TestDirectedGraph < Test::Unit::TestCase
+module DirectedGraphTests
+  def graph_class; raise NotImplementedError end
+
   def setup
-    @dg = DirectedAdjacencyGraph.new
+    @dg = graph_class.new
     [[1, 2], [2, 3], [3, 2], [2, 4]].each do |(src, target)|
       @dg.add_edge(src, target)
     end
   end
 
   def test_empty_graph
-    dg = DirectedAdjacencyGraph.new
+    dg = graph_class.new
     assert dg.empty?
     assert dg.directed?
     assert(!dg.has_edge?(2, 1))
@@ -31,7 +33,7 @@ class TestDirectedGraph < Test::Unit::TestCase
   end
 
   def test_add
-    dg = DirectedAdjacencyGraph.new
+    dg = graph_class.new
     dg.add_edge(1, 2)
     assert(!dg.empty?)
     assert(dg.has_edge?(1, 2))
@@ -85,7 +87,7 @@ class TestDirectedGraph < Test::Unit::TestCase
   end
 
   def test_add_vertices
-    dg = DirectedAdjacencyGraph.new
+    dg = graph_class.new
     dg.add_vertices 1, 3, 2, 4
     assert_equal dg.vertices.sort, [1, 2, 3, 4]
 
@@ -94,7 +96,7 @@ class TestDirectedGraph < Test::Unit::TestCase
   end
 
   def test_creating_from_array
-    dg = DirectedAdjacencyGraph[1, 2, 3, 4]
+    dg = graph_class[1, 2, 3, 4]
     assert_equal([1, 2, 3, 4], dg.vertices.sort)
     assert_equal('(1-2)(3-4)', dg.edges.join)
   end
@@ -116,3 +118,15 @@ class TestDirectedGraph < Test::Unit::TestCase
     assert_equal '(1=2)(2=3)(2=4)', undirected.edges.sort.join
   end
 end
+
+class TestDirectedAdjacencyGraph < Test::Unit::TestCase
+    include DirectedGraphTests
+    def graph_class; DirectedAdjacencyGraph end
+end
+
+class TestBidirectionalDirectedAdjacencyGraph < Test::Unit::TestCase
+    include DirectedGraphTests
+    def graph_class; BidirectionalDirectedAdjacencyGraph end
+end
+
+
