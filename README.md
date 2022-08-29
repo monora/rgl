@@ -3,20 +3,19 @@
 RGL is a framework for graph data structures and algorithms.
 
 The design of the library is much influenced by the Boost Graph Library (BGL)
-which is written in C++. Refer to http://www.boost.org/libs/graph/doc for
+which is written in C++. Refer to https://www.boost.org/libs/graph/doc for
 further links and documentation on graph data structures and algorithms and
 the design rationales of BGL.
 
 A comprehensive summary of graph terminology can be found in the graph section
 of the *Dictionary of Algorithms and Data Structures* at
-http://www.nist.gov/dads/HTML/graph.html or
+https://www.nist.gov/dads/HTML/graph.html or
 [Wikipedia](https://en.wikipedia.org/wiki/Graph_%28discrete_mathematics%29).
 
 ## Documentation
 
-*   RGL's [API Reference](http://www.rubydoc.info/github/monora/rgl) at
-    http://rubydoc.info
-
+*   RGL's [API Reference](https://www.rubydoc.info/github/monora/rgl) at
+    https://rubydoc.info
 
 ## Design principles
 
@@ -30,7 +29,6 @@ Ruby. The main design goals directly taken from the BGL design are:
 
 *   A standardized generic interface for traversing graphs
     {RGL::GraphIterator}
-
 
 RGL provides some general purpose graph classes that conform to this
 interface, but they are not meant to be the **only** graph classes. As in BGL
@@ -48,11 +46,10 @@ achieve genericity:
 *   Element Type Parameterization
 *   Vertex and Edge Property Multi-Parameterization
 
-
 The first is easily achieved in RGL using mixins, which of course is not as
 efficient than C++ templates (but much more readable :-). The second one is
 even more easily implemented using standard iterators with blocks or using the
-[stream](http://www.rubydoc.info/github/monora/stream) module. The third one
+[stream](https://www.rubydoc.info/github/monora/stream) module. The third one
 is no issue since Ruby is dynamically typed: Each object can be a graph
 vertex. There is no need for a vertex (or even edge type). In the current
 version of RGL properties of vertices are simply attached using hashes. At
@@ -65,7 +62,6 @@ RGL current contains a core set of algorithm patterns:
 *   Breadth First Search {RGL::BFSIterator}
 *   Depth First Search {RGL::DFSIterator}
 
-
 The algorithm patterns by themselves do not compute any meaningful quantities
 over graphs, they are merely building blocks for constructing graph
 algorithms. The graph algorithms in RGL currently include:
@@ -77,7 +73,6 @@ algorithms. The graph algorithms in RGL currently include:
 *   Dijkstras Shortest Path Algorithm {RGL::DijkstraAlgorithm}
 *   Bellman Ford Algorithm {RGL::BellmanFordAlgorithm}
 
-
 ### Data Structures
 
 RGL currently provides two graph classes that implement a generalized
@@ -85,7 +80,6 @@ adjacency list and an edge list adaptor.
 
 *   {RGL::AdjacencyGraph}
 *   {RGL::ImplicitGraph}
-
 
 The AdjacencyGraph class is the general purpose _swiss army knife_ of graph
 classes. It is highly parameterized so that it can be optimized for different
@@ -95,20 +89,20 @@ removal at the cost of extra space overhead, etc.
 
 ### Differences to BGL
 
-The concepts of IncidenceGraph, AdjacencyGraph and VertexListGraph (see
-http://www.boost.org/libs/graph/doc/IncidenceGraph.html) are here bundled in
-the base graph module. Most methods of IncidenceGraph should be standard in
-the base module Graph. The complexity guarantees can not necessarily provided.
- See http://www.boost.org/libs/graph/doc/graph_concepts.html.
+The concepts of IncidenceGraph, AdjacencyGraph and VertexListGraph
+(see [IncidenceGraph](https://www.boost.org/libs/graph/doc/IncidenceGraph.html)) are
+bundled in RGL's base graph module. Most methods of IncidenceGraph
+should be standard in the base module Graph. The complexity guarantees
+can not necessarily provided (see [BGL's Graph Concepts](https://www.boost.org/libs/graph/doc/graph_concepts.html)).
 
 ## Installation
 
     % gem install rgl
 
-or download the latest sources from the git repository
-http://github.com/monora/rgl.
+or download the latest sources from the [git
+repository](https://github.com/monora/rgl).
 
-If you are going to use the drawing functionalities install [Graphviz](http://www.graphviz.org/).
+If you are going to use the drawing functionalities install [Graphviz](https://www.graphviz.org/).
 
 ## Running tests
 
@@ -229,8 +223,6 @@ This graph shows all loaded RGL modules:
 Look for more in
 [examples](https://github.com/monora/rgl/tree/master/examples) directory.
 
-I collect some links to stuff around RGL at http://del.icio.us/monora/rgl.
-
 ## Credits
 
 Many thanks to Robert Feldt which also worked on a graph library
@@ -239,29 +231,28 @@ graph resources.
 
 Robert kindly allowed to integrate his work on graphr, which I did not yet
 succeed. Especially his work to output graphs for
-[GraphViz](http://www.graphviz.org) is much more elaborated than the minimal
+[GraphViz](https://www.graphviz.org) is much more elaborated than the minimal
 support in dot.rb.
 
 Jeremy Siek one of the authors of the nice book [The Boost Graph
-Library](http://www.boost.org/libs/graph/doc) kindly allowed to use the BGL
+Library](https://www.boost.org/libs/graph/doc) kindly allowed to use the BGL
 documentation as a *cheap* reference for RGL. He and Robert also gave feedback
 and many ideas for RGL.
 
-Dave Thomas for [RDoc](http://rdoc.sourceforge.net) which generated what you
+Dave Thomas for [RDoc](https://rdoc.sourceforge.net) which generated what you
 read and matz for Ruby. Dave included in the latest version of RDoc (alpha9)
 the module dot/dot.rb which I use instead of Roberts module to visualize
 graphs (see rgl/dot.rb).
 
-Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas Schörk
-and Kirill Lashuk for contributing additions, test cases and bugfixes.
+Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas
+Schörk, Dan Čermák and Kirill Lashuk for contributing additions, test
+cases and bugfixes.
 
-Kirill Lashuk who started to take over further development in November 2012.
-
-See also http://github.com/monora/rgl/contributors.
+See also: https://github.com/monora/rgl/contributors
 
 ## Copying
 
-RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019,2020 by Horst
+RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019,2020,2022 by Horst
 Duchene. It is free software, and may be redistributed under the [Ruby
 license](https://en.wikipedia.org/wiki/Ruby_License) and terms specified in
 the LICENSE file.
