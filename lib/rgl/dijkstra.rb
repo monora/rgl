@@ -2,7 +2,7 @@ require 'rgl/dijkstra_visitor'
 require 'rgl/edge_properties_map'
 require 'rgl/path_builder'
 
-require 'lazy_priority_queue'
+require 'pairing_heap'
 
 module RGL
 
@@ -54,7 +54,7 @@ module RGL
     def init(source)
       @visitor.set_source(source)
 
-      @queue = MinPriorityQueue.new
+      @queue = PairingHeap::MinPriorityQueue.new
       @queue.push(source, 0)
     end
 

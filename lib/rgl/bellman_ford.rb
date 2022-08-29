@@ -2,8 +2,6 @@ require 'rgl/dijkstra_visitor'
 require 'rgl/edge_properties_map'
 require 'rgl/path_builder'
 
-require 'lazy_priority_queue'
-
 module RGL
 
   # Bellman-Ford shortest paths algorithm has the following event points:
