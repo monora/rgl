@@ -11,7 +11,7 @@ module RGL
 
     NODE_OPTS = [
         # attributes due to
-        # http://www.graphviz.org/Documentation/dotguide.pdf
+        # https://www.graphviz.org/Documentation/dotguide.pdf
         # February 23, 2008
         'color', # default: black; node shape color
         'comment', # any string (format-dependent)

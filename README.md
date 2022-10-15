@@ -226,7 +226,7 @@ Look for more in
 ## Credits
 
 Many thanks to Robert Feldt which also worked on a graph library
-(http://rockit.sf.net/subprojects/graphr) who pointed me to BGL and many other
+(https://rockit.sf.net/subprojects/graphr) who pointed me to BGL and many other
 graph resources.
 
 Robert kindly allowed to integrate his work on graphr, which I did not yet

@@ -237,8 +237,8 @@ This release mainly contains the contributions of Kirill, who added many algorit
 	  tests/TestRdot.rb: All IDs for DOT objects, including names,
 	  options, and values, are now automatically quoted as necessary
 	  according to the rules documented at
-	  http://www.graphviz.org/doc/info/lang.html and
-	  http://www.graphviz.org/Documentation/dotguide.pdf.
+	  https://www.graphviz.org/doc/info/lang.html and
+	  https://www.graphviz.org/Documentation/dotguide.pdf.
 
 	  Labels are handled specially in order to account for \l, \r, and
 	  \n sequences but are otherwise treated the same as other options.

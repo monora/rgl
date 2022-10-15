@@ -1,15 +1,15 @@
 # graphxml.rb
 #
 # This file contains minimal support for creating RGL graphs from the GraphML
-# format (see http://graphml.graphdrawing.org/). The main purpose is to
+# format (see https://graphml.graphdrawing.org/). The main purpose is to
 # have a rich set of example graphs to have some more tests.
 #
 # See the examples directory, which contains a subdirectory _north_ with the
 # Graph catalog GraphViz (see
-# http://www.research.att.com/sw/tools/graphviz/refs.html).
+# https://www.research.att.com/sw/tools/graphviz/refs.html).
 #
 # We use REXML::StreamListener from the REXML library
-# (http://www.germane-software.com/software/rexml) to parse the grapml files.
+# (https://www.germane-software.com/software/rexml) to parse the grapml files.
 
 require 'rgl/mutable'
 require 'rexml/document'
@@ -48,7 +48,7 @@ module RGL
     end # class MutableGraphParser
 
     # Initializes an RGL graph from a subset of the GraphML format given in
-    # +source+ (see http://graphml.graphdrawing.org/).
+    # +source+ (see https://graphml.graphdrawing.org/).
     #
     def from_graphxml(source)
       listener = MutableGraphParser.new(self)
