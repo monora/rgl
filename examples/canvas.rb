@@ -1,6 +1,6 @@
 # From c.l.r SNIP IT: bond TkCanvas with RubyGraphLibrary
 # author: Phlip (see also
-# http://www.rubygarden.org/ruby?RubyAlgorithmPackage/TkCanvasSample)
+# https://www.rubygarden.org/ruby?RubyAlgorithmPackage/TkCanvasSample)
 #
 # put a GraphViz graph into a TkCanvas, and make nodes
 # selectable. Illustrates a bug in GraphViz

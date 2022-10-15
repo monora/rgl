@@ -1,14 +1,14 @@
 #
 # Simple extensions of Hal Fultons tool to show dependencies between ruby
-# source files (see http://hypermetrics.com/rubyhacker/code/rdep/). The basic
+# source files (see https://hypermetrics.com/rubyhacker/code/rdep/). The basic
 # extensions can be found at the end of the function find_files.
 #
-# Source: [http://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/rgl/rgl/examples/rdep-rgl.rb]
+# Source: [https://cvs.sourceforge.net/cgi-bin/viewcvs.cgi/rgl/rgl/examples/rdep-rgl.rb]
 #
 # Additionaly rdep-rgl.rb generates a graphics file named
 # File.basename(ARGV[0]) + ".png".
 #
-# Requires RGL (http://rgl.sourceforge.net) and Graphviz
+# Requires RGL (https://rgl.sourceforge.net) and Graphviz
 # (www.research.att.com/sw/tools/graphviz/download.html).
 #
 #  ruby rdep-rgl.rb j:/ruby/lib/ruby/site_ruby/1.6/rdoc/rdoc.rb

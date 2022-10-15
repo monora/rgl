@@ -1,12 +1,10 @@
 # dot.rb
 #
-# $Id$
-#
 # Minimal Dot support, based on Dave Thomas's dot module (included in rdoc).
 # rdot.rb is a modified version which also contains support for undirected
 # graphs.
 #
-# You need to have [GraphViz](http://www.graphviz.org) installed, because the
+# You need to have [GraphViz](https://www.graphviz.org) installed, because the
 # functions in this modul execute the GraphViz executables _dot_ or _dotty_.
 
 require 'rgl/rdot'
@@ -24,8 +22,8 @@ module RGL
       v
     end
 
-    # Return a RGL::DOT::Digraph for directed graphs or a DOT::Graph for an
-    # undirected Graph. _params_ can contain any graph property specified in
+    # Return a {DOT::Digraph} for directed graphs or a {DOT::Graph} for an
+    # undirected {Graph}. _params_ can contain any graph property specified in
     # rdot.rb.
     #
     def to_dot_graph(params = {})
@@ -67,7 +65,7 @@ module RGL
       s << to_dot_graph(params).to_s << "\n"
     end
 
-    # Call dotty[http://www.graphviz.org] for the graph which is written to the
+    # Call dotty[https://www.graphviz.org] for the graph which is written to the
     # file 'graph.dot' in the current directory.
     #
     def dotty(params = {})
@@ -80,7 +78,7 @@ module RGL
       end
     end
 
-    # Use dot[http://www.graphviz.org] to create a graphical representation of
+    # Use dot[https://www.graphviz.org] to create a graphical representation of
     # the graph. Returns the filename of the graphics file.
     #
     def write_to_graphic_file(fmt='png', dotfile="graph", options={})

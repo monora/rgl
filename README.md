@@ -128,7 +128,7 @@ After that you can run the tests:
 
 The result:
 
-![Example](https://github.com/monora/rgl/raw/master/images/example.jpg)
+![Example](images/example.jpg)
 
 You can control the graph layout by passing layout parameters to `write_to_graphic_file`. See
 `TestDot::test_to_dot_digraph_with_options` for an example using a feature implemented by Lia
@@ -214,11 +214,11 @@ subgraph of the original graph, using a filtered graph:
 
 creates the following graph image with DOT:
 
-![Module graph](https://github.com/monora/rgl/raw/master/images/module_graph.jpg)
+![Module graph](images/module_graph.jpg)
 
 This graph shows all loaded RGL modules:
 
-![RGL Modules](https://github.com/monora/rgl/raw/master/images/rgl_modules.png)
+![RGL Modules](images/rgl_modules.png)
 
 Look for more in
 [examples](https://github.com/monora/rgl/tree/master/examples) directory.
@@ -226,7 +226,7 @@ Look for more in
 ## Credits
 
 Many thanks to Robert Feldt which also worked on a graph library
-(http://rockit.sf.net/subprojects/graphr) who pointed me to BGL and many other
+(https://rockit.sf.net/subprojects/graphr) who pointed me to BGL and many other
 graph resources.
 
 Robert kindly allowed to integrate his work on graphr, which I did not yet
@@ -241,8 +241,8 @@ and many ideas for RGL.
 
 Dave Thomas for [RDoc](https://rdoc.sourceforge.net) which generated what you
 read and matz for Ruby. Dave included in the latest version of RDoc (alpha9)
-the module dot/dot.rb which I use instead of Roberts module to visualize
-graphs (see rgl/dot.rb).
+the module {RGL::DOT} which is used instead of Roberts module to visualize
+graphs.
 
 Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas
 Schörk, Dan Čermák and Kirill Lashuk for contributing additions, test

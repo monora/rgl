@@ -10,7 +10,7 @@ module RGL
     #
     # Returns an array of two disjoint vertices sets (represented as arrays) if the graph is bipartite. Otherwise,
     # returns nil.
-    #
+    # @return [Array]
     def bipartite_sets
       raise NotUndirectedError.new('bipartite sets can only be found for an undirected graph') if directed?
 

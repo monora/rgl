@@ -1,17 +1,17 @@
-# This is a modified version of dot.rb from Dave Thomas's rdoc project. I
-# renamed it to rdot.rb to avoid collision with an installed rdoc/dot.
-#
-# It also supports undirected edges.
-
 module RGL
 
+  # This is a modified version of +dot.rb+ from {https://ruby.github.io/rdoc Dave
+  # Thomas's rdoc project}. I renamed it to +rdot.rb+ to avoid collision with an
+  # installed rdoc/dot.
+  #
+  # It also supports undirected edges.
   module DOT
 
     # options for node declaration
 
     NODE_OPTS = [
         # attributes due to
-        # http://www.graphviz.org/Documentation/dotguide.pdf
+        # https://www.graphviz.org/Documentation/dotguide.pdf
         # February 23, 2008
         'color', # default: black; node shape color
         'comment', # any string (format-dependent)
@@ -139,7 +139,7 @@ module RGL
 
       attr_accessor :name, :options
 
-      def initialize(params = {}, option_list = []) # :nodoc:
+      def initialize(params = {}, option_list = [])
         @name = params['name'] ? params['name'] : nil
         @options = {}
 

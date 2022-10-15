@@ -6,14 +6,14 @@ module RGL
 
   module Graph
 
-    # Returns an RGL::ImplicitGraph where the strongly connected components of
+    # Returns an {ImplicitGraph} where the strongly connected components of
     # this graph are condensed into single nodes represented by Set instances
     # containing the members of each strongly connected component. Edges
     # between the different strongly connected components are preserved while
     # edges within strongly connected components are omitted.
     #
-    # Raises RGL::NotDirectedError if run on an undirected graph.
-    #
+    # Raises {NotDirectedError} if run on an undirected graph.
+    # @return ImplicitGraph
     def condensation_graph
       raise NotDirectedError,
             "condensation_graph only supported for directed graphs" unless directed?

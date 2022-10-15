@@ -204,7 +204,7 @@ END
 
   def test_depth_first_search_with_parens
     @dg.add_edge 10, 11
-    # We must ensure, that the order of the traversal is not dependend on the
+    # We must ensure, that the order of the traversal is not dependent on the
     # order of the each iterator in the hash map of the adjacency graph. Therefor we
     # wrap the graph with an implicit graph that simply ensures a sort order on
     # the vertices.

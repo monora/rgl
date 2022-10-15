@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- This file was written by the internal XML-Handler of Y-Files.-->
-<!DOCTYPE graphml SYSTEM "http://www.graphdrawing.org/dtds/graphml.dtd">
+<!DOCTYPE graphml SYSTEM "https://www.graphdrawing.org/dtds/graphml.dtd">
 <graphml>
 <graph id="G">
 <node id="n0"/>

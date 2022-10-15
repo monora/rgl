@@ -1,7 +1,8 @@
 module RGL
 
-  module GraphWrapper # :nodoc:
+  module GraphWrapper
 
+    # @return [Graph] the wrapped graph
     attr_accessor :graph
 
     # Creates a new GraphWrapper on _graph_.
