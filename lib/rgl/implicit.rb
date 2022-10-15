@@ -3,25 +3,26 @@
 # This file contains the definition of the class RGL::ImplicitGraph, which
 # defines vertex and edge iterators using blocks (which again call blocks).
 #
-# An ImplicitGraph provides a handy way to define graphs on the fly, using two
-# blocks for the two iterators defining a graph. A directed cyclic graph,
-# with five vertices can be created as follows:
-#
-#   g = RGL::ImplicitGraph.new do |g|
-#     g.vertex_iterator { |b| 0.upto(4,&b) }
-#     g.adjacent_iterator { |x, b| b.call((x+1)%5) }
-#     g.directed = true
-#   end
-#
-#   g.to_s # => "(0-1)(1-2)(2-3)(3-4)(4-0)"
-#
-# Other examples are given by the methods vertices_filtered_by and
-# edges_filtered_by, which can be applied to any graph.
 
 require 'rgl/base'
 
 module RGL
 
+  # An ImplicitGraph provides a handy way to define graphs on the fly, using two
+  # blocks for the two iterators defining a graph. Other examples are given by the
+  # methods {#vertices_filtered_by} and {#edges_filtered_by}, which can be
+  # applied to any graph.
+  #
+  # @example
+  #   # A directed cyclic graph, with five vertices can be created as follows:
+  #   g = RGL::ImplicitGraph.new do |g|
+  #     g.vertex_iterator { |b| 0.upto(4,&b) }
+  #     g.adjacent_iterator { |x, b| b.call((x+1)%5) }
+  #     g.directed = true
+  #   end
+  #
+  #   g.to_s # => "(0-1)(1-2)(2-3)(3-4)(4-0)"
+  #
   class ImplicitGraph
 
     include Graph
@@ -31,10 +32,10 @@ module RGL
     EMPTY_VERTEX_ITERATOR   = proc { |b| }
     EMPTY_NEIGHBOR_ITERATOR = proc { |x, b| }
 
-    # Create a new ImplicitGraph, which is empty by default. The caller should
+    # Create a new {ImplicitGraph}, which is empty by default. The caller should
     # configure the graph using vertex and neighbor iterators. If the graph is
-    # directed, the client should set _directed_ to true. The default value
-    # for _directed_ is false.
+    # directed, the client should set +@directed+ to true. The default value
+    # for +@directed+ is false.
     #
     def initialize
       @directed          = false
@@ -43,21 +44,21 @@ module RGL
       yield self if block_given? # Let client overwrite defaults.
     end
 
-    # Returns the value of @directed.
+    # Returns the value of +@directed+.
     #
     def directed?
       @directed
     end
 
-    def each_vertex(&block) # :nodoc:
+    def each_vertex(&block)
       @vertex_iterator.call(block)
     end
 
-    def each_adjacent(v, &block) # :nodoc:
+    def each_adjacent(v, &block)
       @adjacent_iterator.call(v, block)
     end
 
-    def each_edge(&block) # :nodoc:
+    def each_edge(&block)
       if defined? @edge_iterator
         @edge_iterator.call(block)
       else
@@ -67,7 +68,7 @@ module RGL
 
     # Sets the vertex_iterator to _block_,
     # which must be a block of one parameter
-    # which again is the block called by each_vertex.
+    # which again is the block called by {#each_vertex}.
     #
     def vertex_iterator(&block)
       @vertex_iterator = block
@@ -98,15 +99,14 @@ module RGL
 
   module Graph
 
-    # === Graph adaptors
-    #
-    # Return a new ImplicitGraph which has as vertices all vertices of the
+    # Returns a new {ImplicitGraph} which has as vertices all vertices of the
     # receiver which satisfy the predicate _filter_.
     #
-    # The methods provides similar functionality as the BGL graph adapter
-    # filtered_graph (see BOOST_DOC/filtered_graph.html).
+    # The methods provides similar functionality as
+    # {https://www.boost.org/doc/libs/1_36_0/libs/graph/doc/filtered_graph.html
+    # BGLs Filtered Graph}
     #
-    # ==== Example
+    # @example
     #
     #   def complete (n)
     #     set = n.integer? ? (1..n) : n
@@ -120,7 +120,7 @@ module RGL
     #
     #   complete(4).to_s # => "(1=2)(1=3)(1=4)(2=3)(2=4)(3=4)"
     #   complete(4).vertices_filtered_by { |v| v != 4 }.to_s # => "(1=2)(1=3)(2=3)"
-    #
+    # @return [ImplicitGraph]
     def vertices_filtered_by(&filter)
       implicit_graph do |g|
         g.vertex_iterator do |b|
@@ -133,15 +133,15 @@ module RGL
       end
     end
 
-    # Return a new ImplicitGraph which has as edges all edges of the receiver
+    # Returns a new {ImplicitGraph} which has as edges all edges of the receiver
     # which satisfy the predicate _filter_ (a block with two parameters).
     #
-    # ==== Example
+    # @example
     #
     #       g = complete(7).edges_filtered_by { |u,v| u+v == 7 }
     #       g.to_s     => "(1=6)(2=5)(3=4)"
     #       g.vertices => [1, 2, 3, 4, 5, 6, 7]
-    #
+    # @return [ImplicitGraph]
     def edges_filtered_by(&filter)
       implicit_graph do |g|
         g.adjacent_iterator do |v, b|
@@ -156,10 +156,10 @@ module RGL
       end
     end
 
-    # Return a new ImplicitGraph which is isomorphic (i.e. has same edges and
+    # Return a new {ImplicitGraph} which is isomorphic (i.e. has same edges and
     # vertices) to the receiver. It is a shortcut, also used by
-    # edges_filtered_by and vertices_filtered_by.
-    #
+    # {#edges_filtered_by} and {#vertices_filtered_by}.
+    # @return [ImplicitGraph]
     def implicit_graph
       result = ImplicitGraph.new do |g|
         g.vertex_iterator { |b| self.each_vertex(&b) }

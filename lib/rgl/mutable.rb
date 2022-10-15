@@ -21,7 +21,7 @@ module RGL
     # Inserts the edge (u,v) into the graph.
     #
     # Note that for undirected graphs, (u,v) is the same edge as (v,u), so
-    # after a call to the function add_edge(), this implies that edge (u,v)
+    # after a call to the function #add_edge, this implies that edge (u,v)
     # will appear in the out-edges of u and (u,v) (or equivalently (v,u))
     # will appear in the out-edges of v. Put another way, v will be adjacent
     # to u and u will be adjacent to v.
@@ -37,8 +37,8 @@ module RGL
     end
 
     # Add all edges in the _edges_ array to the edge set. Elements of the
-    # array can be both two-element arrays or instances of DirectedEdge or
-    # UnDirectedEdge.
+    # array can be both two-element arrays or instances of {Edge::DirectedEdge} or
+    # {Edge::UnDirectedEdge}.
     #
     def add_edges(*edges)
       edges.each { |edge| add_edge(edge[0], edge[1]) }
@@ -65,7 +65,7 @@ module RGL
     end
 
     # Remove all vertices specified by the array a from the graph by calling
-    # remove_vertex.
+    # {#remove_vertex}.
     #
     def remove_vertices(*a)
       a.each { |v| remove_vertex v }
@@ -74,14 +74,14 @@ module RGL
     # Returns all minimum cycles that pass through a give vertex.
     # The format is an Array of cycles, with each cycle being an Array
     # of vertices in the cycle.
-    #
+    # @return [Array[Array]]
     def cycles_with_vertex(vertex)
       cycles_with_vertex_helper(vertex, vertex, [])
     end
 
     protected
 
-    def cycles_with_vertex_helper(vertex, start, visited) #:nodoc:
+    def cycles_with_vertex_helper(vertex, start, visited)
       adjacent_vertices(start).reject { |x| visited.include?(x) }.inject([]) do |acc, adj|
         local_visited = Array.new(visited) << adj
         acc << local_visited if (adj==vertex)
@@ -91,7 +91,7 @@ module RGL
 
     public
 
-    # Returns an array of all minimum cycles in a graph
+    # @return [Array] of all minimum cycles in a graph
     #
     # This is not an efficient implementation O(n^4) and could
     # be done using Minimum Spanning Trees. Hint. Hint.

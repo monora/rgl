@@ -28,7 +28,7 @@ module RGL
 
     # Returns the number of in-edges (for directed graphs) or the number of
     # incident edges (for undirected graphs) of vertex _v_.
-    #
+    # @return [int]
     def in_degree(v)
       r = 0
       each_in_neighbor(v) { |u| r += 1 }
@@ -37,7 +37,7 @@ module RGL
 
     # Returns the number of in-edges plus out-edges (for directed graphs) or the
     # number of incident edges (for undirected graphs) of vertex _v_.
-    #
+    # @return [int]
     def degree(v)
       in_degree(v) + out_degree(v)
     end

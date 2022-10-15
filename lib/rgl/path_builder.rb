@@ -1,6 +1,6 @@
 module RGL
 
-  class PathBuilder # :nodoc:
+    class PathBuilder
 
     def initialize(source, parents_map)
       @source      = source
@@ -16,6 +16,7 @@ module RGL
       end
     end
 
+    # @return [Hash]
     def paths(targets)
       paths_map = {}
 

@@ -2,8 +2,8 @@ require 'rgl/graph_wrapper'
 
 module RGL
 
-  # Module GraphVisitor defines the BGL
-  # BFS[http://www.boost.org/libs/graph/doc/BFSVisitor.html] Visitor Concept.
+  # Module GraphVisitor defines the
+  # {https://www.boost.org/libs/graph/doc/visitor_concepts.html BGL Visitor Concepts}.
   #
   # Visitors provide a mechanism for extending an algorithm (i.e., for
   # customizing what is done at each step of the algorithm). They allow users
@@ -12,7 +12,7 @@ module RGL
   # Graph algorithms typically have multiple event points where one may want to
   # insert a call-back. Therefore, visitors have several methods that
   # correspond to the various event points. Each algorithm has a different
-  # set of event points. The following are common to both DFS and BFS search.
+  # set of event points. The following are common to both DFS and BFS search:
   #
   #  * examine_vertex
   #  * examine_edge
@@ -21,25 +21,26 @@ module RGL
   #  * forward_edge
   #  * finish_vertex
   #
-  # These methods are all called handle_* and can be set to appropriate blocks,
-  # using the methods set_*_event_handler, which are defined for each event
+  # These methods are all named +handle_*+ and can be set to appropriate blocks,
+  # using the methods +set_*_event_handler+, which are defined for each event
   # mentioned above.
   #
-  # As an alternative, you can also override the handle_* methods in a
+  # As an alternative, you can also override the +handle_*+ methods in a
   # subclass, to configure the algorithm (as an example, see TarjanSccVisitor).
   #
   # During a graph traversal, vertices are *colored* using the colors :GRAY
   # (when waiting) and :BLACK when finished. All other vertices are :WHITE.
-  # The color_map is also maintained in the visitor.
+  # The +color_map+ is also maintained in the visitor.
   #
   module GraphVisitor
 
     include GraphWrapper
 
+    # @return [Hash] a map which store the colors for each vertex
     attr_reader :color_map
 
     # Create a new GraphVisitor on _graph_.
-    #
+    # @param [Graph] graph
     def initialize(graph)
       super(graph)
       reset
@@ -59,7 +60,7 @@ module RGL
 
     # Shall we follow the edge (u,v); i.e. v has color :WHITE
     #
-    def follow_edge?(u, v) # :nodoc:
+    def follow_edge?(u, v)
       @color_map[v] == :WHITE
     end
 
@@ -67,10 +68,10 @@ module RGL
     # vertex to the start vertex.
     #
     # This is similar to BGLs
-    # distance_recorder[http://www.boost.org/libs/graph/doc/distance_recorder.html].
+    # {https://www.boost.org/libs/graph/doc/distance_recorder.html distance_recorder}.
     #
-    # After the distance_map is attached, the visitor has a new method
-    # distance_to_root, which answers the distance to the start vertex.
+    # After the +distance_map+ is attached, the visitor has a new method
+    # +distance_to_root+, which answers the distance to the start vertex.
     #
     def attach_distance_map(map = Hash.new(0))
       @distance_map = map
@@ -123,7 +124,8 @@ module RGL
     extend ClassMethods # add class methods to GraphVisitor class itself
 
     def self.included(base)
-      base.extend ClassMethods # when GraphVisitor is included into a class/module, add class methods as well
+      # when GraphVisitor is included into a class/module, add class methods as well
+      base.extend ClassMethods
     end
 
     def_event_handlers :examine_vertex,

@@ -2,4 +2,9 @@
 --title 'RGL API Documentation'
 --charset utf-8
 --embed-mixins
-'lib/**/*.rb' - 'examples/*.rb' 'rakelib/dep_graph.rake'
+--asset images
+--no-private
+-
+examples/*.rb
+rakelib/dep_graph.rake
+ChangeLog

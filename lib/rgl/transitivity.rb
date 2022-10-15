@@ -6,7 +6,7 @@ module RGL
 
   module Graph
 
-    # Returns an RGL::DirectedAdjacencyGraph which is the transitive closure of
+    # Returns an {DirectedAdjacencyGraph} which is the transitive closure of
     # this graph. Meaning, for each path u -> ... -> v in this graph, the path
     # is copied and the edge u -> v is added. This method supports working with
     # cyclic graphs by ensuring that edges are created between every pair of
@@ -15,8 +15,8 @@ module RGL
     # This method should run in O(|V||E|) time, where |V| and |E| are the number
     # of vertices and edges respectively.
     #
-    # Raises RGL::NotDirectedError if run on an undirected graph.
-    #
+    # Raises {NotDirectedError} if run on an undirected graph.
+    # @return DirectedAdjacencyGraph
     def transitive_closure
       raise NotDirectedError,
             "transitive_closure only supported for directed graphs" unless directed?
@@ -86,7 +86,7 @@ module RGL
       g
     end
 
-    # Returns an RGL::DirectedAdjacencyGraph which is the transitive reduction
+    # Returns an {DirectedAdjacencyGraph} which is the transitive reduction
     # of this graph. Meaning, that each edge u -> v is omitted if path
     # u -> ... -> v exists. This method supports working with cyclic graphs;
     # however, cycles are arbitrarily simplified which may lead to variant,
@@ -95,8 +95,8 @@ module RGL
     # This method should run in O(|V||E|) time, where |V| and |E| are the number
     # of vertices and edges respectively.
     #
-    # Raises RGL::NotDirectedError if run on an undirected graph.
-    #
+    # Raises {NotDirectedError} if run on an undirected graph.
+    # @return DirectedAdjacencyGraph
     def transitive_reduction
       raise NotDirectedError,
             "transitive_reduction only supported for directed graphs" unless directed?

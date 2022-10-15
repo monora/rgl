@@ -38,7 +38,7 @@ module RGL
       yield comp unless comp.empty?
     end
 
-    # This GraphVisitor is used by strongly_connected_components to compute
+    # This {GraphVisitor} is used by {#strongly_connected_components} to compute
     # the strongly connected components of a directed graph.
     #
     class TarjanSccVisitor < DFSVisitor
@@ -103,7 +103,7 @@ module RGL
     # This is Tarjan's algorithm for strongly connected components, from his
     # paper "Depth first search and linear graph algorithms". It calculates
     # the components in a single application of DFS. We implement the
-    # algorithm with the help of the DFSVisitor TarjanSccVisitor.
+    # algorithm with the help of the {DFSVisitor} {TarjanSccVisitor}.
     #
     # === Definition
     #
@@ -128,10 +128,10 @@ module RGL
     #   bibsource =    "Parallel/Multi.bib, Misc/Reverse.eng.bib",
     # }
     #
-    # The output of the algorithm is recorded in a TarjanSccVisitor _vis_.
-    # vis.comp_map will contain numbers giving the component ID assigned to
-    # each vertex. The number of components is vis.num_comp.
-    #
+    # The output of the algorithm is recorded in a {TarjanSccVisitor} _vis_.
+    # +vis.comp_map+ will contain numbers giving the component ID assigned to
+    # each vertex. The number of components is +vis.num_comp+.
+    # @return [TarjanSccVisitor]
     def strongly_connected_components
       raise NotDirectedError,
             "strong_components only works for directed graphs." unless directed?

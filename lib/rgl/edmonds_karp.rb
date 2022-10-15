@@ -3,6 +3,9 @@ require 'rgl/traversal'
 
 module RGL
 
+  # Implements {https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm
+  # Edmonds–Karp algorithm}.
+  # @see Graph#maximum_flow
   class EdmondsKarpAlgorithm
 
     # Initializes Edmonds-Karp algorithm for a _graph_ with provided edges capacities map.
@@ -17,9 +20,10 @@ module RGL
 
     # Finds the maximum flow from the _source_ to the _sink_ in the graph.
     #
-    # Returns flows map as a hash that maps each edge of the graph to a flow through that edge that is required to reach
-    # the maximum total flow.
+    # Returns flows map as a hash that maps each edge of the graph to a flow
+    # through that edge that is required to reach the maximum total flow.
     #
+    # @return [Hash]
     def maximum_flow(source, sink)
       raise ArgumentError.new("source and sink can't be equal") if source == sink
 
@@ -127,6 +131,7 @@ module RGL
     # Raises ArgumentError if a reverse edge is missing, edge capacity is missing, an edge has negative capacity, or a
     # reverse edge has positive capacity.
     #
+    # @return [Hash]
     def maximum_flow(edge_capacities_map, source, sink)
       EdmondsKarpAlgorithm.new(self, edge_capacities_map).maximum_flow(source, sink)
     end

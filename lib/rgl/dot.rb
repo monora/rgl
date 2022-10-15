@@ -1,7 +1,5 @@
 # dot.rb
 #
-# $Id$
-#
 # Minimal Dot support, based on Dave Thomas's dot module (included in rdoc).
 # rdot.rb is a modified version which also contains support for undirected
 # graphs.
@@ -24,8 +22,8 @@ module RGL
       v
     end
 
-    # Return a RGL::DOT::Digraph for directed graphs or a DOT::Graph for an
-    # undirected Graph. _params_ can contain any graph property specified in
+    # Return a {DOT::Digraph} for directed graphs or a {DOT::Graph} for an
+    # undirected {Graph}. _params_ can contain any graph property specified in
     # rdot.rb.
     #
     def to_dot_graph(params = {})

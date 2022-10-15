@@ -39,9 +39,10 @@ module RGL
 
     # Finds the shortest path form the _source_ to every other vertex of the graph.
     #
-    # Returns the shortest paths map that contains the shortest path (if it exists) from the source to any vertex of the
-    # graph.
+    # Returns the shortest paths map that contains the shortest path (if it
+    # exists) from the source to any vertex of the graph.
     #
+    # @return [Hash[Object,Array]]
     def shortest_paths(source)
       init(source)
       relax_edges
@@ -102,7 +103,7 @@ module RGL
     #
     # Raises ArgumentError or the graph has negative-weight cycles. This behavior can be overridden my a custom handler
     # for visitor's _edge_not_minimized_ event.
-    #
+    # @return [Hash[Object,Array]]
     def bellman_ford_shortest_paths(edge_weights_map, source, visitor = BellmanFordVisitor.new(self))
       BellmanFordAlgorithm.new(self, edge_weights_map, visitor).shortest_paths(source)
     end

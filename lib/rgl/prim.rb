@@ -3,6 +3,8 @@ require 'rgl/adjacency'
 
 module RGL
 
+  # Implements {https://en.wikipedia.org/wiki/Prim%27s_algorithm Prim's algorithm}.
+  # @see Graph#prim_minimum_spanning_tree
   class PrimAlgorithm
 
     # Replacement for default distance combinator that is used in Dijkstra's algorithm. While building a minimum
@@ -36,7 +38,7 @@ module RGL
 
     # Finds the minimum spanning tree of the graph.
     #
-    # Returns an AdjacencyGraph that represents the minimum spanning tree of the graph's connectivity component that
+    # Returns an {AdjacencyGraph} that represents the minimum spanning tree of the graph's connectivity component that
     # contains the starting vertex. The algorithm starts from an arbitrary vertex if the _start_vertex_ is not given.
     # Since the implementation relies on the Dijkstra's algorithm, Prim's algorithm uses the same visitor class and emits
     # the same events.

@@ -1,41 +1,45 @@
 # traversal.rb
 #
-# This file defines the basic graph traversal algorithm for DFS and BFS search.
-# They are implemented as an RGL::GraphIterator, which is a Stream of vertices
-# of a given graph. The streams are not reversable.
-#
-# Beside being an iterator in the sense of the Stream mixin, RGL::BFSIterator
-# and RGL::DFSIterator follow the BGL
-# Visitor[http://www.boost.org/libs/graph/doc/visitor_concepts.html] Concepts
-# in a slightly modified fashion (especially for the RGL::DFSIterator).
-
 require 'rgl/base'
 require 'rgl/graph_visitor'
 require 'rgl/graph_iterator'
 
 module RGL
 
-  # A BFSIterator can be used to traverse a graph from a given start vertex in
-  # breath first search order. Since the Iterator also mixins the GraphVisitor,
+  # File +traversal.rb+ defines the basic graph traversal algorithm for DFS and
+  # BFS search. They are implemented as a {GraphIterator}, which is a +Stream+
+  # of vertices of a given graph. The streams are not reversable.
+  #
+  # Beside being an iterator in the sense of the Stream mixin, {BFSIterator} and
+  # {DFSIterator} follow the
+  # {https://www.boost.org/libs/graph/doc/visitor_concepts.html BGL Visitor
+  # Concepts} in a slightly modified fashion (especially for the
+  # {DFSIterator}).
+  #
+  # A {BFSIterator} can be used to traverse a graph from a given start vertex in
+  # breath first search order. Since the iterator also mixins the {GraphVisitor},
   # it provides all event points defined there.
   #
-  # The vertices which are not yet visited are held in the queue @waiting.
+  # The vertices which are not yet visited are held in the queue +@waiting+.
   # During the traversal, vertices are *colored* using the colors :GRAY
   # (when waiting) and :BLACK when finished. All other vertices are :WHITE.
   #
-  # For more doc see the BGL
-  # BFS[http://www.boost.org/libs/graph/doc/BFSVisitor.html] Visitor Concept .
+  # For more see the BGL {BFS Visitor
+  # Concept}[https://www.boost.org/libs/graph/doc/BFSVisitor.html].
   #
-  # See the implementation of bfs_search_tree_from for an example usage.
+  # See the implementation of {Graph#bfs_search_tree_from} for an example usage.
   #
+  # @see Graph#bfs_iterator
+  # @see Graph#bfs_search_tree_from
   class BFSIterator
 
     include GraphIterator
     include GraphVisitor
 
+    # @return the vertex where the search starts
     attr_accessor :start_vertex
 
-    # Create a new BFSIterator on _graph_, starting at vertex _start_.
+    # Create a new {BFSIterator} on _graph_, starting at vertex _start_.
     #
     def initialize(graph, start = graph.detect { |x| true })
       super(graph)
@@ -43,9 +47,9 @@ module RGL
       set_to_begin
     end
 
-    # Returns true if the @color_map has only one entry (for the start vertex).
+    # Returns true if +@color_map+ has only one entry (for the start vertex).
     #
-    def at_beginning? # :nodoc:
+    def at_beginning?
       @color_map.size == 1
     end
 
@@ -66,7 +70,8 @@ module RGL
       self
     end
 
-    def basic_forward # :nodoc:
+    # @private
+    def basic_forward
       u = next_vertex
       handle_examine_vertex(u)
 
@@ -92,7 +97,7 @@ module RGL
 
     protected
 
-    def next_vertex # :nodoc:
+    def next_vertex
       # waiting is a queue
       @waiting.shift
     end
@@ -101,16 +106,15 @@ module RGL
 
   module Graph
 
-    # Returns a BFSIterator, starting at vertex _v_.
-
+    # @return [BFSIterator] starting at vertex _v_.
     def bfs_iterator(v = self.detect { |x| true })
       BFSIterator.new(self, v)
     end
 
-    # Returns a DirectedAdjacencyGraph, which represents a BFS search tree
-    # starting at _v_. This method uses the tree_edge_event of BFSIterator
+    # This method uses the +tree_edge_event+ of BFSIterator
     # to record all tree edges of the search tree in the result.
-
+    #
+    # @return [DirectedAdjacencyGraph] which represents a BFS search tree starting at _v_.
     def bfs_search_tree_from(v)
       require 'rgl/adjacency'
       bfs  = bfs_iterator(v)
@@ -127,11 +131,12 @@ module RGL
   end # module Graph
 
   # Iterator for a depth first search, starting at a given vertex. The only
-  # difference from BFSIterator is that @waiting is a stack, instead of a queue.
+  # difference from {BFSIterator} is that +@waiting+ is a stack, instead of a queue.
   #
-  # Note that this is different from DFSVisitor, which is used in the recursive
-  # version for depth first search (see depth_first_search).
+  # Note that this is different from {DFSVisitor}, which is used in the recursive
+  # version for depth first search (see {Graph#depth_first_search}).
   #
+  # @see Graph#dfs_iterator
   class DFSIterator < BFSIterator
 
     def next_vertex
@@ -141,17 +146,13 @@ module RGL
 
   end # class DFSIterator
 
-  # A DFSVisitor is needed by the depth_first_search and depth_first_visit
-  # methods of a graph. Besides the eventpoint of GraphVisitor, it provides
-  # an additional eventpoint start_vertex, which is called when a
-  # depth_first_search starts a new subtree of the depth first forest that is
-  # defined by the search.
+  # A DFSVisitor is needed by the {Graph#depth_first_search} and
+  # {Graph#depth_first_visit} methods of a graph. Besides the eventpoints of
+  # {GraphVisitor}, it provides an additional eventpoint +start_vertex+, which is
+  # called when a +depth_first_search+ starts a new subtree of the depth first
+  # forest that is defined by the search.
   #
-  # Note that the discover_vertex event defined in the BGL
-  # DFSVisitor[http://www.boost.org/libs/graph/doc/DFSVisitor.html] is not
-  # this is also defined in the common mixin GraphVisitor of DFSVisitor,
-  # DFSIterator, and BFSIterator.
-  #
+  # @see DFSIterator
   class DFSVisitor
 
     include GraphVisitor
@@ -162,20 +163,19 @@ module RGL
 
   module Graph
 
-    # Returns a DFSIterator staring at vertex _v_.
-
+    # @return [DFSIterator] staring at vertex _v_.
     def dfs_iterator(v = self.detect { |x| true })
       DFSIterator.new(self, v)
     end
 
-    # Do a recursive DFS search on the whole graph. If a block is passed,
-    # it is called on each _finish_vertex_ event. See
-    # strongly_connected_components for an example usage.
+    # Do a recursive DFS search on the whole graph. If a block is passed, it is
+    # called on each +finish_vertex+ event. See {Graph#strongly_connected_components}
+    # for an example usage.
     #
     # Note that this traversal does not garantee, that roots are at the top of
     # each spanning subtree induced by the DFS search on a directed graph (see
     # also the discussion in issue #20[https://github.com/monora/rgl/issues/20]).
-    #
+    # @see DFSVisitor
     def depth_first_search(vis = DFSVisitor.new(self), &b)
       each_vertex do |u|
         unless vis.finished_vertex?(u)
@@ -186,8 +186,8 @@ module RGL
     end
 
     # Start a depth first search at vertex _u_. The block _b_ is called on
-    # each finish_vertex event.
-    #
+    # each +finish_vertex+ event.
+    # @see DFSVisitor
     def depth_first_visit(u, vis = DFSVisitor.new(self), &b)
       vis.color_map[u] = :GRAY
       vis.handle_examine_vertex(u)

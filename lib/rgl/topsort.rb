@@ -10,10 +10,11 @@ module RGL
   # such that if edge (u,v) appears in the graph, then u comes before v in
   # the ordering. The graph must be a directed acyclic graph (DAG).
   #
-  # The iterator can also be applied to undirected graph or to a DG graph
+  # The iterator can also be applied to an undirected graph or to a directed graph
   # which contains a cycle. In this case, the Iterator does not reach all
-  # vertices. The implementation of acyclic? uses this fact.
+  # vertices. The implementation of {Graph#acyclic?} uses this fact.
   #
+  # @see Graph#topsort_iterator
   class TopsortIterator
 
     include GraphIterator
@@ -23,7 +24,7 @@ module RGL
       set_to_begin
     end
 
-    def set_to_begin # :nodoc:
+    def set_to_begin
       @waiting   = Array.new
       @inDegrees = Hash.new(0)
 
@@ -39,7 +40,8 @@ module RGL
       end
     end
 
-    def basic_forward # :nodoc:
+    # @private
+    def basic_forward
       u = @waiting.pop
       graph.each_adjacent(u) do |v|
         @inDegrees[v] -= 1
@@ -52,16 +54,15 @@ module RGL
       true
     end
 
-    # :nodoc: FIXME
     def at_end?
       @waiting.empty?
-    end # :nodoc:
+    end
 
   end # class TopsortIterator
 
   module Graph
 
-    # Returns a TopsortIterator.
+    # @return [TopsortIterator] for the graph.
     #
     def topsort_iterator
       TopsortIterator.new(self)
