@@ -197,7 +197,7 @@ module RGL
 
         if vis.follow_edge?(u, v)          # (u,v) is a tree edge
           vis.handle_tree_edge(u, v)       # also discovers v
-          vis.color_map[v] = :GRAY         # color of v was :WHITE
+          # color of v was :WHITE. Will be marked :GRAY in recursion
           depth_first_visit(v, vis, &b)
         else                               # (u,v) is a non tree edge
           if vis.color_map[v] == :GRAY
