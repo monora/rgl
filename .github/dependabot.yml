@@ -2,7 +2,14 @@
 
 version: 2
 updates:
-  - package-ecosystem: github-actions # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  # Maintain dependencies for bundler
+  - package-ecosystem: "bundler"
+    directory: "/"
     schedule:
       interval: "weekly"
