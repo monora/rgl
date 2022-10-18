@@ -1,0 +1,31 @@
+---
+name: Build + Test
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ruby-version:
+          - '2.6'
+          - '2.7'
+          - '3.0'
+          - '3.1'
+          - ruby-head
+          - jruby-head
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          # runs 'bundle install' and caches installed gems automatically
+          bundler-cache: true
+      - name: Deps
+        run: bundle install --jobs 4 --retry 3
+      - name: Run tests
+        run: bundle exec rake test
