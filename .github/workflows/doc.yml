@@ -32,7 +32,7 @@ jobs:
       - name: Build docs
         run: bundle exec rake yard || true
       - name: Setup Pages
-        uses: actions/configure-pages@v2
+        uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
