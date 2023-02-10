@@ -22,11 +22,6 @@ module RGL
       @reverse = self.reverse
     end
 
-    def add_vertex(v)
-      super(v)
-      @reverse.add_vertex(v)
-    end
-
     def add_edge(u, v)
       super(u, v)
       @reverse.add_edge(v, u)
