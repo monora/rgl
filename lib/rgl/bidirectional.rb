@@ -22,16 +22,23 @@ module RGL
       @reverse = self.reverse
     end
 
+    # We don't need to override add_vertex() because the reverse graph doesn't need to
+    # contain any unconnected vertices. Vertices will be added by add_vertex() as
+    # required.
+    #
+    # @see MutableGraph#add_edge.
     def add_edge(u, v)
       super(u, v)
       @reverse.add_edge(v, u)
     end
 
+    # @see MutableGraph#remove_vertex.
     def remove_vertex(v)
       super(v)
       @reverse.remove_vertex(v)
     end
 
+    # @see MutableGraph::remove_edge.
     def remove_edge(u, v)
       super(u, v)
       @reverse.remove_edge(v, u)
