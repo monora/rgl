@@ -1,4 +1,5 @@
-require 'rgl/base'
+require 'delegate'
+require 'rgl/adjacency'
 
 module RGL
 
@@ -12,9 +13,40 @@ module RGL
   # graphs, this is not an issue; because the in_edges() and out_edges()
   # functions are the same, they both return the edges incident to the vertex.
   #
-  module BidirectionalGraph
+  class BidirectionalGraph < DirectedAdjacencyGraph
 
     include Graph
+
+    def initialize(edgelist_class = Set, *other_graphs)
+      super(edgelist_class, *other_graphs)
+      @reverse = self.reverse
+    end
+
+    def add_vertex(v)
+      super(v)
+      @reverse.add_vertex(v)
+    end
+
+    def add_edge(u, v)
+      super(u, v)
+      @reverse.add_edge(v, u)
+    end
+
+    def remove_vertex(v)
+      super(v)
+      @reverse.remove_vertex(v)
+    end
+
+    def remove_edge(u, v)
+      super(u, v)
+      @reverse.remove_edge(v, u)
+    end
+
+    def has_in_edge?(u, v)
+      @reverse.has_edge?(v, u)
+    end
+
+    alias :has_out_edge? :has_edge?
 
     # Iterator providing access to the in-edges (for directed graphs) or incident
     # edges (for undirected graphs) of vertex _v_. For both directed and
@@ -22,17 +54,22 @@ module RGL
     # and the source is required to be a vertex that is adjacent to _v_.
     #
     def each_in_neighbor(v)
-      raise NotImplementedError
-      yield u
+      @reverse.each_adjacent
     end
+
+    alias :each_out_neighbor :each_adjacent
+
+    def in_neighbors(v)
+      @reverse.adjacent_vertices(v)
+    end
+
+    alias :out_neighbors :adjacent_vertices
 
     # Returns the number of in-edges (for directed graphs) or the number of
     # incident edges (for undirected graphs) of vertex _v_.
     # @return [int]
     def in_degree(v)
-      r = 0
-      each_in_neighbor(v) { |u| r += 1 }
-      r
+      @reverse.out_degree(v)
     end
 
     # Returns the number of in-edges plus out-edges (for directed graphs) or the
