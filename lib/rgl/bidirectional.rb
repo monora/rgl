@@ -43,7 +43,7 @@ module RGL
     end
 
     def has_in_edge?(u, v)
-      @reverse.has_edge?(v, u)
+      @reverse.has_edge?(u, v)
     end
 
     alias :has_out_edge? :has_edge?
