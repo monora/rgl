@@ -56,7 +56,7 @@ module RGL
     # and the source is required to be a vertex that is adjacent to _v_.
     #
     def each_in_neighbor(v)
-      @reverse.each_adjacent
+      @reverse.each_adjacent(v)
     end
 
     alias :each_out_neighbor :each_adjacent

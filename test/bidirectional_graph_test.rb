@@ -10,6 +10,12 @@ class TestBidirectionalGraph < Test::Unit::TestCase
   def setup
     @edges = [[1, 2], [1, 3], [2, 3], [2, 4], [2, 5], [2, 6], [3, 2], [3, 7], [3, 8],
              [5, 10], [6, 9], [7, 9], [7, 10], [8, 10]]
+    @out_neighbors = Hash.new { |h, k| h[k] = Set.new }
+    @in_neighbors = Hash.new { |h, k| h[k] = Set.new }
+    @edges.each do |e|
+      @out_neighbors[e[0]] << e[1]
+      @in_neighbors[e[1]] << e[0]
+    end
     @dg = BidirectionalGraph.new
     @edges.each do |(src, target)|
       @dg.add_edge(src, target)
@@ -134,4 +140,27 @@ class TestBidirectionalGraph < Test::Unit::TestCase
     undirected = @dg.to_undirected
     assert_equal '(1=2)(1=3)(2=3)(2=4)(2=5)(2=6)(3=7)(3=8)(5=10)(6=9)(7=9)(7=10)(8=10)', undirected.edges.sort.join
   end
+
+  def test_neighbors
+    @edges.flatten.to_set.each do |v|
+      assert_equal @out_neighbors[v], @dg.out_neighbors(v).to_set
+      assert_equal @in_neighbors[v], @dg.in_neighbors(v).to_set
+    end
+  end
+
+  def test_each_neighbor
+    @edges.flatten.to_set.each do |v|
+      assert_equal @out_neighbors[v], @dg.each_out_neighbor(v).inject(Set.new) { |s, v| s << v }
+      assert_equal @in_neighbors[v], @dg.each_in_neighbor(v).inject(Set.new) { |s, v| s << v }
+    end
+  end
+
+  def test_degrees
+    @edges.flatten.to_set.each do |v|
+      assert_equal @out_neighbors[v].size, @dg.out_degree(v)
+      assert_equal @in_neighbors[v].size, @dg.in_degree(v)
+      assert_equal @out_neighbors[v].size + @in_neighbors[v].size, @dg.degree(v)
+    end
+  end
+
 end
