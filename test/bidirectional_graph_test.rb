@@ -8,8 +8,10 @@ include RGL::Edge
 
 class TestBidirectionalGraph < Test::Unit::TestCase
   def setup
+    @edges = [[1, 2], [1, 3], [2, 3], [2, 4], [2, 5], [2, 6], [3, 2], [3, 7], [3, 8],
+             [5, 10], [6, 9], [7, 9], [7, 10], [8, 10]]
     @dg = BidirectionalGraph.new
-    [[1, 2], [2, 3], [3, 2], [2, 4]].each do |(src, target)|
+    @edges.each do |(src, target)|
       @dg.add_edge(src, target)
     end
   end
@@ -65,42 +67,23 @@ class TestBidirectionalGraph < Test::Unit::TestCase
   end
 
   def test_edges
-    assert_equal(4, @dg.edges.length)
-    assert_equal([1, 2, 2, 3], @dg.edges.map { |l| l.source }.sort)
-    assert_equal([2, 2, 3, 4], @dg.edges.map { |l| l.target }.sort)
-    assert_equal("(1-2)(2-3)(2-4)(3-2)", @dg.edges.map { |l| l.to_s }.sort.join)
+    assert_equal(14, @dg.edges.length)
+    assert_equal(@edges.map { |e| e[0] }.to_set, @dg.edges.map { |l| l.source }.to_set)
+    assert_equal(@edges.map { |e| e[1] }.to_set, @dg.edges.map { |l| l.target }.to_set)
+    assert_equal("(1-2)(1-3)(2-3)(2-4)(2-5)(2-6)(3-2)(3-7)(3-8)(5-10)(6-9)(7-10)(7-9)(8-10)", @dg.edges.map { |l| l.to_s }.sort.join)
     #    assert_equal([0,1,2,3], @dg.edges.map {|l| l.info}.sort)
   end
 
   def test_vertices
-    assert_equal([1, 2, 3, 4], @dg.vertices.sort)
+    assert_equal(@edges.flatten.to_set, @dg.vertices.to_set)
   end
 
   def test_edges_from_to?
-    assert @dg.has_edge?(1, 2)
-    assert @dg.has_out_edge?(1, 2)
-    assert @dg.has_in_edge?(2, 1)
-    assert @dg.has_edge?(2, 3)
-    assert @dg.has_out_edge?(2, 3)
-    assert @dg.has_in_edge?(3, 2)
-    assert @dg.has_edge?(3, 2)
-    assert @dg.has_out_edge?(3, 2)
-    assert @dg.has_in_edge?(2, 3)
-    assert @dg.has_edge?(2, 4)
-    assert @dg.has_out_edge?(2, 4)
-    assert @dg.has_in_edge?(4, 2)
-    assert !@dg.has_edge?(2, 1)
-    assert !@dg.has_out_edge?(2, 1)
-    assert !@dg.has_in_edge?(1, 2)
-    assert !@dg.has_edge?(3, 1)
-    assert !@dg.has_out_edge?(3, 1)
-    assert !@dg.has_in_edge?(1, 3)
-    assert !@dg.has_edge?(4, 1)
-    assert !@dg.has_out_edge?(4, 1)
-    assert !@dg.has_in_edge?(1, 4)
-    assert !@dg.has_edge?(4, 2)
-    assert !@dg.has_out_edge?(4, 2)
-    assert !@dg.has_in_edge?(2, 4)
+    @edges.each do |u, v|
+      assert @dg.has_edge?(u, v)
+      assert @dg.has_out_edge?(u, v)
+      assert @dg.has_in_edge?(v, u)
+    end
   end
 
   def test_remove_edges
@@ -117,7 +100,7 @@ class TestBidirectionalGraph < Test::Unit::TestCase
     assert !@dg.has_edge?(2, 3)
     assert !@dg.has_out_edge?(2, 3)
     assert !@dg.has_in_edge?(3, 2)
-    assert_equal('(2-4)', @dg.edges.join)
+    assert_equal('(2-4)(2-5)(2-6)(5-10)(6-9)(7-9)(7-10)(8-10)', @dg.edges.join)
   end
 
   def test_add_vertices
@@ -149,6 +132,6 @@ class TestBidirectionalGraph < Test::Unit::TestCase
 
   def test_to_undirected
     undirected = @dg.to_undirected
-    assert_equal '(1=2)(2=3)(2=4)', undirected.edges.sort.join
+    assert_equal '(1=2)(1=3)(2=3)(2=4)(2=5)(2=6)(3=7)(3=8)(5=10)(6=9)(7=9)(7=10)(8=10)', undirected.edges.sort.join
   end
 end
