@@ -1,6 +1,5 @@
 # bidirectional.rb
 #
-require 'delegate'
 require 'rgl/adjacency'
 
 module RGL
