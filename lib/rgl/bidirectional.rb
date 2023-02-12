@@ -90,8 +90,8 @@ module RGL
       @vertices_dict.delete(v)
 
       # remove v from all adjacency lists
-      @vertices_dict.each_value do |vdv|
-        vdv.each { |adjList| adjList.delete(v) }
+      @vertices_dict.each_value do |el_array|
+        el_array.each { |adjList| adjList.delete(v) }
       end
     end
 
