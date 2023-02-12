@@ -100,14 +100,14 @@ module RGL
       @vertices_dict[v][IN ].delete(u) unless @vertices_dict[v].nil?
     end
 
-     # Converts the adjacency list of each vertex to be of type +klass+. The
+    # Converts the adjacency list of each vertex to be of type +klass+. The
     # class is expected to have a new constructor which accepts an enumerable as
     # parameter.
     # @param [Class] klass
     def edgelist_class=(klass)
       @vertices_dict.keys.each do |v|
         [OUT, IN].each do |d|
-          @vertices_dict[v][d] = klass.new @vertices_dict[v].to_a
+          @vertices_dict[v][d] = klass.new @vertices_dict[v][d].to_a
         end
       end
     end
