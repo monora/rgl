@@ -137,7 +137,7 @@ module RGL
 
     def basic_add_edge(u, v)
       @vertices_dict[u][OUT].add(v)
-      @vertices_dict[v][IN].add(u)
+      @vertices_dict[v][IN ].add(u)
     end
 
   end
