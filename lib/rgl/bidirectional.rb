@@ -7,9 +7,9 @@ module RGL
 
   # BGL defines the concept BidirectionalGraph as follows:
   #
-  # The BidirectionalGraph concept refines IncidenceGraph and adds the
+  # The BidirectionalGraph concept refines DirectedAdjacencyGraph and adds the
   # requirement for efficient access to the in-edges of each vertex. This
-  # concept is separated from IncidenceGraph because, for directed graphs,
+  # concept is separated from DirectedAdjacencyGraph because, for directed graphs,
   # efficient access to in-edges typically requires more storage space,
   # and many algorithms do not require access to in-edges. For undirected
   # graphs, this is not an issue; because the in_edges() and out_edges()
@@ -23,41 +23,58 @@ module RGL
     include Graph
 
     protected
+
+    # @param v [Object] vertex
+    # @param d [Integer] 0 = out, 1 = in
+    # @return [Array] of vertices adjacent to vertex +v+ in the +d+ direction
     def adjacent_vertices_in_dir(v, d)
       (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")[d].to_a
     end
 
     public
-    def out_neighbors(v)
+
+    # @param v [Object] vertex
+    # @return [Array] of vertices adjacent to vertex +v+ in the _out_ direction
+    #
+    # @see Graph#adjacent_vertices
+     def out_neighbors(v)
       adjacent_vertices_in_dir(v, OUT)
     end
 
     alias :adjacent_vertices :out_neighbors
 
+    # @param v [Object] vertex
+    # @return [Array] of vertices adjacent to vertex +v+ in the _in_ direction
+    #
+    # @see Graph#adjacent_vertices
     def in_neighbors(v)
       adjacent_vertices_in_dir(v, IN)
     end
 
     public
 
+    # @param v [Object] vertex
+    #
+    # @see Graph#each_adjacent
     def each_out_neighbor(v, &b)
       out_neighbors(v).each(&b)
     end
 
     alias :each_adjacent :each_out_neighbor
 
+    # @param v [Object] vertex
+    #
+    # @see Graph#each_adjacent
     def each_in_neighbor(v, &b)
       in_neighbors(v).each(&b)
     end
 
-     # Complexity is O(1), if a Set is used as adjacency list. Otherwise,
-    # complexity is O(out_degree(v)).
     # @see Graph#has_edge?
-    def has_edge?(u, v)
+    def has_out_edge?(u, v)
       has_vertex?(u) && @vertices_dict[u][OUT].include?(v)
     end
 
-    alias :has_out_edge? :has_edge?
+    alias :has_edge? :has_out_edge?
 
     def has_in_edge?(u, v)
       has_vertex?(u) && @vertices_dict[u][IN].include?(v)
@@ -96,10 +113,15 @@ module RGL
       end
     end
 
+    # @see Graph#out_degree
     def out_degree(v)
       adjacent_vertices_in_dir(v, OUT).size
     end
 
+    # Returns the number of in-edges (for directed graphs) or the number of
+    # incident edges (for undirected graphs) of vertex +v+.
+    # @return [int]
+    # @param (see #each_adjacent)
     def in_degree(v)
       adjacent_vertices_in_dir(v, IN).size
     end
