@@ -1,3 +1,5 @@
+# bidirectional.rb
+#
 require 'delegate'
 require 'rgl/adjacency'
 
@@ -23,7 +25,7 @@ module RGL
     end
 
     # We don't need to override add_vertex() because the reverse graph doesn't need to
-    # contain any unconnected vertices. Vertices will be added by add_vertex() as
+    # contain any unconnected vertices. Vertices will be added by add_edge() as
     # required.
     #
     # @see MutableGraph#add_edge.
