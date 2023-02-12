@@ -96,20 +96,12 @@ module RGL
       end
     end
 
-    protected
-
-    def degree_in_dir(v, d)
-      adjacent_vertices_in_dir(v, d).size
-    end
-
-    public
-
     def out_degree(v)
-      degree_in_dir(v, OUT)
+      adjacent_vertices_in_dir(v, OUT).size
     end
 
     def in_degree(v)
-      degree_in_dir(v, IN)
+      adjacent_vertices_in_dir(v, IN).size
     end
 
     # Returns the number of in-edges plus out-edges (for directed graphs) or the
