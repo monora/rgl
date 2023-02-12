@@ -17,63 +17,99 @@ module RGL
   #
   class BidirectionalGraph < DirectedAdjacencyGraph
 
+    OUT = 0
+    IN  = 1
+
     include Graph
 
-    def initialize(edgelist_class = Set, *other_graphs)
-      super(edgelist_class, *other_graphs)
-      @reverse = self.reverse
+    protected
+    def adjacent_vertices_in_dir(v, d)
+      (@vertices_dict[v] or raise NoVertexError, "No vertex #{v}.")[d].to_a
     end
 
-    # We don't need to override add_vertex() because the reverse graph doesn't need to
-    # contain any unconnected vertices. Vertices will be added by add_edge() as
-    # required.
-    #
-    # @see MutableGraph#add_edge.
-    def add_edge(u, v)
-      super(u, v)
-      @reverse.add_edge(v, u)
+    public
+    def out_neighbors(v)
+      adjacent_vertices_in_dir(v, OUT)
     end
 
-    # @see MutableGraph#remove_vertex.
-    def remove_vertex(v)
-      super(v)
-      @reverse.remove_vertex(v)
+    alias :adjacent_vertices :out_neighbors
+
+    def in_neighbors(v)
+      adjacent_vertices_in_dir(v, IN)
     end
 
-    # @see MutableGraph::remove_edge.
-    def remove_edge(u, v)
-      super(u, v)
-      @reverse.remove_edge(v, u)
+    public
+
+    def each_out_neighbor(v, &b)
+      out_neighbors(v).each(&b)
     end
 
-    def has_in_edge?(u, v)
-      @reverse.has_edge?(u, v)
+    alias :each_adjacent :each_out_neighbor
+
+    def each_in_neighbor(v, &b)
+      in_neighbors(v).each(&b)
+    end
+
+     # Complexity is O(1), if a Set is used as adjacency list. Otherwise,
+    # complexity is O(out_degree(v)).
+    # @see Graph#has_edge?
+    def has_edge?(u, v)
+      has_vertex?(u) && @vertices_dict[u][OUT].include?(v)
     end
 
     alias :has_out_edge? :has_edge?
 
-    # Iterator providing access to the in-edges (for directed graphs) or incident
-    # edges (for undirected graphs) of vertex _v_. For both directed and
-    # undirected graphs, the target of an out-edge is required to be vertex _v_
-    # and the source is required to be a vertex that is adjacent to _v_.
-    #
-    def each_in_neighbor(v)
-      @reverse.each_adjacent(v)
+    def has_in_edge?(u, v)
+      has_vertex?(u) && @vertices_dict[u][IN].include?(v)
     end
 
-    alias :each_out_neighbor :each_adjacent
-
-    def in_neighbors(v)
-      @reverse.adjacent_vertices(v)
+    # @see MutableGraph#add_vertex
+    def add_vertex(v)
+      @vertices_dict[v] ||= [@edgelist_class.new, @edgelist_class.new] # out, in
     end
 
-    alias :out_neighbors :adjacent_vertices
+    # @see MutableGraph#remove_vertex.
+    def remove_vertex(v)
+      @vertices_dict.delete(v)
 
-    # Returns the number of in-edges (for directed graphs) or the number of
-    # incident edges (for undirected graphs) of vertex _v_.
-    # @return [int]
+      # remove v from all adjacency lists
+      @vertices_dict.each_value do |vdv|
+        vdv.each { |adjList| adjList.delete(v) }
+      end
+    end
+
+     # @see MutableGraph::remove_edge.
+    def remove_edge(u, v)
+      @vertices_dict[u][OUT].delete(v) unless @vertices_dict[u].nil?
+      @vertices_dict[v][IN ].delete(u) unless @vertices_dict[v].nil?
+    end
+
+     # Converts the adjacency list of each vertex to be of type +klass+. The
+    # class is expected to have a new constructor which accepts an enumerable as
+    # parameter.
+    # @param [Class] klass
+    def edgelist_class=(klass)
+      @vertices_dict.keys.each do |v|
+        [OUT, IN].each do |d|
+          @vertices_dict[v][d] = klass.new @vertices_dict[v].to_a
+        end
+      end
+    end
+
+    protected
+
+    def degree_in_dir(v, d)
+      adjacent_vertices_in_dir(v, d).size
+    end
+
+    public
+
+    def out_degree(v)
+      degree_in_dir(v, OUT)
+    end
+
     def in_degree(v)
-      @reverse.out_degree(v)
+      degree_in_dir(v, IN)
     end
 
     # Returns the number of in-edges plus out-edges (for directed graphs) or the
@@ -81,6 +117,13 @@ module RGL
     # @return [int]
     def degree(v)
       in_degree(v) + out_degree(v)
+    end
+
+    protected
+
+    def basic_add_edge(u, v)
+      @vertices_dict[u][OUT].add(v)
+      @vertices_dict[v][IN].add(u)
     end
 
   end
