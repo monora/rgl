@@ -1,4 +1,8 @@
-# Ruby Graph Library (RGL)[![Test](https://github.com/monora/rgl/actions/workflows/test.yml/badge.svg)](https://github.com/monora/rgl/actions/workflows/test.yml) [![Doc](https://github.com/monora/rgl/actions/workflows/doc.yml/badge.svg)](https://github.com/monora/rgl/actions/workflows/doc.yml) [<img src="https://codeclimate.com/github/monora/rgl/badges/coverage.svg" />](https://codeclimate.com/github/monora/rgl/coverage) [<img src="https://badge.fury.io/rb/rgl.svg" alt="Version"/>](https://badge.fury.io/rb/rgl) [![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/monora/rgl)
+# Ruby Graph Library (RGL)
+[![Test](https://github.com/monora/rgl/actions/workflows/test.yml/badge.svg)](https://github.com/monora/rgl/actions/workflows/test.yml) [![Doc](https://github.com/monora/rgl/actions/workflows/doc.yml/badge.svg)](https://github.com/monora/rgl/actions/workflows/doc.yml)
+[![Version](https://badge.fury.io/rb/rgl.svg)](https://badge.fury.io/rb/rgl)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/monora/rgl)
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/monora/rgl)](https://codeclimate.com/github/monora/rgl)
 
 RGL is a framework for graph data structures and algorithms.
 
