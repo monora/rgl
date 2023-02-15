@@ -1,12 +1,12 @@
 require 'test_helper'
 
-require 'rgl/adjacency'
-require 'rgl/bidirectional'
+require 'rgl/bidirectional_adjacency'
+require 'directed_graph_test'
 
 include RGL
 include RGL::Edge
 
-class TestBidirectionalGraph < Test::Unit::TestCase
+class TestBidirectionalAdjacencyGraph < TestDirectedGraph
   def setup
     @edges = [[1, 2], [1, 3], [2, 3], [2, 4], [2, 5], [2, 6], [3, 2], [3, 7], [3, 8],
              [5, 10], [6, 9], [7, 9], [7, 10], [8, 10]]
@@ -16,14 +16,14 @@ class TestBidirectionalGraph < Test::Unit::TestCase
       @out_neighbors[e[0]] << e[1]
       @in_neighbors[e[1]] << e[0]
     end
-    @dg = BidirectionalGraph.new
+    @dg = BidirectionalAdjacencyGraph.new
     @edges.each do |(src, target)|
       @dg.add_edge(src, target)
     end
   end
 
   def test_empty_graph
-    dg = BidirectionalGraph.new
+    dg = BidirectionalAdjacencyGraph.new
     assert dg.empty?
     assert dg.directed?
     assert(!dg.has_edge?(2, 1))
@@ -43,7 +43,7 @@ class TestBidirectionalGraph < Test::Unit::TestCase
   end
 
   def test_add
-    dg = BidirectionalGraph.new
+    dg = BidirectionalAdjacencyGraph.new
     dg.add_edge(1, 2)
     assert(!dg.empty?)
     assert(dg.has_edge?(1, 2))
@@ -110,7 +110,7 @@ class TestBidirectionalGraph < Test::Unit::TestCase
   end
 
   def test_add_vertices
-    dg = BidirectionalGraph.new
+    dg = BidirectionalAdjacencyGraph.new
     dg.add_vertices 1, 3, 2, 4
     assert_equal dg.vertices.sort, [1, 2, 3, 4]
 
@@ -119,7 +119,7 @@ class TestBidirectionalGraph < Test::Unit::TestCase
   end
 
   def test_creating_from_array
-    dg = BidirectionalGraph[1, 2, 3, 4]
+    dg = BidirectionalAdjacencyGraph[1, 2, 3, 4]
     assert_equal([1, 2, 3, 4], dg.vertices.sort)
     assert_equal('(1-2)(3-4)', dg.edges.join)
   end
