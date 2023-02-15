@@ -1,4 +1,4 @@
-# bidirectional.rb
+# bidirectional_adjacency.rb
 #
 require 'rgl/adjacency'
 require 'rgl/bidirectional'
@@ -14,11 +14,16 @@ module RGL
   # and many algorithms do not require access to in-edges. For undirected
   # graphs, this is not an issue; because the in_edges() and out_edges()
   # functions are the same, they both return the edges incident to the vertex.
+
+  # This implementation simply creates an internal DirectedAdjacencyGraph to store
+  # the in-edges and overrides methods to ensure that the out and in graphs
+  # remain synchronized.
   #
   class BidirectionalAdjacencyGraph < DirectedAdjacencyGraph
 
     include BidirectionalGraph
 
+    # @see DirectedAdjacencyGraph#initialize
     def initialize(edgelist_class = Set, *other_graphs)
       super(edgelist_class, *other_graphs)
       @reverse = self.reverse
@@ -27,7 +32,7 @@ module RGL
     # We don't need to override add_vertex() because the reverse graph doesn't need to
     # contain any unconnected vertices. Vertices will be added by add_edge() as
     # required.
-    #
+
     # @see MutableGraph#add_edge.
     def add_edge(u, v)
       super(u, v)
@@ -46,6 +51,7 @@ module RGL
       @reverse.remove_edge(v, u)
     end
 
+    # @see Graph#has_edge?
     def has_in_edge?(u, v)
       @reverse.has_edge?(u, v)
     end
