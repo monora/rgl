@@ -1,11 +1,23 @@
 require 'test_helper'
 
 require 'rgl/bidirectional_adjacency'
+require 'directed_graph_test'
 
 include RGL
 include RGL::Edge
 
-class TestBidirectionalAdjacencyGraph < Test::Unit::TestCase
+class TestBidirectionalAdjacencyGraphBasic < TestDirectedGraph
+  def setup
+    @dg = BidirectionalAdjacencyGraph.new
+    [[1, 2], [2, 3], [3, 2], [2, 4]].each do |(src, target)|
+      # @dg.add_edge(src, target)
+    end
+    @eg = BidirectionalAdjacencyGraph.new
+    @gfa = BidirectionalAdjacencyGraph[1, 2]
+  end
+end
+
+class TestBidirectionalAdjacencyGraphExtended < Test::Unit::TestCase
   def setup
     @edges = [[1, 2], [1, 3], [2, 3], [2, 4], [2, 5], [2, 6], [3, 2], [3, 7], [3, 8],
              [5, 10], [6, 9], [7, 9], [7, 10], [8, 10]]
@@ -163,3 +175,4 @@ class TestBidirectionalAdjacencyGraph < Test::Unit::TestCase
   end
 
 end
+

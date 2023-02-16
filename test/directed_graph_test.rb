@@ -11,10 +11,12 @@ class TestDirectedGraph < Test::Unit::TestCase
     [[1, 2], [2, 3], [3, 2], [2, 4]].each do |(src, target)|
       @dg.add_edge(src, target)
     end
+    @eg = DirectedAdjacencyGraph.new
+    @gfa = DirectedAdjacencyGraph[1, 2, 3, 4]
   end
 
   def test_empty_graph
-    dg = DirectedAdjacencyGraph.new
+    dg = @eg.clone
     assert dg.empty?
     assert dg.directed?
     assert(!dg.has_edge?(2, 1))
@@ -31,7 +33,7 @@ class TestDirectedGraph < Test::Unit::TestCase
   end
 
   def test_add
-    dg = DirectedAdjacencyGraph.new
+    dg = @eg.clone
     dg.add_edge(1, 2)
     assert(!dg.empty?)
     assert(dg.has_edge?(1, 2))
@@ -85,7 +87,7 @@ class TestDirectedGraph < Test::Unit::TestCase
   end
 
   def test_add_vertices
-    dg = DirectedAdjacencyGraph.new
+    dg = @eg.clone
     dg.add_vertices 1, 3, 2, 4
     assert_equal dg.vertices.sort, [1, 2, 3, 4]
 
@@ -94,7 +96,7 @@ class TestDirectedGraph < Test::Unit::TestCase
   end
 
   def test_creating_from_array
-    dg = DirectedAdjacencyGraph[1, 2, 3, 4]
+    dg = @gfa.clone
     assert_equal([1, 2, 3, 4], dg.vertices.sort)
     assert_equal('(1-2)(3-4)', dg.edges.join)
   end
