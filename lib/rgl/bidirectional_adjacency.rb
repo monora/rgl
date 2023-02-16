@@ -5,19 +5,9 @@ require 'rgl/bidirectional'
 
 module RGL
 
-  # BGL defines the concept BidirectionalGraph as follows:
-  #
-  # The BidirectionalGraph concept refines IncidenceGraph and adds the
-  # requirement for efficient access to the in-edges of each vertex. This
-  # concept is separated from IncidenceGraph because, for directed graphs,
-  # efficient access to in-edges typically requires more storage space,
-  # and many algorithms do not require access to in-edges. For undirected
-  # graphs, this is not an issue; because the in_edges() and out_edges()
-  # functions are the same, they both return the edges incident to the vertex.
-
-  # This implementation simply creates an internal DirectedAdjacencyGraph to store
-  # the in-edges and overrides methods to ensure that the out and in graphs
-  # remain synchronized.
+  # This implementation of @see BidirectionalGraph creates an internal
+  # DirectedAdjacencyGraph to store the in-edges and overrides methods
+  # to ensure that the out and in graphs remain synchronized.
   #
   class BidirectionalAdjacencyGraph < DirectedAdjacencyGraph
 
@@ -58,11 +48,7 @@ module RGL
 
     alias :has_out_edge? :has_edge?
 
-    # Iterator providing access to the in-edges (for directed graphs) or incident
-    # edges (for undirected graphs) of vertex _v_. For both directed and
-    # undirected graphs, the target of an out-edge is required to be vertex _v_
-    # and the source is required to be a vertex that is adjacent to _v_.
-    #
+    # @see BidirectionalGraph#each_in_neighbor
     def each_in_neighbor(v)
       @reverse.each_adjacent(v)
     end
@@ -72,8 +58,6 @@ module RGL
     def in_neighbors(v)
       @reverse.adjacent_vertices(v)
     end
-
-    alias :out_neighbors :adjacent_vertices
 
     # Returns the number of in-edges (for directed graphs) or the number of
     # incident edges (for undirected graphs) of vertex _v_.

@@ -26,6 +26,20 @@ module RGL
       yield u
     end
 
+    alias :each_out_neighbor :each_adjacent
+
+    def has_in_edge?(u, v)
+      raise NotImplementedError
+    end
+
+    alias :has_out_edge? :has_edge?
+
+    def in_neighbors(v)
+      raise NotImplementedError
+    end
+
+    alias :out_neighbors :adjacent_vertices
+
     # Returns the number of in-edges (for directed graphs) or the number of
     # incident edges (for undirected graphs) of vertex _v_.
     # @return [int]
