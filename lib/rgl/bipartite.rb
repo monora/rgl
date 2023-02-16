@@ -41,6 +41,7 @@ module RGL
 
   end # module Graph
 
+
   class BipartiteBFSIterator < BFSIterator
 
     attr_reader :bipartite_sets_map, :found_odd_cycle

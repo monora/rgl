@@ -116,6 +116,7 @@ module RGL
 
   end # class EdmondsKarpAlgorithm
 
+
   module Graph
 
     # Finds the maximum flow from the _source_ to the _sink_ in the graph.

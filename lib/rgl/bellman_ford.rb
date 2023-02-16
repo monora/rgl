@@ -27,6 +27,7 @@ module RGL
 
   end
 
+  # This class implements {Graph#bellman_ford_shortest_paths}.
   class BellmanFordAlgorithm
 
     # Initializes Bellman-Ford algorithm for a _graph_ with provided edges weights map.
@@ -88,6 +89,7 @@ module RGL
     end
 
   end # class BellmanFordAlgorithm
+
 
   module Graph
 

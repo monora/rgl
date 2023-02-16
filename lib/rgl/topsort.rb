@@ -8,10 +8,10 @@ module RGL
   #
   # The topological sort algorithm creates a linear ordering of the vertices
   # such that if edge (u,v) appears in the graph, then u comes before v in
-  # the ordering. The graph must be a directed acyclic graph (DAG).
+  # the ordering. The graph must be a directed acyclic graph.
   #
   # The iterator can also be applied to an undirected graph or to a directed graph
-  # which contains a cycle. In this case, the Iterator does not reach all
+  # which contains a cycle. In this case, the iterator does not reach all
   # vertices. The implementation of {Graph#acyclic?} uses this fact.
   #
   # @see Graph#topsort_iterator
@@ -59,6 +59,7 @@ module RGL
     end
 
   end # class TopsortIterator
+
 
   module Graph
 

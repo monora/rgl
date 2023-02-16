@@ -104,6 +104,7 @@ module RGL
 
   end # class BFSIterator
 
+
   module Graph
 
     # @return [BFSIterator] starting at vertex _v_.
@@ -160,6 +161,7 @@ module RGL
     def_event_handler 'start_vertex'
 
   end # class DFSVisitor
+
 
   module Graph
 
