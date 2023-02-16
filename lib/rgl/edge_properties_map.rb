@@ -37,6 +37,7 @@ module RGL
 
   end # EdgePropertiesMap
 
+
   class NonNegativeEdgePropertiesMap < EdgePropertiesMap
 
     private
