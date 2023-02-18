@@ -6,18 +6,7 @@ require 'directed_graph_test'
 include RGL
 include RGL::Edge
 
-class TestBidirectionalAdjacencyGraphBasic < TestDirectedGraph
-  def setup
-    @dg = BidirectionalAdjacencyGraph.new
-    [[1, 2], [2, 3], [3, 2], [2, 4]].each do |(src, target)|
-      # @dg.add_edge(src, target)
-    end
-    @eg = BidirectionalAdjacencyGraph.new
-    @gfa = BidirectionalAdjacencyGraph[1, 2]
-  end
-end
-
-class TestBidirectionalAdjacencyGraphExtended < Test::Unit::TestCase
+class TestBidirectionalAdjacencyGraph < Test::Unit::TestCase
   def setup
     @edges = [[1, 2], [1, 3], [2, 3], [2, 4], [2, 5], [2, 6], [3, 2], [3, 7], [3, 8],
              [5, 10], [6, 9], [7, 9], [7, 10], [8, 10]]
@@ -31,10 +20,12 @@ class TestBidirectionalAdjacencyGraphExtended < Test::Unit::TestCase
     @edges.each do |(src, target)|
       @dg.add_edge(src, target)
     end
+    @eg = BidirectionalAdjacencyGraph.new
+    @gfa = BidirectionalAdjacencyGraph[1, 2, 3, 4]
   end
 
   def test_empty_graph
-    dg = BidirectionalAdjacencyGraph.new
+    dg = @eg.clone
     assert dg.empty?
     assert dg.directed?
     assert(!dg.has_edge?(2, 1))
@@ -54,7 +45,7 @@ class TestBidirectionalAdjacencyGraphExtended < Test::Unit::TestCase
   end
 
   def test_add
-    dg = BidirectionalAdjacencyGraph.new
+    dg = @eg.clone
     dg.add_edge(1, 2)
     assert(!dg.empty?)
     assert(dg.has_edge?(1, 2))
@@ -121,7 +112,7 @@ class TestBidirectionalAdjacencyGraphExtended < Test::Unit::TestCase
   end
 
   def test_add_vertices
-    dg = BidirectionalAdjacencyGraph.new
+    dg = @eg.clone
     dg.add_vertices 1, 3, 2, 4
     assert_equal dg.vertices.sort, [1, 2, 3, 4]
 
@@ -130,17 +121,25 @@ class TestBidirectionalAdjacencyGraphExtended < Test::Unit::TestCase
   end
 
   def test_creating_from_array
-    dg = BidirectionalAdjacencyGraph[1, 2, 3, 4]
+    dg = @gfa.clone
     assert_equal([1, 2, 3, 4], dg.vertices.sort)
     assert_equal('(1-2)(3-4)', dg.edges.join)
   end
 
-  def test_reverse
-    # Add isolated vertex
-    @dg.add_vertex(42)
-    reverted = @dg.reverse
+  def test_creating_from_graphs
+    dg = @dg.clone
+    @gfa.each_edge { |e| dg.add_edge(e[0], e[1])}
+    dg2 = BidirectionalAdjacencyGraph.new(Set, @dg, @gfa)
+    assert_equal(dg2, dg2)
+  end
 
-    @dg.each_edge do |u, v|
+  def test_reverse
+    dg = @dg.clone
+    # Add isolated vertex
+    dg.add_vertex(42)
+    reverted = dg.reverse
+
+    dg.each_edge do |u, v|
       assert(reverted.has_edge?(v, u))
     end
 

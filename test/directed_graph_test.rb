@@ -101,12 +101,20 @@ class TestDirectedGraph < Test::Unit::TestCase
     assert_equal('(1-2)(3-4)', dg.edges.join)
   end
 
-  def test_reverse
-    # Add isolated vertex
-    @dg.add_vertex(42)
-    reverted = @dg.reverse
+  def test_creating_from_graphs
+    dg = @dg.clone
+    @gfa.each_edge { |e| dg.add_edge(e[0], e[1])}
+    dg2 = DirectedAdjacencyGraph.new(Set, @dg, @gfa)
+    assert_equal(dg2, dg2)
+  end
 
-    @dg.each_edge do |u, v|
+  def test_reverse
+    dg = @dg.clone
+    # Add isolated vertex
+    dg.add_vertex(42)
+    reverted = dg.reverse
+
+    dg.each_edge do |u, v|
       assert(reverted.has_edge?(v, u))
     end
 

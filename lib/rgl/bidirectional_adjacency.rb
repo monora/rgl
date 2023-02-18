@@ -15,8 +15,8 @@ module RGL
 
     # @see DirectedAdjacencyGraph#initialize
     def initialize(edgelist_class = Set, *other_graphs)
+      @reverse = DirectedAdjacencyGraph.new(edgelist_class)
       super(edgelist_class, *other_graphs)
-      @reverse = self.reverse
     end
 
     # We don't need to override add_vertex() because the reverse graph doesn't need to
