@@ -25,53 +25,51 @@ class TestBidirectionalAdjacencyGraph < Test::Unit::TestCase
   end
 
   def test_empty_graph
-    dg = @eg.clone
-    assert dg.empty?
-    assert dg.directed?
-    assert(!dg.has_edge?(2, 1))
-    assert(!dg.has_out_edge?(2, 1))
-    assert(!dg.has_in_edge?(1, 2))
-    assert(!dg.has_vertex?(3))
+    assert @eg.empty?
+    assert @eg.directed?
+    assert(!@eg.has_edge?(2, 1))
+    assert(!@eg.has_out_edge?(2, 1))
+    assert(!@eg.has_in_edge?(1, 2))
+    assert(!@eg.has_vertex?(3))
     # Non existent vertex result in a Name Error because each_key is
     # called for nil
-    assert_raises(NoVertexError) { dg.out_degree(3) }
-    assert_raises(NoVertexError) { dg.in_degree(3) }
-    assert_equal([], dg.vertices)
-    assert_equal(0, dg.size)
-    assert_equal(0, dg.num_vertices)
-    assert_equal(0, dg.num_edges)
-    assert_equal(DirectedEdge, dg.edge_class)
-    assert([].eql?(dg.edges))
+    assert_raises(NoVertexError) { @eg.out_degree(3) }
+    assert_raises(NoVertexError) { @eg.in_degree(3) }
+    assert_equal([], @eg.vertices)
+    assert_equal(0, @eg.size)
+    assert_equal(0, @eg.num_vertices)
+    assert_equal(0, @eg.num_edges)
+    assert_equal(DirectedEdge, @eg.edge_class)
+    assert_empty(@eg.edges)
   end
 
   def test_add
-    dg = @eg.clone
-    dg.add_edge(1, 2)
-    assert(!dg.empty?)
-    assert(dg.has_edge?(1, 2))
-    assert(dg.has_out_edge?(1, 2))
-    assert(dg.has_in_edge?(2, 1))
-    assert(!dg.has_edge?(2, 1))
-    assert(!dg.has_out_edge?(2, 1))
-    assert(!dg.has_in_edge?(1, 2))
-    assert(dg.has_vertex?(1) && dg.has_vertex?(2))
-    assert(!dg.has_vertex?(3))
+    @eg.add_edge(1, 2)
+    assert(!@eg.empty?)
+    assert(@eg.has_edge?(1, 2))
+    assert(@eg.has_out_edge?(1, 2))
+    assert(@eg.has_in_edge?(2, 1))
+    assert(!@eg.has_edge?(2, 1))
+    assert(!@eg.has_out_edge?(2, 1))
+    assert(!@eg.has_in_edge?(1, 2))
+    assert(@eg.has_vertex?(1) && @eg.has_vertex?(2))
+    assert(!@eg.has_vertex?(3))
 
-    assert_equal([1, 2], dg.vertices.sort)
-    assert([DirectedEdge.new(1, 2)].eql?(dg.edges))
-    assert_equal("(1-2)", dg.edges.join)
+    assert_equal([1, 2], @eg.vertices.sort)
+    assert([DirectedEdge.new(1, 2)].eql?(@eg.edges))
+    assert_equal("(1-2)", @eg.edges.join)
 
-    assert_equal([2], dg.adjacent_vertices(1))
-    assert_equal([2], dg.out_neighbors(1))
-    assert_equal([], dg.in_neighbors(1))
-    assert_equal([], dg.adjacent_vertices(2))
-    assert_equal([], dg.out_neighbors(2))
-    assert_equal([1], dg.in_neighbors(2))
+    assert_equal([2], @eg.adjacent_vertices(1))
+    assert_equal([2], @eg.out_neighbors(1))
+    assert_equal([], @eg.in_neighbors(1))
+    assert_equal([], @eg.adjacent_vertices(2))
+    assert_equal([], @eg.out_neighbors(2))
+    assert_equal([1], @eg.in_neighbors(2))
 
-    assert_equal(1, dg.out_degree(1))
-    assert_equal(0, dg.in_degree(1))
-    assert_equal(0, dg.out_degree(2))
-    assert_equal(1, dg.in_degree(2))
+    assert_equal(1, @eg.out_degree(1))
+    assert_equal(0, @eg.in_degree(1))
+    assert_equal(0, @eg.out_degree(2))
+    assert_equal(1, @eg.in_degree(2))
   end
 
   def test_edges
@@ -79,7 +77,6 @@ class TestBidirectionalAdjacencyGraph < Test::Unit::TestCase
     assert_equal(@edges.map { |e| e[0] }.to_set, @dg.edges.map { |l| l.source }.to_set)
     assert_equal(@edges.map { |e| e[1] }.to_set, @dg.edges.map { |l| l.target }.to_set)
     assert_equal("(1-2)(1-3)(2-3)(2-4)(2-5)(2-6)(3-2)(3-7)(3-8)(5-10)(6-9)(7-10)(7-9)(8-10)", @dg.edges.map { |l| l.to_s }.sort.join)
-    #    assert_equal([0,1,2,3], @dg.edges.map {|l| l.info}.sort)
   end
 
   def test_vertices
@@ -112,34 +109,30 @@ class TestBidirectionalAdjacencyGraph < Test::Unit::TestCase
   end
 
   def test_add_vertices
-    dg = @eg.clone
-    dg.add_vertices 1, 3, 2, 4
-    assert_equal dg.vertices.sort, [1, 2, 3, 4]
+    @eg.add_vertices 1, 3, 2, 4
+    assert_equal @eg.vertices.sort, [1, 2, 3, 4]
 
-    dg.remove_vertices 1, 3
-    assert_equal dg.vertices.sort, [2, 4]
+    @eg.remove_vertices 1, 3
+    assert_equal @eg.vertices.sort, [2, 4]
   end
 
   def test_creating_from_array
-    dg = @gfa.clone
-    assert_equal([1, 2, 3, 4], dg.vertices.sort)
-    assert_equal('(1-2)(3-4)', dg.edges.join)
+    assert_equal([1, 2, 3, 4], @gfa.vertices.sort)
+    assert_equal('(1-2)(3-4)', @gfa.edges.join)
   end
 
   def test_creating_from_graphs
-    dg = @dg.clone
-    @gfa.each_edge { |e| dg.add_edge(e[0], e[1])}
     dg2 = BidirectionalAdjacencyGraph.new(Set, @dg, @gfa)
-    assert_equal(dg2, dg2)
+    assert_equal(dg2.vertices.to_set, (@dg.vertices + @gfa.vertices).to_set)
+    assert_equal(dg2.edges.to_set, (@dg.edges + @gfa.edges).to_set)
   end
 
   def test_reverse
-    dg = @dg.clone
     # Add isolated vertex
-    dg.add_vertex(42)
-    reverted = dg.reverse
+    @dg.add_vertex(42)
+    reverted = @dg.reverse
 
-    dg.each_edge do |u, v|
+    @dg.each_edge do |u, v|
       assert(reverted.has_edge?(v, u))
     end
 

@@ -14,6 +14,7 @@ module RGL
     include BidirectionalGraph
 
     # @see DirectedAdjacencyGraph#initialize
+    # In super method the in edges are also added since `add_edge` of this class also inserts edges in `@reverse`.
     def initialize(edgelist_class = Set, *other_graphs)
       @reverse = DirectedAdjacencyGraph.new(edgelist_class)
       super(edgelist_class, *other_graphs)
