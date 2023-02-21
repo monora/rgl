@@ -1,6 +1,6 @@
 module RGL
 
-    class PathBuilder
+  class PathBuilder
 
     def initialize(source, parents_map)
       @source      = source
