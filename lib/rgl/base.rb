@@ -192,6 +192,15 @@ module RGL
       include?(v) # inherited from enumerable
     end
 
+    # Returns true if +(u, v)+ is an edge of the graph.
+    # @param (see #each_edge)
+    def has_edge?(u, v)
+      each_adjacent(u) do |w|
+        return true if v == w
+      end
+      return false
+    end
+
     # Returns true if the graph has no vertices, i.e. num_vertices == 0.
     #
     def empty?
