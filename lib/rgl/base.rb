@@ -1,7 +1,7 @@
 # base.rb
 
 # version information
-RGL_VERSION = "0.5.10"
+RGL_VERSION = "0.6.0"
 
 # Module {RGL} defines the namespace for all modules and classes of the graph
 # library. The main module is {Graph} which defines the abstract behavior of
