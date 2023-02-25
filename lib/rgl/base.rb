@@ -1,7 +1,7 @@
 # base.rb
 
 # version information
-RGL_VERSION = "0.5.10"
+RGL_VERSION = "0.6.0"
 
 # Module {RGL} defines the namespace for all modules and classes of the graph
 # library. The main module is {Graph} which defines the abstract behavior of
@@ -190,6 +190,15 @@ module RGL
     # @param (see #each_adjacent)
     def has_vertex?(v)
       include?(v) # inherited from enumerable
+    end
+
+    # Returns true if +(u, v)+ is an edge of the graph.
+    # @param (see #each_edge)
+    def has_edge?(u, v)
+      each_adjacent(u) do |w|
+        return true if v == w
+      end
+      return false
     end
 
     # Returns true if the graph has no vertices, i.e. num_vertices == 0.

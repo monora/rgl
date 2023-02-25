@@ -97,6 +97,7 @@ module RGL
 
   end # class ImplicitGraph
 
+
   module Graph
 
     # Returns a new {ImplicitGraph} which has as vertices all vertices of the

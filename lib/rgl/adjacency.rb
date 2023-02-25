@@ -161,6 +161,7 @@ module RGL
 
   end # class AdjacencyGraph
 
+
   module Graph
 
     # Convert a general graph to an AdjacencyGraph. If the graph is directed,

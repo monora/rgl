@@ -34,6 +34,7 @@ module RGL
 
   end # class PrimAlgorithm
 
+
   module Graph
 
     # Finds the minimum spanning tree of the graph.

@@ -6,6 +6,7 @@ require 'pairing_heap'
 
 module RGL
 
+  # This class implements {Graph#dijkstra_shortest_path} and {Graph#dijkstra_shortest_paths}
   class DijkstraAlgorithm
 
     # Distance combinator is a lambda that accepts the distance (usually from the source) to vertex _u_ and the weight
@@ -102,6 +103,7 @@ module RGL
     end
 
   end # class DijkstraAlgorithm
+
 
   module Graph
 

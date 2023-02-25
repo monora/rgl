@@ -11,6 +11,7 @@ class TestDirectedGraph < Test::Unit::TestCase
     [[1, 2], [2, 3], [3, 2], [2, 4]].each do |(src, target)|
       @dg.add_edge(src, target)
     end
+    @gfa = DirectedAdjacencyGraph[1, 2, 3, 4]
   end
 
   def test_empty_graph
@@ -86,17 +87,23 @@ class TestDirectedGraph < Test::Unit::TestCase
 
   def test_add_vertices
     dg = DirectedAdjacencyGraph.new
-    dg.add_vertices 1, 3, 2, 4
-    assert_equal dg.vertices.sort, [1, 2, 3, 4]
+    dg.add_vertices(1, 3, 2, 4)
+    assert_equal(dg.vertices.sort, [1, 2, 3, 4])
 
-    dg.remove_vertices 1, 3
-    assert_equal dg.vertices.sort, [2, 4]
+    dg.remove_vertices(1, 3)
+    assert_equal(dg.vertices.sort, [2, 4])
   end
 
   def test_creating_from_array
-    dg = DirectedAdjacencyGraph[1, 2, 3, 4]
-    assert_equal([1, 2, 3, 4], dg.vertices.sort)
-    assert_equal('(1-2)(3-4)', dg.edges.join)
+    assert_equal([1, 2, 3, 4], @gfa.vertices.sort)
+    assert_equal('(1-2)(3-4)', @gfa.edges.join)
+  end
+
+  def test_creating_from_graphs
+    @gfa.each_edge { |e| @dg.add_edge(e[0], e[1])}
+    dg = DirectedAdjacencyGraph.new(Set, @dg, @gfa)
+    assert_equal(dg.vertices.to_set, (@dg.vertices + @gfa.vertices).to_set)
+    assert_equal(dg.edges.to_set, (@dg.edges + @gfa.edges).to_set)
   end
 
   def test_reverse
