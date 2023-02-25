@@ -52,8 +52,8 @@ module RGL
     alias :has_out_edge? :has_edge?
 
     # @see BidirectionalGraph#each_in_neighbor
-    def each_in_neighbor(v)
-      @reverse.each_adjacent(v)
+    def each_in_neighbor(v, &block)
+      @reverse.each_adjacent(v, &block)
     end
 
     alias :each_out_neighbor :each_adjacent
