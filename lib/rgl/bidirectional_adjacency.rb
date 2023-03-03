@@ -22,9 +22,11 @@ module RGL
       super(edgelist_class, *other_graphs)
     end
 
-    # We don't need to override add_vertex() because the reverse graph doesn't need to
-    # contain any unconnected vertices. Vertices will be added by add_edge() as
-    # required.
+    # @see MutableGraph#add_vertex.
+    def add_vertex(v)
+      super(v)
+      @reverse.add_vertex(v)
+    end
 
     # @see MutableGraph#add_edge.
     def add_edge(u, v)
