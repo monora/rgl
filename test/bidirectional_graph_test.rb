@@ -149,6 +149,9 @@ class TestBidirectionalAdjacencyGraph < Test::Unit::TestCase
       assert_equal @out_neighbors[v], @dg.out_neighbors(v).to_set
       assert_equal @in_neighbors[v], @dg.in_neighbors(v).to_set
     end
+    @dg.add_vertex(42)
+    assert_empty(@dg.out_neighbors(42))
+    assert_empty(@dg.in_neighbors(42))
   end
 
   def test_each_neighbor
@@ -160,6 +163,13 @@ class TestBidirectionalAdjacencyGraph < Test::Unit::TestCase
       @dg.each_in_neighbor(v) { |n| in_neighbors << n }
       assert_equal @in_neighbors[v], in_neighbors
     end
+    @dg.add_vertex(42)
+    out_neighbors = Set.new
+    @dg.each_out_neighbor(42) { |n| out_neighbors << n }
+    assert_empty(out_neighbors)
+    in_neighbors = Set.new
+    @dg.each_in_neighbor(42) { |n| in_neighbors << n }
+    assert_empty(in_neighbors)
   end
 
   def test_degrees
