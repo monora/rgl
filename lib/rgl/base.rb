@@ -143,7 +143,7 @@ module RGL
     # method must be defined by concrete graph classes. It defines the BGL
     # VertexListGraph concept.
     #
-    def each_vertex() # :yields: v
+    def each_vertex(&block) # :yields: v
       raise NotImplementedError
     end
 
@@ -152,7 +152,7 @@ module RGL
     # IncidenceGraph concept.
     # @param v a vertex of the graph
     #
-    def each_adjacent(v) # :yields: v
+    def each_adjacent(v, &block) # :yields: v
       raise NotImplementedError
     end
 

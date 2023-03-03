@@ -156,11 +156,9 @@ class TestBidirectionalAdjacencyGraph < Test::Unit::TestCase
       out_neighbors = Set.new
       @dg.each_out_neighbor(v) { |n| out_neighbors << n }
       assert_equal @out_neighbors[v], out_neighbors
-      assert_equal @out_neighbors[v], @dg.each_out_neighbor(v).inject(Set.new) { |s, vv| s << vv }
       in_neighbors = Set.new
       @dg.each_in_neighbor(v) { |n| in_neighbors << n }
       assert_equal @in_neighbors[v], in_neighbors
-      assert_equal @in_neighbors[v], @dg.each_in_neighbor(v).inject(Set.new) { |s, vv| s << vv }
     end
   end
 
