@@ -35,13 +35,26 @@ module RGL
       edge_options   = params['edge'] || {}
 
       each_vertex do |v|
-        default_vertex_options =  {
+        default_vertex_options = {
           'name'     => vertex_id(v),
           'fontsize' => fontsize,
           'label'    => vertex_label(v)
         }
         each_vertex_options = default_vertex_options.merge(vertex_options)
-        vertex_options.each{|option, val| each_vertex_options[option] = val.call(v) if val.is_a?(Proc)}
+
+        vertex_options.each do |option, val|
+          if val.is_a?(Proc)
+            if val.call(v).nil?
+              each_vertex_options[option] = nil
+            elsif val.call(v).key?(:"#{option}")
+              foundval = val.call(v)[:"#{option}"]
+            end
+          else
+            foundval = val
+          end
+          each_vertex_options[option] = foundval
+        end
+
         graph << DOT::Node.new(each_vertex_options)
       end
 
@@ -52,7 +65,20 @@ module RGL
           'fontsize' => fontsize
         }
         each_edge_options = default_edge_options.merge(edge_options)
-        edge_options.each{|option, val| each_edge_options[option] = val.call(u, v) if val.is_a?(Proc)}
+
+        edge_options.each do |option, val|
+          if val.is_a?(Proc)
+            if val.call(u, v).nil?
+              each_edge_options[option] = nil
+            elsif val.call(u, v).key?(:"#{option}")
+              foundval = val.call(u, v)[:"#{option}"]
+            end
+          else
+            foundval = val
+          end
+          each_edge_options[option] = foundval
+        end
+
         graph << edge_class.new(each_edge_options)
       end
 
@@ -81,7 +107,7 @@ module RGL
     # Use dot[https://www.graphviz.org] to create a graphical representation of
     # the graph. Returns the filename of the graphics file.
     #
-    def write_to_graphic_file(fmt='png', dotfile="graph", options={})
+    def write_to_graphic_file(fmt = 'png', dotfile = "graph", options = {})
       src = dotfile + ".dot"
       dot = dotfile + "." + fmt
 
