@@ -7,13 +7,14 @@ module RGL
   # It also supports undirected edges.
   module DOT
 
-    # options for node declaration
+    # attributes due to
+    # https://www.graphviz.org/Documentation/dotguide.pdf
+    # January 5, 2015
 
+    # options for node declaration
     NODE_OPTS = [
-      # attributes due to
-      # https://www.graphviz.org/Documentation/dotguide.pdf
-      # February 23, 2008
       'color', # default: black; node shape color
+      'colorscheme', # default: X11; scheme for interpreting color names
       'comment', # any string (format-dependent)
       'distortion', # default: 0.0; node distortion for shape=polygon
       'fillcolor', # default: lightgrey/black; node fill color
@@ -23,46 +24,64 @@ module RGL
       'fontsize', # default: 14; point size of label
       'group', # name of node's group
       'height', # default: .5; height in inches
+      'id', # any string (user-defined output object tags)
       'label', # default: node name; any string
+      'labelloc', # default: c; node label vertical alignment
       'layer', # default: overlay range; all, id or id:id
-      'orientation', # dafault: 0.0; node rotation angle
+      'margin', # default: 0.11,0.55; space around label
+      'nojustify', # default: false; if true, justify to label, not node
+      'orientation', # default: 0.0; node rotation angle
+      'penwidth', # default: 1.0; width of pen for drawing boundaries, in points
       'peripheries', # shape-dependent number of node boundaries
       'regular', # default: false; force polygon to be regular
+      'samplepoints', # default 8 or 20; number vertices to convert circle or ellipse
       'shape', # default: ellipse; node shape; see Section 2.1 and Appendix E
       'shapefile', # external EPSF or SVG custom shape file
       'sides', # default: 4; number of sides for shape=polygon
       'skew', # default: 0.0; skewing of node for shape=polygon
       'style', # graphics options, e.g. bold, dotted, filled; cf. Section 2.3
+      'target', # if URL is set, determines browser window for URL
+      'tooltip', # default: label, tooltip annotation for node
       'URL', # URL associated with node (format-dependent)
       'width', # default: .75; width in inches
-      'z' # default: 0.0; z coordinate for VRML output
-    ]
+    ].freeze
 
+    # maintained for backward compatibility or rdot internal
     NODE_OPTS_LGCY = [
-      # maintained for backward compatibility or rdot internal
       'bottomlabel', # auxiliary label for nodes of shape M*
       'bgcolor',
       'rank',
       'toplabel' # auxiliary label for nodes of shape M*
-    ]
+    ].freeze
 
     # options for edge declaration
-
     EDGE_OPTS = [
       'arrowhead', # default: normal; style of arrowhead at head end
       'arrowsize', # default: 1.0; scaling factor for arrowheads
       'arrowtail', # default: normal; style of arrowhead at tail end
       'color', # default: black; edge stroke color
+      'colorscheme', # default: X11; scheme for interpreting color names
       'comment', # any string (format-dependent)
       'constraint', # default: true use edge to affect node ranking
       'decorate', # if set, draws a line connecting labels with their edges
       'dir', # default: forward; forward, back, both, or none
+      'edgeURL', # URL attached to non-label part of edge
+      'edgehref', # synonym for edgeURL
+      'edgetarget', # if URL is set, determines browser window for URL
+      'edgetooltip', # default: label; tooltip annotation for non-label part of edge
       'fontcolor', # default: black type face color
       'fontname', # default: Times-Roman; font family
       'fontsize', # default: 14; point size of label
-      'headlabel', # label placed near head of edge
+      'headclip', # default: true; if false, edge is not clipped to head node boundary
+      'headhref', # synonym for headURL
+      'headlabel', # default: label; placed near head of edge
       'headport', # n,ne,e,se,s,sw,w,nw
+      'headtarget', # if headURL is set, determines browser window for URL
+      'headtooltip', # default: label; tooltip annotation near head of edge
+      'headlabel', # label placed near head of edge
       'headURL', # URL attached to head label if output format is ismap
+      'href', # alias for URL
+      'id', # any string (user-defined output object tags)
       'label', # edge label
       'labelangle', # default: -25.0; angle in degrees which head or tail label is rotated off edge
       'labeldistance', # default: 1.0; scaling factor for distance of head or tail label from node
@@ -70,49 +89,68 @@ module RGL
       'labelfontcolor', # default: black; type face color for head and tail labels
       'labelfontname', # default: Times-Roman; font family for head and tail labels
       'labelfontsize', # default: 14 point size for head and tail labels
+      'labelhref', # synonym for labelURL
+      'labelURL', # URL for label, overrides edge URL
+      'labeltarget', # if URL or labelURL is set, determines browser window for URL
+      'labeltooltip', # default: label; tooltip annotation near label
       'layer', # default: overlay range; all, id or id:id
       'lhead', # name of cluster to use as head of edge
       'ltail', # name of cluster to use as tail of edge
       'minlen', # default: 1 minimum rank distance between head and tail
+      'penwidth', # default: 1.0; width of pen for drawing boundaries, in points
       'samehead', # tag for head node; edge heads with the same tag are merged onto the same port
       'sametail', # tag for tail node; edge tails with the same tag are merged onto the same port
       'style', # graphics options, e.g. bold, dotted, filled; cf. Section 2.3
       'taillabel', # label placed near tail of edge
       'tailport', # n,ne,e,se,s,sw,w,nw
       'tailURL', # URL attached to tail label if output format is ismap
-      'weight' # default: 1; integer cost of stretching an edge
-    ]
+      'weight', # default: 1; integer cost of stretching an edge
+      'tailclip', # default: true; if false, edge is not clipped to tail node boundary
+      'tailhref', # synonym for tailURL
+      'taillabel', # label placed near tail of edge
+      'tailport', # n,ne,e,se,s,sw,w,nw
+      'tailtarget', # if tailURL is set, determines browser window for URL
+      'tailtooltip', # default: label; tooltip annotation near tail of edge
+      'tailURL', # URL attached to tail label
+      'target', # if URL is set, determines browser window for URL
+      'tooltip' # default: label; tooltip annotation for edge
+    ].freeze
 
-    EDGE_OPTS_LGCY = [
-      # maintained for backward compatibility or rdot internal
-      'id'
-    ]
+    # maintained for backward compatibility or rdot internal
+    EDGE_OPTS_LGCY = [].freeze
 
     # options for graph declaration
-
     GRAPH_OPTS = [
+      'aspect', # controls aspect ratio adjustment
       'bgcolor', # background color for drawing, plus initial fill color
       'center', # default: false; center draing on page
       'clusterrank', # default: local; may be "global" or "none"
       'color', # default: black; for clusters, outline color, and fill color if
                # fillcolor not defined
+      'colorscheme', # default: X11; scheme for interpreting color names
       'comment', # any string (format-dependent)
       'compound', # default: false; allow edges between clusters
       'concentrate', # default: false; enables edge concentrators
+      'dpi', # default: 96; dots per inch for image output
       'fillcolor', # default: black; cluster fill color
       'fontcolor', # default: black; type face color
       'fontname', # default: Times-Roman; font family
+      'fontnames', # svg, ps, gd (SVG only)
       'fontpath', # list of directories to search for fonts
       'fontsize', # default: 14; point size of label
+      'id', # any string (user-defined output object tags)
       'label', # any string
       'labeljust', # default: centered; "l" and "r" for left- and right-justified
                    # cluster labels, respectively
       'labelloc', # default: top; "t" and "b" for top- and bottom-justified
                   # cluster labels, respectively
+      'landscape', # if true, means orientation=landscape
       'layers', # id:id:id...
+      'layersep', # default: : ; specifies separator character to split layers'
       'margin', # default: .5; margin included in page, inches
       'mclimit', # default: 1.0; scale factor for mincross iterations
       'nodesep', # default: .25; separation between nodes, in inches.
+      'nojustify', # default: false; if true, justify to label, not graph
       'nslimit', # if set to "f", bounds network simplex iterations by
                  # (f)(number of nodes) when setting x-coordinates
       'nslimit1', # if set to "f", bounds network simplex iterations by
@@ -120,24 +158,38 @@ module RGL
       'ordering', # if "out" out edge order is preserved
       'orientation', # default: portrait; if "rotate" is not used and the value is
                      # "landscape", use landscape orientation
+      'outputorder', # default: breadthfirst; or nodesfirst, edgesfirst
       'page', # unit of pagination, e.g. "8.5,11"
+      'pagedir', # default: BL; traversal order of pages
+      'pencolor', # default: black; color for drawing cluster boundaries
+      'penwidth', # default: 1.0; width of pen for drawing boundaries, in points
+      'peripheries', # default: 1; shape-dependent number of node boundaries
       'rank', # "same", "min", "max", "source", or "sink"
       'rankdir', # default: TB; "LR" (left to right) or "TB" (top to bottom)
       'ranksep', # default: .75; separation between ranks, in inches.
       'ratio', # approximate aspect ratio desired, "fill" or "auto"
+      'remincross', # default: true; whether to run edge crossing minimization
+                    # a second time when there are multiple clusters
+      'rotate', # If 90, set orientation to landscape
       'samplepoints', # default: 8; number of points used to represent ellipses
                       # and circles on output
       'searchsize', # default: 30; maximum edges with negative cut values to check
                     # when looking for a minimum one during network simplex
       'size', # maximum drawing size, in inches
+      'splines', # draw edges as splines, polylines, lines
       'style', # graphics options, e.g. "filled" for clusters
+      'stylesheet', # pathname or URL to XML style sheet for SVG
+      'target', # if URL is set, determines browser window for URL
+      'tooltip', # default: label; tooltip annotation for cluster
+      'truecolor', # if set, force 24 bit or indexed color in image output
+      'viewport', # clipping window on output
       'URL', # URL associated with graph (format-dependent)
-    ]
+    ].freeze
 
+    # maintained for backward compatibility or rdot internal
     GRAPH_OPTS_LGCY = [
-      # maintained for backward compatibility or rdot internal
       'layerseq'
-    ]
+    ].freeze
 
     # Ancestor of Edge, Node, and Graph.
     #
@@ -185,15 +237,14 @@ module RGL
         # Return a quoted version of the label otherwise.
         '"' + label.split(/(\\n|\\r|\\l)/).collect do |part|
           case part
-            when "\\n", "\\r", "\\l"
-              part
-            else
-              part.gsub('\\', '\\\\\\\\').gsub('"', '\\\\"').gsub("\n", '\\n')
+          when "\\n", "\\r", "\\l"
+            part
+          else
+            part.gsub('\\', '\\\\\\\\').gsub('"', '\\\\"').gsub("\n", '\\n')
           end
         end.join + '"'
       end
     end
-
 
     # Ports are used when a Node instance has its `shape' option set to
     # _record_ or _Mrecord_. Ports can be nested.
@@ -293,11 +344,10 @@ module RGL
           leader + quote_ID(@name) unless @name.nil?
         else
           leader + (@name.nil? ? '' : quote_ID(@name) + " ") + "[\n" +
-              stringified_options + "\n" +
-              leader + "]"
+          stringified_options + "\n" +
+          leader + "]"
         end
       end
-
     end # class Node
 
     # A graph representation. Whether or not it is rendered as directed or
@@ -374,9 +424,8 @@ module RGL
         end.join("\n\n")
 
         hdr + (options.empty? ? '' : options + "\n\n") +
-            (elements.empty? ? '' : elements + "\n") + leader + "}"
+        (elements.empty? ? '' : elements + "\n") + leader + "}"
       end
-
     end # class Graph
 
     # A digraph is a directed graph representation which is the same as a Graph
@@ -458,8 +507,8 @@ module RGL
           leader + quote_ID(f_s) + ' ' + edge_link + ' ' + quote_ID(t_s)
         else
           leader + quote_ID(f_s) + ' ' + edge_link + ' ' + quote_ID(t_s) + " [\n" +
-              stringified_options + "\n" +
-              leader + "]"
+          stringified_options + "\n" +
+          leader + "]"
         end
       end
 
