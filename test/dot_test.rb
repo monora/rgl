@@ -13,7 +13,7 @@ class TestDot < Test::Unit::TestCase
     graph = RGL::DirectedAdjacencyGraph["a", "b"]
 
     begin
-      dot   = graph.to_dot_graph.to_s
+      dot  = graph.to_dot_graph.to_s
 
       first_vertex_id = "a"
       second_vertex_id = "b"
@@ -29,31 +29,52 @@ class TestDot < Test::Unit::TestCase
     end
   end
 
-  def test_to_dot_digraph_with_options
-      graph = RGL::DirectedAdjacencyGraph["a", "b"]
+  def test_dot_digraph_with_complicated_options
+    graph = RGL::DirectedAdjacencyGraph['a', 'b', 'c', 'd']
 
-    begin
-      edge_labels = {}
-      graph.each_edge do |b, e|
-        key              = "#{b}-#{e}"
-        edge_labels[key] = "#{b} to #{e}"
-      end
-      
-      vertex_fontcolors = {'a' => 'green', 'b' => 'blue'}
-      vertex_fontcolor_setting = Proc.new{|v| vertex_fontcolors[v]}
-      vertex_settings          = {'fontcolor' => vertex_fontcolor_setting, 'fontsize' => 12}
-      
-      edge_label_setting = Proc.new{|b, e| edge_labels["#{b}-#{e}"]}
-      edge_settings      = {'color' => 'red', 'label' => edge_label_setting}
-      dot_options        = {'edge' => edge_settings,'vertex' => vertex_settings}
-      dot                = graph.to_dot_graph(dot_options).to_s
+    set_vertex_options('a', label: 'This is A', shape: 'box3d', fontcolor: 'green', fontsize: 16)
+    set_vertex_options('b', label: 'This is B', shape: 'tab', fontcolor: 'red', fontsize: 14)
+    set_vertex_options('c', shape: 'tab', fontcolor: 'blue')
 
-      assert_match(dot, /a \[\n\s*fontcolor = green,\n\s*fontsize = 12,\n\s*label = a\n\s*/)
-      assert_match(dot, /b \[\n\s*fontcolor = blue,\n\s*fontsize = 12,\n\s*label = b\n\s*/)
-      assert_match(dot, /a -> b \[\n\s*color = red,\n\s*fontsize = 8,\n\s*label = \"a to b\"\n/)
-    rescue
-      puts "Graphviz not installed?"
-    end
+    graph.add_edge('a', 'b')
+    graph.add_edge('a', 'c')
+    set_edge_options('a-b', label: 'NotCapitalEdge', style: 'dotted', direction: 'back', color: 'yellow')
+    set_edge_options('a-c', weight: 5, color: 'blue')
+
+    get_vertex_setting = proc { |v| @vertex_options[v] }
+    get_edge_setting = proc { |b, e| @edge_options["#{b}-#{e}"] }
+
+    # To configure more options, add the respective keys and the proc call
+    # Then provide the respective key:value to set_vertex_options
+    # Any hard coded values for a key will be applied to all nodes
+    vertex_options = {
+      'fontname'  => 'Calibri',
+      'label'     => get_vertex_setting,
+      'shape'     => get_vertex_setting,
+      'fontcolor' => get_vertex_setting,
+      'fontsize'  => get_vertex_setting
+    }
+
+    # To configure more options, add the respective keys and the proc call
+    # Then provide the respective key:value to set_edge_options
+    # Any hard coded values for a key will be applied to all edges
+    edge_options = {
+      'label'      => get_edge_setting,
+      'dir'        => get_edge_setting,
+      'color'      => get_edge_setting,
+      'style'      => get_edge_setting,
+      'weight'     => get_edge_setting,
+      'constraint' => get_edge_setting,
+      'headlabel'  => get_edge_setting,
+      'taillabel'  => get_edge_setting
+    }
+
+    dot_options = { 'edge' => edge_options, 'vertex' => vertex_options }
+    dot = graph.to_dot_graph(dot_options).to_s
+
+    assert_match(dot, /a \[\n\s*fontcolor = green,\n\s*fontname = Calibri,\n\s*fontsize = 16,\n\s*shape = box3d,\n\s*label = "This is A"\n\s*/)
+    assert_match(dot, /b \[\n\s*fontcolor = red,\n\s*fontname = Calibri,\n\s*fontsize = 14,\n\s*shape = tab,\n\s*label = "This is B"\n\s*/)
+    assert_match(dot, /a -> b \[\n\s*color = yellow,\n\s*fontsize = 8,\n\s*label = NotCapitalEdge,\n\s*style = dotted\n\s*/)
   end
 
   def test_to_dot_graph

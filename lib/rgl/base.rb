@@ -329,4 +329,22 @@ module RGL
 
   end # module Graph
 
+  def set_vertex_options(vertex, **options)
+    @vertex_options ||= {}
+    @vertex_options[vertex] ||= {}
+
+    RGL::DOT::NODE_OPTS.each do |opt|
+      @vertex_options[vertex][:"#{opt}"] = options[:"#{opt}"] if options.key?(:"#{opt}")
+    end
+  end
+
+  def set_edge_options(edge, **options)
+    @edge_options ||= {}
+    @edge_options[edge] = {}
+
+    RGL::DOT::EDGE_OPTS.each do |opt|
+      @edge_options[edge][:"#{opt}"] = options[:"#{opt}"] if options.key?(:"#{opt}")
+    end
+  end
+
 end # module RGL
