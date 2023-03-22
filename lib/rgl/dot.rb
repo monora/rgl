@@ -36,7 +36,7 @@ module RGL
     def set_edge_options(u, v, **options)
       edge = edge_class.new(u, v)
       @edge_options ||= {}
-      @edge_options[edge] = {}
+      @edge_options[edge] ||= {}
 
       RGL::DOT::EDGE_OPTS.each do |opt|
         @edge_options[edge][:"#{opt}"] = options[:"#{opt}"] if options.key?(:"#{opt}")
