@@ -66,7 +66,7 @@ module RGL
         vertex_options.each do |option, val|
           if val.is_a?(Proc)
             if val.call(v).nil?
-              each_vertex_options[option] = nil
+              each_vertex_options[:"#{option}"] = nil
             elsif val.call(v).key?(:"#{option}")
               foundval = val.call(v)[:"#{option}"]
             end
@@ -90,7 +90,7 @@ module RGL
         edge_options.each do |option, val|
           if val.is_a?(Proc)
             if val.call(u, v).nil?
-              each_edge_options[option] = nil
+              each_edge_options[:"#{option}"] = nil
             elsif val.call(u, v).key?(:"#{option}")
               foundval = val.call(u, v)[:"#{option}"]
             end
