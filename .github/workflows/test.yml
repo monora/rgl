@@ -26,6 +26,8 @@ jobs:
           ruby-version: ${{ matrix.ruby-version }}
           # runs 'bundle install' and caches installed gems automatically
           bundler-cache: true
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v1
       - name: Deps
         run: bundle install --jobs 4 --retry 3
       - name: Run tests

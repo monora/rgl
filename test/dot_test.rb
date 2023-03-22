@@ -32,17 +32,17 @@ class TestDot < Test::Unit::TestCase
   def test_dot_digraph_with_complicated_options
     graph = RGL::DirectedAdjacencyGraph['a', 'b', 'c', 'd']
 
-    set_vertex_options('a', label: 'This is A', shape: 'box3d', fontcolor: 'green', fontsize: 16)
-    set_vertex_options('b', label: 'This is B', shape: 'tab', fontcolor: 'red', fontsize: 14)
-    set_vertex_options('c', shape: 'tab', fontcolor: 'blue')
+    graph.set_vertex_options('a', label: 'This is A', shape: 'box3d', fontcolor: 'green', fontsize: 16)
+    graph.set_vertex_options('b', label: 'This is B', shape: 'tab', fontcolor: 'red', fontsize: 14)
+    graph.set_vertex_options('c', shape: 'tab', fontcolor: 'blue')
 
     graph.add_edge('a', 'b')
     graph.add_edge('a', 'c')
-    set_edge_options('a-b', label: 'NotCapitalEdge', style: 'dotted', direction: 'back', color: 'yellow')
-    set_edge_options('a-c', weight: 5, color: 'blue')
+    graph.set_edge_options('a', 'b', label: 'NotCapitalEdge', style: 'dotted', direction: 'back', color: 'yellow')
+    graph.set_edge_options('a', 'c', weight: 5, color: 'blue')
 
-    get_vertex_setting = proc { |v| @vertex_options[v] }
-    get_edge_setting = proc { |b, e| @edge_options["#{b}-#{e}"] }
+    get_vertex_setting = proc { |v| graph.vertex_options[v] }
+    get_edge_setting = proc { |u, v| graph.edge_options[graph.edge_class.new(u, v)] }
 
     # To configure more options, add the respective keys and the proc call
     # Then provide the respective key:value to set_vertex_options
@@ -86,8 +86,6 @@ class TestDot < Test::Unit::TestCase
     def graph.vertex_id(v)
       "id-"+v.to_s
     end
-    begin
-      graph.write_to_graphic_file
-    end
+    graph.write_to_graphic_file
   end
 end

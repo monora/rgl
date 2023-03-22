@@ -10,8 +10,8 @@
 require 'rgl/rdot'
 
 module RGL
-
   module Graph
+    attr_reader :vertex_options, :edge_options
 
     # Returns a label for vertex v. Default is v.to_s
     def vertex_label(v)
@@ -20,6 +20,27 @@ module RGL
 
     def vertex_id(v)
       v
+    end
+
+    # Set the configuration values for the given vertex
+    def set_vertex_options(vertex, **options)
+      @vertex_options ||= {}
+      @vertex_options[vertex] ||= {}
+
+      RGL::DOT::NODE_OPTS.each do |opt|
+        @vertex_options[vertex][:"#{opt}"] = options[:"#{opt}"] if options.key?(:"#{opt}")
+      end
+    end
+
+    # Set the configuration values for the given edge
+    def set_edge_options(u, v, **options)
+      edge = edge_class.new(u, v)
+      @edge_options ||= {}
+      @edge_options[edge] ||= {}
+
+      RGL::DOT::EDGE_OPTS.each do |opt|
+        @edge_options[edge][:"#{opt}"] = options[:"#{opt}"] if options.key?(:"#{opt}")
+      end
     end
 
     # Return a {DOT::Digraph} for directed graphs or a {DOT::Graph} for an
@@ -42,21 +63,22 @@ module RGL
         }
         each_vertex_options = default_vertex_options.merge(vertex_options)
 
+
+
         vertex_options.each do |option, val|
-          if val.is_a?(Proc)
-            if val.call(v).nil?
-              each_vertex_options[option] = nil
-            elsif val.call(v).key?(:"#{option}")
-              foundval = val.call(v)[:"#{option}"]
-            end
-          else
-            foundval = val
-          end
-          each_vertex_options[option] = foundval
+          each_vertex_options[option] = if val.is_a?(Proc)
+                                          if val.call(v).nil?
+                                            nil
+                                          elsif val.call(v).key?(:"#{option}")
+                                            val.call(v)[:"#{option}"]
+                                          end
+                                        else
+                                          val
+                                        end
         end
 
-        graph << DOT::Node.new(each_vertex_options)
-      end
+          graph << DOT::Node.new(each_vertex_options)
+        end
 
       each_edge do |u, v|
         default_edge_options = {
@@ -67,20 +89,19 @@ module RGL
         each_edge_options = default_edge_options.merge(edge_options)
 
         edge_options.each do |option, val|
-          if val.is_a?(Proc)
-            if val.call(u, v).nil?
-              each_edge_options[option] = nil
-            elsif val.call(u, v).key?(:"#{option}")
-              foundval = val.call(u, v)[:"#{option}"]
-            end
-          else
-            foundval = val
-          end
-          each_edge_options[option] = foundval
+          each_edge_options[option] = if val.is_a?(Proc)
+                                        if val.call(u, v).nil?
+                                          nil
+                                        elsif val.call(u, v).key?(:"#{option}")
+                                          val.call(u, v)[:"#{option}"]
+                                        end
+                                      else
+                                        val
+                                      end
         end
 
-        graph << edge_class.new(each_edge_options)
-      end
+            graph << edge_class.new(each_edge_options)
+        end
 
       graph
     end
