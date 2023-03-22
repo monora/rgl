@@ -88,8 +88,6 @@ class TestDot < Test::Unit::TestCase
     end
     begin
       graph.write_to_graphic_file
-    rescue
-      puts "Graphviz not installed?"
     end
   end
 end
