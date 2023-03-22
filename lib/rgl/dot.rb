@@ -10,8 +10,8 @@
 require 'rgl/rdot'
 
 module RGL
-
   module Graph
+    attr_reader :vertex_options, :edge_options
 
     # Returns a label for vertex v. Default is v.to_s
     def vertex_label(v)
@@ -20,6 +20,27 @@ module RGL
 
     def vertex_id(v)
       v
+    end
+
+    # Set the configuration values for the given vertex
+    def set_vertex_options(vertex, **options)
+      @vertex_options ||= {}
+      @vertex_options[vertex] ||= {}
+
+      RGL::DOT::NODE_OPTS.each do |opt|
+        @vertex_options[vertex][:"#{opt}"] = options[:"#{opt}"] if options.key?(:"#{opt}")
+      end
+    end
+
+    # Set the configuration values for the given edge
+    def set_edge_options(u, v, **options)
+      edge = edge_class.new(u, v)
+      @edge_options ||= {}
+      @edge_options[edge] = {}
+
+      RGL::DOT::EDGE_OPTS.each do |opt|
+        @edge_options[edge][:"#{opt}"] = options[:"#{opt}"] if options.key?(:"#{opt}")
+      end
     end
 
     # Return a {DOT::Digraph} for directed graphs or a {DOT::Graph} for an
