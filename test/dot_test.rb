@@ -4,7 +4,6 @@ require 'rgl/dot'
 require 'rgl/adjacency'
 
 class TestDot < Test::Unit::TestCase
-include RGL
 
   def assert_match(dot, pattern)
     assert(!(dot =~ pattern).nil?, "#{dot} doesn't match #{pattern}")
