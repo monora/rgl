@@ -86,8 +86,6 @@ class TestDot < Test::Unit::TestCase
     def graph.vertex_id(v)
       "id-"+v.to_s
     end
-    begin
-      graph.write_to_graphic_file
-    end
+    graph.write_to_graphic_file
   end
 end
