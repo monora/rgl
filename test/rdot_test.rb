@@ -267,7 +267,7 @@ class TestDotNode < Test::Unit::TestCase
     assert_match(dot, /label\s*=\s*<html><head><title>test<\/title><\/head>\n<body>text<\/body><\/html>/)
   end
 
-  def test_option_quoting
+  def test_comment_quoting
     node = DOT::Node.new({ "name" => "test_name", "comment" => "Comment with spaces" })
     dot  = node.to_s
     assert_match(dot, /comment\s*=\s*"Comment with spaces"/)
@@ -470,7 +470,7 @@ class TestDotGraph < Test::Unit::TestCase
     assert_match(dot, /label\s*=\s*<html><head><title>test<\/title><\/head>\n<body>text<\/body><\/html>/)
   end
 
-  def test_option_quoting
+  def test_comment_quoting
     node = DOT::Graph.new({ "name" => "test_name", "comment" => "Comment with spaces" })
     dot  = node.to_s
     assert_match(dot, /comment\s*=\s*"Comment with spaces"/)
@@ -637,7 +637,7 @@ class TestDotDigraph < Test::Unit::TestCase
     assert_match(dot, /label\s*=\s*<html><head><title>test<\/title><\/head>\n<body>text<\/body><\/html>/)
   end
 
-  def test_option_quoting
+  def test_comment_quoting
     node = DOT::Digraph.new({ "name" => "test_name", "comment" => "Comment with spaces" })
     dot  = node.to_s
     assert_match(dot, /comment\s*=\s*"Comment with spaces"/)
@@ -804,7 +804,7 @@ class TestDotSubgraph < Test::Unit::TestCase
     assert_match(dot, /label\s*=\s*<html><head><title>test<\/title><\/head>\n<body>text<\/body><\/html>/)
   end
 
-  def test_option_quoting
+  def test_comment_quoting
     node = DOT::Subgraph.new({ "name" => "test_name", "comment" => "Comment with spaces" })
     dot  = node.to_s
     assert_match(dot, /comment\s*=\s*"Comment with spaces"/)
