@@ -4,7 +4,6 @@ require 'rgl/dot'
 require 'rgl/adjacency'
 
 class TestDot < Test::Unit::TestCase
-
   def assert_match(dot, pattern)
     assert(!(dot =~ pattern).nil?, "#{dot} doesn't match #{pattern}")
   end
@@ -13,7 +12,7 @@ class TestDot < Test::Unit::TestCase
     graph = RGL::DirectedAdjacencyGraph["a", "b"]
 
     begin
-      dot  = graph.to_dot_graph.to_s
+      dot = graph.to_dot_graph.to_s
 
       first_vertex_id = "a"
       second_vertex_id = "b"
