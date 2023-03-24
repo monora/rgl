@@ -6,7 +6,6 @@ include RGL
 
 # Add some helper methods to TestCase
 class Test::Unit::TestCase
-
   # assert string matches regular expression
   def assert_match(dot, pattern)
     assert(!(dot =~ pattern).nil?, "#{dot} doesn't match #{pattern}")
@@ -16,7 +15,6 @@ class Test::Unit::TestCase
   def assert_no_match(dot, pattern)
     assert((dot =~ pattern).nil?, "#{dot} shouldn't match #{pattern}")
   end
-
 end
 
 # Tests for DOT::Port
@@ -53,7 +51,6 @@ end
 
 # Tests for DOT::Node
 class TestDotNode < Test::Unit::TestCase
-
   def test_no_name
     node = DOT::Node.new()
     dot  = node.to_s
@@ -336,7 +333,6 @@ end
 
 # Tests for DOT::DirectedEdge
 class TestDotDirectedEdge < Test::Unit::TestCase
-
   def test_0prop
     edge = DOT::DirectedEdge.new({ 'from' => 'a', 'to' => 'b' })
     dot  = edge.to_s
