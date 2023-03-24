@@ -78,7 +78,6 @@ module RGL
       'headport', # n,ne,e,se,s,sw,w,nw
       'headtarget', # if headURL is set, determines browser window for URL
       'headtooltip', # default: label; tooltip annotation near head of edge
-      'headlabel', # label placed near head of edge
       'headURL', # URL attached to head label if output format is ismap
       'href', # alias for URL
       'id', # any string (user-defined output object tags)
@@ -101,9 +100,6 @@ module RGL
       'samehead', # tag for head node; edge heads with the same tag are merged onto the same port
       'sametail', # tag for tail node; edge tails with the same tag are merged onto the same port
       'style', # graphics options, e.g. bold, dotted, filled; cf. Section 2.3
-      'taillabel', # label placed near tail of edge
-      'tailport', # n,ne,e,se,s,sw,w,nw
-      'tailURL', # URL attached to tail label if output format is ismap
       'weight', # default: 1; integer cost of stretching an edge
       'tailclip', # default: true; if false, edge is not clipped to tail node boundary
       'tailhref', # synonym for tailURL
@@ -111,7 +107,7 @@ module RGL
       'tailport', # n,ne,e,se,s,sw,w,nw
       'tailtarget', # if tailURL is set, determines browser window for URL
       'tailtooltip', # default: label; tooltip annotation near tail of edge
-      'tailURL', # URL attached to tail label
+      'tailURL', # URL attached to tail label if output format is ismap
       'target', # if URL is set, determines browser window for URL
       'tooltip' # default: label; tooltip annotation for edge
     ].freeze
