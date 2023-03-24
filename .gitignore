@@ -11,3 +11,5 @@ Gemfile.lock
 /.buildpath
 /dep_graph.dot
 /graph.*
+edge-opts*
+node-opts*
