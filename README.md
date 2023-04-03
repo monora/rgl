@@ -227,6 +227,81 @@ This graph shows all loaded RGL modules:
 Look for more in
 [examples](https://github.com/monora/rgl/tree/master/examples) directory.
 
+## (Optional) Configuring DOT output options
+
+The default graph will use standard DOT output visuals.
+
+If you wish to configure the styling of the diagram you need to provide a set of options for the graph and set individual options for each vertex and edge that you wish to adjust. We provide the methods `set_edge_options` and `set_vertex_options` for this purpose.
+
+On your application side you need to define three hashes to configure which options RGL/DOT should access (`graph_options`, `vertex_options`, and `edge_options`). In case of `graph_options` these will contain the general options that apply to the DOT graph. The other two will contain the formatting options that you want to use for edges and vertices respectively.
+
+These hashes must contain a reference to the proc for each option you wish to use with the `set_*_options` method.
+
+```ruby
+require 'rgl/adjacency'
+require 'rgl/dot'
+
+graph = RGL::DirectedAdjacencyGraph['a', 'b', 'b', 'c']
+
+graph.add_edge('a', 'b')
+graph.add_edge('a', 'c')
+
+# Vertex Settings
+graph.set_vertex_options('a', label: 'This is A', shape: 'box3d', fontcolor: 'green', fontsize: 16)
+graph.set_vertex_options('b', label: 'This is B', shape: 'tab', fontcolor: 'red', fontsize: 14)
+graph.set_vertex_options('c', shape: 'tab', fontcolor: 'blue')
+
+# Edge Settings
+graph.set_edge_options('a', 'b', label: 'NotCapitalEdge', style: 'dotted', direction: 'back', color: 'magenta')
+graph.set_edge_options('a', 'c', weight: 5, color: 'blue')
+
+get_vertex_setting = proc { |v| graph.vertex_options[v] }
+get_edge_setting = proc { |b, e| graph.edge_options[graph.edge_class.new(b, e)] }
+
+# To configure more options, add the respective keys and the proc call here
+# Then provide the respective key:value to set_vertex_options
+# Any hard coded values for a key will be applied to all nodes
+# Applicable values are listed in lib/rgl/rdot.rb NODE_OPTS
+vertex_options = {
+  'label' => get_vertex_setting,
+  'shape' => get_vertex_setting,
+  'fontcolor' => get_vertex_setting,
+  'fontsize' => get_vertex_setting
+}
+
+# To configure more options, add the respective keys and the proc call here
+# Then provide the respective key:value to set_edge_options
+# Any hard coded values for a key will be applied to all edges
+# Applicable values are listed in lib/rgl/rdot.rb EDGE_OPTS
+edge_options = {
+  'label' => get_edge_setting,
+  'dir' => get_edge_setting,
+  'color' => get_edge_setting,
+  'style' => get_edge_setting,
+  'weight' => get_edge_setting,
+  'constraint' => get_edge_setting,
+  'headlabel' => get_edge_setting,
+  'taillabel' => get_edge_setting
+}
+
+# This hash contains the configuration for the overall graph
+# Applicable values are listed in lib/rgl/rdot.rb GRAPH_OPTS
+# The values for edge and vertex will make use of the hashes above
+graph_options = {
+    "rankdir"  => "LR",
+    "edge"     => edge_options,
+    "vertex"   => vertex_options,
+    "labelloc" => "t",
+    "label"    => "Graph\n (generated #{Time.now.utc})"
+}
+
+graph.write_to_graphic_file('png', 'graph', graph_options)
+
+```
+
+![colored diagram](images/styled_graph.png "Colored DOT graph")
+
+
 ## Credits
 
 Many thanks to Robert Feldt which also worked on a graph library
@@ -249,14 +324,14 @@ the module {RGL::DOT} which is used instead of Roberts module to visualize
 graphs.
 
 Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas
-Schörk, Dan Čermák and Kirill Lashuk for contributing additions, test
+Schörk, Dan Čermák, Kirill Lashuk and Markus Napp for contributing additions, test
 cases and bugfixes.
 
 See also: https://github.com/monora/rgl/contributors
 
 ## Copying
 
-RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019,2020,2022 by Horst
+RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019,2020,2022,2023 by Horst
 Duchene. It is free software, and may be redistributed under the [Ruby
 license](https://en.wikipedia.org/wiki/Ruby_License) and terms specified in
 the LICENSE file.

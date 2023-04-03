@@ -63,8 +63,6 @@ module RGL
         }
         each_vertex_options = default_vertex_options.merge(vertex_options)
 
-
-
         vertex_options.each do |option, val|
           each_vertex_options[option] = if val.is_a?(Proc)
                                           if val.call(v).nil?

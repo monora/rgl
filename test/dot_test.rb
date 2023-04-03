@@ -38,15 +38,16 @@ class TestDot < Test::Unit::TestCase
 
     graph.add_edge('a', 'b')
     graph.add_edge('a', 'c')
-    graph.set_edge_options('a', 'b', label: 'NotCapitalEdge', style: 'dotted', direction: 'back', color: 'yellow')
+    graph.set_edge_options('a', 'b', label: 'NotCapitalEdge', style: 'dotted', direction: 'back', color: 'magenta')
     graph.set_edge_options('a', 'c', weight: 5, color: 'blue')
 
     get_vertex_setting = proc { |v| graph.vertex_options[v] }
     get_edge_setting = proc { |u, v| graph.edge_options[graph.edge_class.new(u, v)] }
 
-    # To configure more options, add the respective keys and the proc call
+    # To configure more options, add the respective keys and the proc call here
     # Then provide the respective key:value to set_vertex_options
     # Any hard coded values for a key will be applied to all nodes
+    # Applicable values are listed in lib/rgl/rdot.rb NODE_OPTS
     vertex_options = {
       'fontname'  => 'Calibri',
       'label'     => get_vertex_setting,
@@ -55,9 +56,10 @@ class TestDot < Test::Unit::TestCase
       'fontsize'  => get_vertex_setting
     }
 
-    # To configure more options, add the respective keys and the proc call
+    # To configure more options, add the respective keys and the proc call here
     # Then provide the respective key:value to set_edge_options
     # Any hard coded values for a key will be applied to all edges
+    # Applicable values are listed in lib/rgl/rdot.rb EDGE_OPTS
     edge_options = {
       'label'      => get_edge_setting,
       'dir'        => get_edge_setting,
@@ -69,12 +71,23 @@ class TestDot < Test::Unit::TestCase
       'taillabel'  => get_edge_setting
     }
 
+    # This hash contains the configuration for the overall graph
+    # Applicable values are listed in lib/rgl/rdot.rb GRAPH_OPTS
+    # The values for edge and vertex will make use of the hashes above
+    graph_options = {
+      "rankdir"  => "LR",
+      "edge"     => edge_options,
+      "vertex"   => vertex_options,
+      "labelloc" => "t",
+      "label"    => "Graph\n (generated #{Time.now.utc})"
+    }
+
     dot_options = { 'edge' => edge_options, 'vertex' => vertex_options }
     dot = graph.to_dot_graph(dot_options).to_s
 
     assert_match(dot, /a \[\n\s*fontcolor = green,\n\s*fontname = Calibri,\n\s*fontsize = 16,\n\s*shape = box3d,\n\s*label = "This is A"\n\s*/)
     assert_match(dot, /b \[\n\s*fontcolor = red,\n\s*fontname = Calibri,\n\s*fontsize = 14,\n\s*shape = tab,\n\s*label = "This is B"\n\s*/)
-    assert_match(dot, /a -> b \[\n\s*color = yellow,\n\s*fontsize = 8,\n\s*label = NotCapitalEdge,\n\s*style = dotted\n\s*/)
+    assert_match(dot, /a -> b \[\n\s*color = magenta,\n\s*fontsize = 8,\n\s*label = NotCapitalEdge,\n\s*style = dotted\n\s*/)
   end
 
   def test_to_dot_graph
