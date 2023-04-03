@@ -52,8 +52,6 @@ module RGL
       fontsize       = params['fontsize'] ? params['fontsize'] : '8'
       graph          = (directed? ? DOT::Digraph : DOT::Graph).new(params)
       edge_class     = directed? ? DOT::DirectedEdge : DOT::Edge
-      vertex_options = params['vertex'] || {}
-      edge_options   = params['edge'] || {}
 
       each_vertex do |v|
         default_vertex_options = {
@@ -61,46 +59,35 @@ module RGL
           'fontsize' => fontsize,
           'label'    => vertex_label(v)
         }
-        each_vertex_options = default_vertex_options.merge(vertex_options)
+        each_vertex_options = default_vertex_options
 
-
-
-        vertex_options.each do |option, val|
-          each_vertex_options[option] = if val.is_a?(Proc)
-                                          if val.call(v).nil?
-                                            nil
-                                          elsif val.call(v).key?(:"#{option}")
-                                            val.call(v)[:"#{option}"]
-                                          end
-                                        else
-                                          val
-                                        end
+        if @vertex_options && @vertex_options[v]
+          RGL::DOT::NODE_OPTS.each do |opt|
+            if @vertex_options[v].key?(:"#{opt}")
+              each_vertex_options["#{opt}"] = @vertex_options[v].fetch(:"#{opt}")
+            end
+          end
         end
+        graph << DOT::Node.new(each_vertex_options)
+      end
 
-          graph << DOT::Node.new(each_vertex_options)
-        end
-
-      each_edge do |u, v|
+      edges.each do |edge|
         default_edge_options = {
-          'from'     => vertex_id(u),
-          'to'       => vertex_id(v),
+          'from'     => edge.source,
+          'to'       => edge.target,
           'fontsize' => fontsize
         }
-        each_edge_options = default_edge_options.merge(edge_options)
 
-        edge_options.each do |option, val|
-          each_edge_options[option] = if val.is_a?(Proc)
-                                        if val.call(u, v).nil?
-                                          nil
-                                        elsif val.call(u, v).key?(:"#{option}")
-                                          val.call(u, v)[:"#{option}"]
-                                        end
-                                      else
-                                        val
-                                      end
+        each_edge_options = default_edge_options
+
+        if @edge_options && @edge_options[edge]
+          RGL::DOT::EDGE_OPTS.each do |opt|
+            if @edge_options[edge].key?(:"#{opt}")
+              each_edge_options["#{opt}"] = @edge_options[edge].fetch(:"#{opt}")
+            end
+          end
         end
-
-            graph << edge_class.new(each_edge_options)
+        graph << edge_class.new(each_edge_options)
         end
 
       graph
