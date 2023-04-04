@@ -8,7 +8,7 @@ module RGL
   module DOT
 
     # attributes due to
-    # https://www.graphviz.org/Documentation/dotguide.pdf
+    # https://www.graphviz.org/pdf/dotguide.pdf
     # January 5, 2015
 
     # options for node declaration
