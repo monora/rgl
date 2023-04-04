@@ -241,9 +241,8 @@ You can also configure the overall appearance of the graph by passing a hash of 
 require 'rgl/adjacency'
 require 'rgl/dot'
 
-graph = RGL::DirectedAdjacencyGraph['a', 'b', 'c', 'd']
+graph = RGL::DirectedAdjacencyGraph['a','b', 'c','d']
 
-graph.add_edge('a', 'b')
 graph.add_edge('a', 'c')
 
 # Vertex Settings

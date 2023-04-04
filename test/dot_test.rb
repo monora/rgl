@@ -30,13 +30,12 @@ class TestDot < Test::Unit::TestCase
   end
 
   def test_dot_digraph_with_complicated_options
-    graph = RGL::DirectedAdjacencyGraph['a', 'b', 'c', 'd']
+    graph = RGL::DirectedAdjacencyGraph['a','b', 'c','d']
 
     graph.set_vertex_options('a', label: 'This is A', shape: 'box3d', fontcolor: 'green', fontsize: 16)
     graph.set_vertex_options('b', label: 'This is B', shape: 'tab', fontcolor: 'red', fontsize: 14)
     graph.set_vertex_options('c', shape: 'tab', fontcolor: 'blue')
 
-    graph.add_edge('a', 'b')
     graph.add_edge('a', 'c')
     graph.set_edge_options('a', 'b', label: 'NotCapitalEdge', style: 'dotted', direction: 'back', color: 'magenta')
     graph.set_edge_options('a', 'c', weight: 5, color: 'blue')
