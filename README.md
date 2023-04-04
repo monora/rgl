@@ -231,9 +231,9 @@ Look for more in
 
 The default graph will use standard DOT output visuals.
 
-If you wish to configure the styling of the diagram we provide the methods `set_edge_options` and `set_vertex_options` for this purpose. You can use any options from the `NODE_OPTS` and `EDGE_OPTS` constants in `lib/rgl/rdot.rb`. Simply use the exact option name as an argument in your method call.
+If you wish to configure the styling of the diagram, we provide the methods `set_edge_options` and `set_vertex_options` for this purpose. You can use any options from the `NODE_OPTS` and `EDGE_OPTS` constants in `lib/rgl/rdot.rb`. Use the exact option name as an argument in your method call.
 
-You can also configure the overall appearance of the graph by passing a hash of options from `GRAPH_OPTS` to the output method. The example below shows an example of styling vertices, edges and setting some basic graph options.
+You can also configure the overall appearance of the graph by passing a hash of options from `GRAPH_OPTS` to the output method. The example below shows styling of vertices, edges and setting some basic graph options.
 
 ![colored diagram](images/styled_graph.png "Colored DOT graph")
 
