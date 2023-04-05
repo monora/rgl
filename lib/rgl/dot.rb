@@ -11,8 +11,6 @@ require 'rgl/rdot'
 
 module RGL
   module Graph
-    attr_reader :vertex_options, :edge_options
-
     # Returns a label for vertex v. Default is v.to_s
     def vertex_label(v)
       v.to_s
