@@ -243,22 +243,15 @@ The available options are described in the [GraphViz DOT Spec](https://www.graph
 require 'rgl/adjacency'
 require 'rgl/dot'
 
-graph = RGL::DirectedAdjacencyGraph['a','b', 'c','d']
+graph = RGL::DirectedAdjacencyGraph['a','b', 'c','d', 'a','c']
 
-graph.add_edge('a', 'c')
-
-# Vertex Settings
 graph.set_vertex_options('a', label: 'This is A', shape: 'box3d', fontcolor: 'green', fontsize: 16)
 graph.set_vertex_options('b', label: 'This is B', shape: 'tab', fontcolor: 'red', fontsize: 14)
 graph.set_vertex_options('c', shape: 'tab', fontcolor: 'blue')
 
-# Edge Settings
 graph.set_edge_options('a', 'b', label: 'NotCapitalEdge', style: 'dotted', direction: 'back', color: 'magenta')
 graph.set_edge_options('a', 'c', weight: 5, color: 'blue')
 
-# This hash contains the configuration for the overall graph
-# Applicable values are listed in lib/rgl/rdot.rb GRAPH_OPTS
-# The values for edge and vertex will make use of the hashes above
 graph_options = {
     "rankdir"  => "LR",
     "labelloc" => "t",
