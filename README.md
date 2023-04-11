@@ -258,7 +258,7 @@ graph_options = {
     "label"    => "Graph\n (generated #{Time.now.utc})"
 }
 
-dot = graph.to_dot_graph(graph_options).to_s
+graph.write_to_graphic_file('png', 'graph', graph_options)
 
 ```
 
