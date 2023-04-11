@@ -231,7 +231,7 @@ Look for more in
 
 The default graph will use standard DOT output visuals.
 
-If you wish to configure the styling of the diagram, module {RGL::DOT} adds the methods {RGL::Graph#set_edge_options} and {RGL::Graph#set_vertex_options} for this purpose. You can use any options from the {RGL::DOT::NODE_OPTS} and {RGL::DOT::EDGE_OPTS} constants in {RGL::DOT::EDGE_OPTS}. Use the exact option name as an argument in your method call.
+If you wish to configure the styling of the diagram, module {RGL::DOT} adds the methods {RGL::Graph#set_edge_options} and {RGL::Graph#set_vertex_options} for this purpose. You can use any options from the {RGL::DOT::NODE_OPTS} and {RGL::DOT::EDGE_OPTS} constants in {RGL::DOT}. Use the exact option name as an argument in your method call.
 
 You can also configure the overall appearance of the graph by passing a hash of options from {RGL::DOT::GRAPH_OPTS} to the output method. The example below shows styling of vertices, edges and setting some basic graph options.
 
