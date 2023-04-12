@@ -36,7 +36,7 @@ class TestDot < Test::Unit::TestCase
     graph.set_vertex_options('b', label: 'This is B', shape: 'tab', fontcolor: 'red', fontsize: 14)
     graph.set_vertex_options('c', shape: 'tab', fontcolor: 'blue')
 
-    graph.set_edge_options('a', 'b', label: 'NotCapitalEdge', style: 'dotted', direction: 'back', color: 'magenta')
+    graph.set_edge_options('a', 'b', label: 'NotCapitalEdge', style: 'dotted', dir: 'back', color: 'magenta')
     graph.set_edge_options('a', 'c', weight: 5, color: 'blue')
 
     graph_options = {
@@ -51,7 +51,7 @@ class TestDot < Test::Unit::TestCase
     assert_match(dot, /rankdir = LR\n\s*/)
     assert_match(dot, /a \[\n\s*fontcolor = green,\n\s*fontsize = 16,\n\s*shape = box3d,\n\s*label = "This is A"\n\s*/)
     assert_match(dot, /b \[\n\s*fontcolor = red,\n\s*fontsize = 14,\n\s*shape = tab,\n\s*label = "This is B"\n\s*/)
-    assert_match(dot, /a -> b \[\n\s*color = magenta,\n\s*fontsize = 8,\n\s*label = NotCapitalEdge,\n\s*style = dotted\n\s*/)
+    assert_match(dot, /a -> b \[\n\s*color = magenta,\n\s*dir = back,\n\s*fontsize = 8,\n\s*label = NotCapitalEdge,\n\s*style = dotted\n\s*/)
   end
 
   def test_to_dot_graph
