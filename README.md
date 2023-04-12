@@ -249,7 +249,7 @@ graph.set_vertex_options('a', label: 'This is A', shape: 'box3d', fontcolor: 'gr
 graph.set_vertex_options('b', label: 'This is B', shape: 'tab', fontcolor: 'red', fontsize: 14)
 graph.set_vertex_options('c', shape: 'tab', fontcolor: 'blue')
 
-graph.set_edge_options('a', 'b', label: 'NotCapitalEdge', style: 'dotted', direction: 'back', color: 'magenta')
+graph.set_edge_options('a', 'b', label: 'NotCapitalEdge', style: 'dotted', dir: 'back', color: 'magenta')
 graph.set_edge_options('a', 'c', weight: 5, color: 'blue')
 
 graph_options = {
