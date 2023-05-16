@@ -117,7 +117,9 @@ module RGL
     #
     # @return [DirectedAdjacencyGraph] which represents a BFS search tree starting at _v_.
     def bfs_search_tree_from(v)
-      require 'rgl/adjacency'
+     unless defined?(DirectedAdjacencyGraph)
+         require 'rgl/adjyceny'
+     end
       bfs  = bfs_iterator(v)
       tree = DirectedAdjacencyGraph.new
 
