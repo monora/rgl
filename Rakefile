@@ -10,7 +10,7 @@ require 'rake/clean'
 require 'yard'
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
-require 'rgl/base' # require base module to get RGL_VERSION
+require 'rgl/version' # defines RGL::VERSION
 
 SOURCES = FileList['lib/**/*.rb']
 
@@ -37,9 +37,9 @@ end
 
 desc 'Commit all changes as a new version commit. Tag the commit with v<version> tag'
 task :tag do
-  puts "Committing and tagging version #{RGL_VERSION}"
-  `git commit -am 'Version #{RGL_VERSION}'`
-  `git tag 'v#{RGL_VERSION}'`
+  puts "Committing and tagging version #{RGL::VERSION}"
+  `git commit -am 'Version #{RGL::VERSION}'`
+  `git tag 'v#{RGL::VERSION}'`
 end
 
 YARD::Rake::YardocTask.new

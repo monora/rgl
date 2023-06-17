@@ -1,9 +1,9 @@
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
-require 'rgl/base'
+require 'rgl/version'
 
 Gem::Specification.new do |s|
   s.name    = 'rgl'
-  s.version = RGL_VERSION
+  s.version = RGL::VERSION
   s.summary = "Ruby Graph Library"
   s.description = "RGL is a framework for graph data structures and algorithms"
   s.licenses = ['ruby']
