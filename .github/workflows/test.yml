@@ -3,6 +3,9 @@ name: Build + Test
 on:
   push:
   pull_request:
+  branches:
+    - "**" # matches every branch
+    - "!master" # excludes master
 
 jobs:
   test:
