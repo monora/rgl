@@ -26,6 +26,13 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
+# Test bfs_search_tree_from in isolation, to ensure that adjacency is not loaded by other tests.
+Rake::TestTask.new do |t|
+  t.libs << 'test'
+  t.pattern = 'test/traversal_bfs_require.rb'
+  t.verbose = true
+end
+
 # Git tagging
 
 desc 'Commit all changes as a new version commit. Tag the commit with v<version> tag'
