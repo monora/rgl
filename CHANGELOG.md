@@ -9,6 +9,28 @@ GitHub Action (Issue #101)
 
 ## Changelog prior 0.5.9
 
+## [0.7.0](https://www.github.com/monora/rgl/compare/v0.6.4...v0.7.0) (2023-06-18)
+
+
+### Features
+
+* implement bidirectional adjacency graph ([#78](https://www.github.com/monora/rgl/issues/78)) ([e9069ec](https://www.github.com/monora/rgl/commit/e9069ec8650da5562c6ab48c4e791ef0a8fee661))
+* Update dot option definitions to latest (2015) ([6338b90](https://www.github.com/monora/rgl/commit/6338b905802c3e41607d6f29fd18f22e1923aa84))
+
+
+### Bug Fixes
+
+* [#84](https://www.github.com/monora/rgl/issues/84) each_in_neighbor has missing block argument. ([f38a7ac](https://www.github.com/monora/rgl/commit/f38a7aca045f4d76ad41ccaa68501e69ffef81c9))
+* [#86](https://www.github.com/monora/rgl/issues/86) each_in_neighbor() raises exception on unconnected vertices ([f561bda](https://www.github.com/monora/rgl/commit/f561bda8859dfbb53d82863eda5f3302e60566ef))
+* 15. Use object IDs rather than labels to identify vertexs in DOT graph to ensure that distinct nodes that share a label are shown. ([33206fe](https://www.github.com/monora/rgl/commit/33206fef531dd6601b090a50ba54aaa7256ca95b))
+* 22: Since Ruby 2.0 #inspect no longer calls #to_s. ([ed09fad](https://www.github.com/monora/rgl/commit/ed09fad43690e206a6cb31aa0340d481d90050ed))
+* 47 set_to_begin for graph iterator ([881aa86](https://www.github.com/monora/rgl/commit/881aa86a165eb3bafff8681069e4212cafdd3723))
+* add test case for bfs_search_tree_from (fixes [#99](https://www.github.com/monora/rgl/issues/99)) ([54f92e4](https://www.github.com/monora/rgl/commit/54f92e497c0e628c5dcdab3334ef280f6f38bfd7))
+* codeclimate badge ([5fba98f](https://www.github.com/monora/rgl/commit/5fba98feec0796e8625f680abe3dcd8915093b19))
+* **doc:** [#79](https://www.github.com/monora/rgl/issues/79) class comments in generated doc ([8613828](https://www.github.com/monora/rgl/commit/8613828f285fae9e2c769188d86956f7e1a6275f))
+* Remove require of the file if already required ([0ef2ce5](https://www.github.com/monora/rgl/commit/0ef2ce5c43c56503268303abac40fd841c4cea43))
+* Remove superfluous :GRAY assignment in depth first visit ([#66](https://www.github.com/monora/rgl/issues/66)) ([659f2ae](https://www.github.com/monora/rgl/commit/659f2ae71200305d4478b243206e773b25ddea97))
+
 ### 2022-08 Release 0.5.9
 
 Dan Čermák
