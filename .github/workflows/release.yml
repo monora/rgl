@@ -36,8 +36,11 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
       - name: Setup Graphviz
         uses: ts-graphviz/setup-graphviz@v1
-      - name: Deps
-        run: bundle install --jobs 4 --retry 3
+        if: ${{ steps.release.outputs.release_created }}
+      - name: Install dependencies
+        run: |
+          bundle install --jobs 4 --retry 3
+        if: ${{ steps.release.outputs.release_created }}
       - name: Run tests
         run: |
           bundle exec rake test
