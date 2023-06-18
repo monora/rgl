@@ -1,16 +1,12 @@
 # -*- ruby -*-
 
-require 'rubygems'
 require 'bundler/setup'
-
-require 'rubygems/package_task'
-
 require 'rake/testtask'
 require 'rake/clean'
 require 'yard'
 
 $:.unshift File.join(File.dirname(__FILE__), 'lib')
-require 'rgl/base' # require base module to get RGL_VERSION
+require 'rgl/version' # defines RGL::VERSION
 
 SOURCES = FileList['lib/**/*.rb']
 
@@ -37,9 +33,9 @@ end
 
 desc 'Commit all changes as a new version commit. Tag the commit with v<version> tag'
 task :tag do
-  puts "Committing and tagging version #{RGL_VERSION}"
-  `git commit -am 'Version #{RGL_VERSION}'`
-  `git tag 'v#{RGL_VERSION}'`
+  puts "Committing and tagging version #{RGL::VERSION}"
+  `git commit -am 'Version #{RGL::VERSION}'`
+  `git tag 'v#{RGL::VERSION}'`
 end
 
 YARD::Rake::YardocTask.new
@@ -92,31 +88,4 @@ task :lines do
     total_code += codelines
   end
   show_line('TOTAL', total_lines, total_code)
-end
-
-# simple rake task to output a changelog between two commits, tags ...
-# output is formatted simply, commits are grouped under each author name
-#
-desc 'generate changelog with nice clean output'
-task :changelog, :since_c, :until_c do |t, args|
-  since_c = args[:since_c] || `git tag | tail -1`.chomp
-  until_c = args[:until_c]
-  cmd = `git log --pretty='format:%ci::%an <%ae>::%s::%H' #{since_c}..#{until_c}`
-
-  entries = Hash.new
-  changelog_content = String.new
-
-  cmd.split("\n").each do |entry|
-    _, author, subject, hash = entry.chomp.split('::')
-    entries[author] = Array.new unless entries[author]
-    entries[author] << "#{subject} (#{hash[0..5]})" unless subject =~ /Merge/
-  end
-
-  # generate clean output
-  entries.keys.each do |author|
-    changelog_content += author + "\n"
-    entries[author].reverse.each { |entry| changelog_content += " * #{entry}\n" }
-  end
-
-  puts changelog_content
 end
