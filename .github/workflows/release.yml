@@ -1,0 +1,56 @@
+---
+# .github/workflows/release.yml
+# Adapted from: https://blog.dennisokeeffe.com/blog/2022-03-19-automating-rubygem-package-releases-with-github-actions
+name: Release
+
+on:
+  push:
+    branches:
+      - master # only master
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v2
+        id: release
+        with:
+          # The release type
+          release-type: ruby
+          # A name for the artifact releases are being created for
+          # which is the name of our gem
+          package-name: rgl
+          # Should breaking changes before 1.0.0 produce minor bumps?
+          bump-minor-pre-major: true
+          # Path to our version file to increment
+          version-file: "lib/rgl/version.rb"
+
+      # Checkout code if release was created
+      - uses: actions/checkout@v2
+        if: ${{ steps.release.outputs.release_created }}
+      # Setup ruby if a release was created
+      - uses: ruby/setup-ruby@v1
+        with:
+          # runs 'bundle install' and caches installed gems automatically
+          bundler-cache: true
+        if: ${{ steps.release.outputs.release_created }}
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v1
+      - name: Deps
+        run: bundle install --jobs 4 --retry 3
+      - name: Run tests
+        run: |
+          bundle exec rake test
+        if: ${{ steps.release.outputs.release_created }}
+      # Publish
+      - name: publish gem
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+          gem build *.gemspec
+          gem push *.gem
+        env:
+          GEM_HOST_API_KEY: "${{secrets.RUBYGEMS_AUTH_TOKEN}}"
+        if: ${{ steps.release.outputs.release_created }}          
