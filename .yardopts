@@ -7,4 +7,5 @@
 -
 examples/*.rb
 rakelib/dep_graph.rake
-ChangeLog
+CHANGELOG.md
+
