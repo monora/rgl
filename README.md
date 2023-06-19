@@ -287,11 +287,25 @@ Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas
 Schörk, Dan Čermák, Kirill Lashuk and Markus Napp for contributing additions, test
 cases and bugfixes.
 
-See also: https://github.com/monora/rgl/contributors
+See also the [list of contributers][5]
+
+## Links
+
+- See [CHANGELOG.md][1] for major/breaking updates, and [releases][2] for a
+  detailed version history.
+- To **contribute**, please read [CONTRIBUTING.md][4] first.
+- Please [open an issue][3] if anything is missing or unclear in this
+  documentation.
 
 ## Copying
 
 RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019,2020,2022,2023 by Horst
 Duchene. It is free software, and may be redistributed under the [Ruby
-license](https://en.wikipedia.org/wiki/Ruby_License) and terms specified in
+license](.LICENSE) and terms specified in
 the LICENSE file.
+
+[1] ./CHANGELOG.md
+[2] https://github.com/monora/rgl/releases
+[3] https://github.com/monora/rgl/issues/new
+[4] ./.github/CONTRIBUTING.md
+[5] https://github.com/monora/rgl/contributors

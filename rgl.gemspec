@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir[
       'lib/**/*.rb',
-      'ChangeLog',
+      'CHANGELOG.md',
       'examples/**/*',
       'Gemfile',
       'README.md',
