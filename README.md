@@ -283,29 +283,20 @@ read and matz for Ruby. Dave included in the latest version of RDoc (alpha9)
 the module {RGL::DOT} which is used instead of Roberts module to visualize
 graphs.
 
-Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas
-Schörk, Dan Čermák, Kirill Lashuk and Markus Napp for contributing additions, test
-cases and bugfixes.
-
-See also the [list of contributers][5]
+Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas Schörk, Dan
+Čermák, Kirill Lashuk and Markus Napp for contributing additions, test cases and
+bugfixes. The complete list of contributers is
+[here](https://github.com/monora/rgl/contributors).
 
 ## Links
 
-- See [CHANGELOG.md][1] for major/breaking updates, and [releases][2] for a
-  detailed version history.
-- To **contribute**, please read [CONTRIBUTING.md][4] first.
-- Please [open an issue][3] if anything is missing or unclear in this
-  documentation.
+- See {file:CHANGELOG.md} for major/breaking updates.
+- To **contribute**, please read {file:.github/CONTRIBUTING.md} first.
+- Please [open an issue](https://github.com/monora/rgl/issues/new) if anything
+  is missing or unclear in this documentation.
 
 ## Copying
 
 RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019,2020,2022,2023 by Horst
-Duchene. It is free software, and may be redistributed under the [Ruby
-license](.LICENSE) and terms specified in
-the LICENSE file.
-
-[1] ./CHANGELOG.md
-[2] https://github.com/monora/rgl/releases
-[3] https://github.com/monora/rgl/issues/new
-[4] ./.github/CONTRIBUTING.md
-[5] https://github.com/monora/rgl/contributors
+Duchene. It is free software, and may be redistributed under the {file:LICENSE}
+and terms specified in the LICENSE file.

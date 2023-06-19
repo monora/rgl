@@ -8,4 +8,6 @@
 examples/*.rb
 rakelib/dep_graph.rake
 CHANGELOG.md
+LICENSE
+.github/*.md
 
