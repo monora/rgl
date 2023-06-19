@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.5](https://www.github.com/monora/rgl/compare/v0.6.4...v0.6.5) (2023-06-19)
+
+
+### Bug Fixes
+
+* README links ([#114](https://www.github.com/monora/rgl/issues/114)) ([682e4e6](https://www.github.com/monora/rgl/commit/682e4e6f3786dc5419ce8d8bff92d4006e95be0d))
+
 ## [0.6.4](https://www.github.com/monora/rgl/compare/v0.6.3...v0.6.4) (2023-06-19)
 
 ### Bug Fixes
