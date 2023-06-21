@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   #### Dependencies and requirements.
 
   s.add_dependency 'stream',     '~> 0.5.3'
-  s.add_dependency 'pairing_heap', '~> 0.3'
+  s.add_dependency 'pairing_heap', '>= 0.3', '< 4.0'
   s.add_dependency 'rexml', '~> 3.2', '>= 3.2.4'
 
   s.add_development_dependency 'rake', '~> 13.0'
