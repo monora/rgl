@@ -34,11 +34,12 @@ format:
 ```
 
 Where:
-- =<type>=: The type of change being made (e.g. feat, fix, docs, style, refactor, test, chore)
-- =<scope>= (optional): The scope of the change (e.g. component name, file name)
-- =<description>=: A brief description of the change
-- =[optional body]=: A more detailed description of the change
-- =[optional footer(s)]=: Any important information related to the change, such
+
+- `<type>`: The type of change being made (e.g. feat, fix, docs, style, refactor, test, chore)
+- `<scope>` (optional): The scope of the change (e.g. component name, file name)
+- `<description>`: A brief description of the change
+- `[optional body]`: A more detailed description of the change
+- `[optional footer(s)]`: Any important information related to the change, such
   as a breaking change note
 
 By following these guidelines, it will be easier to understand the purpose of
@@ -63,4 +64,4 @@ information on using pull requests.
 ## License
 
 By contributing, you agree that your contributions will be licensed under the
-[Ruby License](../LICENSE).
+{file:../LICENSE}.
