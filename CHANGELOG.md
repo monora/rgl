@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.6](https://github.com/monora/rgl/compare/v0.6.5...v0.6.6) (2023-07-10)
+
+
+### Bug Fixes
+
+* Bump GoogleCloudPlatform/release-please-action from 2 to 3 ([#120](https://github.com/monora/rgl/issues/120), [#122](https://github.com/monora/rgl/issues/122)) ([3e804d4](https://github.com/monora/rgl/commit/3e804d43de547b8c5754c9c53393973ca6882016))
+
 ### [0.6.5](https://www.github.com/monora/rgl/compare/v0.6.4...v0.6.5) (2023-06-19)
 
 
