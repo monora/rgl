@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.6](https://github.com/monora/rgl/compare/v0.6.5...v0.6.6) (2023-09-07)
+
+
+### Bug Fixes
+
+* Update pairing_heap requirement from ~&gt; 0.3 to >= 0.3, &lt; 4.0 ([#119](https://github.com/monora/rgl/issues/119), [#122](https://github.com/monora/rgl/issues/122)) ([13e39a4](https://github.com/monora/rgl/commit/13e39a47dd166a36dadbf8e3b5fb3b2ff3941467))
+
 ## [0.6.6](https://github.com/monora/rgl/compare/v0.6.5...v0.6.6) (2023-07-10)
 
 
