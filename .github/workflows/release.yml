@@ -35,7 +35,7 @@ jobs:
           bundler-cache: true
         if: ${{ steps.release.outputs.release_created }}
       - name: Setup Graphviz
-        uses: ts-graphviz/setup-graphviz@v1
+        uses: ts-graphviz/setup-graphviz@v2
         if: ${{ steps.release.outputs.release_created }}
       - name: Install dependencies
         run: |
