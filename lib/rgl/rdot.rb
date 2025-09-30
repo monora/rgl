@@ -13,6 +13,7 @@ module RGL
 
     # options for node declaration
     NODE_OPTS = [
+      'class',# multiple space-separated classes are supported
       'color', # default: black; node shape color
       'colorscheme', # default: X11; scheme for interpreting color names
       'comment', # any string (format-dependent)
@@ -59,6 +60,7 @@ module RGL
       'arrowhead', # default: normal; style of arrowhead at head end
       'arrowsize', # default: 1.0; scaling factor for arrowheads
       'arrowtail', # default: normal; style of arrowhead at tail end
+      'class',# multiple space-separated classes are supported
       'color', # default: black; edge stroke color
       'colorscheme', # default: X11; scheme for interpreting color names
       'comment', # any string (format-dependent)
@@ -120,6 +122,7 @@ module RGL
       'aspect', # controls aspect ratio adjustment
       'bgcolor', # background color for drawing, plus initial fill color
       'center', # default: false; center draing on page
+      'class',# multiple space-separated classes are supported
       'clusterrank', # default: local; may be "global" or "none"
       'color', # default: black; for clusters, outline color, and fill color if
                # fillcolor not defined
