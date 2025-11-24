@@ -15,7 +15,7 @@ jobs:
       GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
       GEM_HOST_OTP_CODE: ${{ github.event.inputs.rubygems-otp-code }}
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
           fetch-depth: 0
 
