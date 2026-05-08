@@ -121,7 +121,7 @@ module RGL
         f << self.to_dot_graph(options).to_s << "\n"
       end
 
-      unless system("dot -T#{fmt} #{src} -o #{dot}")
+      unless system("dot", "-T#{fmt}", src, "-o", dot)
         raise "Error executing dot. Did you install GraphViz?"
       end
       dot

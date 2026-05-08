@@ -11,3 +11,4 @@ Gemfile.lock
 /.buildpath
 /dep_graph.dot
 /graph.*
+/.claude/settings.local.json
