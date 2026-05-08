@@ -9,6 +9,52 @@ started.
 Please note that this project is released with a Contributor Code of Conduct. By
 participating in this project you agree to abide by its terms.
 
+## Development Setup
+
+### Ruby
+
+We recommend [rbenv](https://github.com/rbenv/rbenv) with
+[ruby-build](https://github.com/rbenv/ruby-build) to manage Ruby versions:
+
+```bash
+# Install rbenv and ruby-build (see https://github.com/rbenv/rbenv#installation)
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init - bash)"' >> ~/.bashrc
+source ~/.bashrc
+
+# Install the required Ruby version (reads .ruby-version automatically)
+rbenv install
+```
+
+### Dependencies
+
+```bash
+gem install bundler
+bundle install
+```
+
+### GraphViz
+
+DOT/GraphViz related tests require a local GraphViz installation:
+
+```bash
+# Debian/Ubuntu
+sudo apt-get install graphviz
+
+# macOS
+brew install graphviz
+```
+
+### Running Tests
+
+```bash
+bundle exec rake test                                            # full test suite
+bundle exec ruby -Ilib -Itest test/dijkstra_test.rb             # single file
+bundle exec ruby -Ilib -Itest test/dijkstra_test.rb -n test_X   # single test
+```
+
 ## How to Contribute
 
 1. Fork the repository.
