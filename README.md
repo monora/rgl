@@ -1,7 +1,6 @@
 # Ruby Graph Library (RGL)
 [![Test](https://github.com/monora/rgl/actions/workflows/test.yml/badge.svg)](https://github.com/monora/rgl/actions/workflows/test.yml) [![Doc](https://github.com/monora/rgl/actions/workflows/doc.yml/badge.svg)](https://github.com/monora/rgl/actions/workflows/doc.yml)
 [![Version](https://badge.fury.io/rb/rgl.svg)](https://badge.fury.io/rb/rgl)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/monora/rgl)
 RGL is a framework for graph data structures and algorithms.
 
 The design of the library is much influenced by the Boost Graph Library (BGL)
@@ -276,14 +275,14 @@ Library](https://www.boost.org/libs/graph/doc) kindly allowed to use the BGL
 documentation as a *cheap* reference for RGL. He and Robert also gave feedback
 and many ideas for RGL.
 
-Dave Thomas for [RDoc](https://rdoc.sourceforge.net) which generated what you
+Dave Thomas for [RDoc](https://ruby.github.io/rdoc/) which generated what you
 read and matz for Ruby. Dave included in the latest version of RDoc (alpha9)
 the module {RGL::DOT} which is used instead of Roberts module to visualize
 graphs.
 
 Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas Schörk, Dan
 Čermák, Kirill Lashuk and Markus Napp for contributing additions, test cases and
-bugfixes. The complete list of contributers is
+bugfixes. The complete list of contributors is
 [here](https://github.com/monora/rgl/contributors).
 
 ## Links
@@ -295,6 +294,6 @@ bugfixes. The complete list of contributers is
 
 ## Copying
 
-RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019,2020,2022,2023 by Horst
+RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019,2020,2022,2023,2024,2025,2026 by Horst
 Duchene. It is free software, and may be redistributed under the {file:LICENSE}
 and terms specified in the LICENSE file.
