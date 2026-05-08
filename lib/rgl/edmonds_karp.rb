@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rgl/edge_properties_map'
 require 'rgl/traversal'
 

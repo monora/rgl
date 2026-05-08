@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rgl/base'
 require 'rgl/graph_visitor'
 

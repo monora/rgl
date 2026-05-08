@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # dot.rb
 #
 # Minimal Dot support, based on Dave Thomas's dot module (included in rdoc).

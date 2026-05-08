@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rgl/base'
 require 'rgl/adjacency'
 require 'rgl/condensation'

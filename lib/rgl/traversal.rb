@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # traversal.rb
 #
 require 'rgl/base'

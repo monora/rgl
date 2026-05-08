@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # mutable.rb
 
 require 'rgl/base'

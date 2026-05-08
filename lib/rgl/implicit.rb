@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # implicit.rb
 #
 # This file contains the definition of the class RGL::ImplicitGraph, which

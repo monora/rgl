@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RGL
 
   # This is a modified version of +dot.rb+ from {https://ruby.github.io/rdoc Dave

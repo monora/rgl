@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rgl/dijkstra_visitor'
 require 'rgl/edge_properties_map'
 require 'rgl/path_builder'
@@ -19,7 +21,7 @@ module RGL
     def initialize(graph)
       super(graph)
 
-      # by default, through an exception if a negative-weight cycle is detected
+      # by default, raise an exception if a negative-weight cycle is detected
       @edge_not_minimized_event_handler = lambda do |u, v|
         raise ArgumentError.new("there is a negative-weight cycle including edge (#{u}, #{v})")
       end

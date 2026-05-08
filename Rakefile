@@ -61,7 +61,7 @@ end
 def count_lines(filename)
   lines = 0
   codelines = 0
-  open(filename) { |f|
+  File.open(filename) { |f|
     f.each do |line|
       lines += 1
       next if line =~ /^\s*$/

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # topsort.rb
 
 require 'rgl/graph_iterator'
@@ -26,16 +28,16 @@ module RGL
 
     def set_to_begin
       @waiting   = Array.new
-      @inDegrees = Hash.new(0)
+      @in_degrees = Hash.new(0)
 
       graph.each_vertex do |u|
-        @inDegrees[u] = 0 unless @inDegrees.has_key?(u)
+        @in_degrees[u] = 0 unless @in_degrees.key?(u)
         graph.each_adjacent(u) do |v|
-          @inDegrees[v] += 1
+          @in_degrees[v] += 1
         end
       end
 
-      @inDegrees.each_pair do |v, indegree|
+      @in_degrees.each_pair do |v, indegree|
         @waiting.push(v) if indegree.zero?
       end
     end
@@ -44,8 +46,8 @@ module RGL
     def basic_forward
       u = @waiting.pop
       graph.each_adjacent(u) do |v|
-        @inDegrees[v] -= 1
-        @waiting.push(v) if @inDegrees[v].zero?
+        @in_degrees[v] -= 1
+        @waiting.push(v) if @in_degrees[v].zero?
       end
       u
     end
