@@ -7,16 +7,20 @@ Gem::Specification.new do |s|
   s.summary = "Ruby Graph Library"
   s.description = "RGL is a framework for graph data structures and algorithms"
   s.licenses = ['Ruby']
+  s.required_ruby_version = '>= 3.1'
+
+  s.metadata = {
+    "homepage_uri"          => "https://github.com/monora/rgl",
+    "source_code_uri"       => "https://github.com/monora/rgl",
+    "changelog_uri"         => "https://github.com/monora/rgl/blob/master/CHANGELOG.md",
+    "rubygems_mfa_required" => "true"
+  }
 
   #### Dependencies and requirements.
 
   s.add_dependency 'stream',     '~> 0.5.3'
   s.add_dependency 'pairing_heap', '>= 0.3', '< 4.0'
   s.add_dependency 'rexml', '~> 3.2', '>= 3.2.4'
-
-  s.add_development_dependency 'rake', '~> 13.0'
-  s.add_development_dependency 'yard', '~> 0.9'
-  s.add_development_dependency 'test-unit', '~> 3.5'
 
   #### Which files are to be included in this gem?
 
@@ -34,15 +38,6 @@ Gem::Specification.new do |s|
   #### Load-time details: library and application (you will need one or both).
 
   s.require_path = 'lib'
-
-  #### Documentation and testing.
-
-  s.extra_rdoc_files = ['README.md']
-  s.rdoc_options += [
-      '--title', 'RGL - Ruby Graph Library',
-      '--main', 'README.md',
-      '--line-numbers'
-  ]
 
   #### Author and project details.
 
