@@ -1,0 +1,38 @@
+name: Prepare Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v5
+        id: release
+        with:
+          release-type: ruby
+          package-name: rgl
+          bump-minor-pre-major: true
+          version-file: "lib/rgl/version.rb"
+
+      - uses: actions/checkout@v6
+        if: ${{ steps.release.outputs.release_created }}
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v2
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Run tests
+        run: bundle exec rake test
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Build docs
+        run: bundle exec rake yard || true
+        if: ${{ steps.release.outputs.release_created }}
