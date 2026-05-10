@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rgl/base'
 
 module RGL
@@ -23,7 +25,6 @@ module RGL
     #
     def each_in_neighbor(v)
       raise NotImplementedError
-      yield u
     end
 
     alias :each_out_neighbor :each_adjacent

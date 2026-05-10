@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # adjacency.rb
 #
 require 'rgl/mutable'
@@ -77,7 +79,7 @@ module RGL
     #
     # @see Graph#has_vertex
     def has_vertex?(v)
-      @vertices_dict.has_key?(v)
+      @vertices_dict.key?(v)
     end
 
     # Complexity is O(1), if a Set is used as adjacency list. Otherwise,

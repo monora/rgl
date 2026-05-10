@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # connected_components.rb
 #
 # This file contains the algorithms for the connected components of an

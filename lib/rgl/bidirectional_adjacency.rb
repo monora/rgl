@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # bidirectional_adjacency.rb
 #
 require 'rgl/adjacency'

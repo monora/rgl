@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rgl/dijkstra'
 require 'rgl/adjacency'
 

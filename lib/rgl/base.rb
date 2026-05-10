@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # base.rb
 
 # Module {RGL} defines the namespace for all modules and classes of the graph
@@ -316,7 +318,7 @@ module RGL
         each_adjacent(u) do |v|
           edge = UnDirectedEdge.new(u, v)
 
-          unless visited.has_key?(edge)
+          unless visited.key?(edge)
             visited[edge] = true
             yield u, v
           end

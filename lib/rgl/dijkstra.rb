@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rgl/dijkstra_visitor'
 require 'rgl/edge_properties_map'
 require 'rgl/path_builder'

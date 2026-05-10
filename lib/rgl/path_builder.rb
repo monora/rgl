@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RGL
 
   class PathBuilder
@@ -9,7 +11,7 @@ module RGL
     end
 
     def path(target)
-      if @paths.has_key?(target)
+      if @paths.key?(target)
         @paths[target]
       else
         @paths[target] = restore_path(target)

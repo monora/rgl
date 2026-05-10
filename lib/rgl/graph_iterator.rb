@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'stream'
 
 require 'rgl/graph_wrapper'

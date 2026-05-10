@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # graphxml.rb
 #
 # This file contains minimal support for creating RGL graphs from the GraphML
