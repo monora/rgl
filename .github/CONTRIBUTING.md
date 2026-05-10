@@ -108,6 +108,51 @@ use GitHub pull requests for this purpose. Consult [GitHub
 Help](https://help.github.com/articles/about-pull-requests/) for more
 information on using pull requests.
 
+## Release Process
+
+Releases are managed by maintainers with push access to `master`.
+
+### How it works
+
+1. Merging a PR to `master` triggers the
+   [release-please](https://github.com/googleapis/release-please) workflow,
+   which automatically creates or updates a release PR. The release PR bumps
+   the version in `lib/rgl/version.rb` and updates `CHANGELOG.md` based on
+   [Conventional Commits](https://www.conventionalcommits.org/).
+
+2. When ready to release, merge the release PR.
+
+3. Publish the gem to RubyGems.org:
+
+   ```bash
+   gh workflow run publish-gem.yml
+   ```
+
+   No OTP or API key is needed. Publishing uses
+   [RubyGems Trusted Publishing (OIDC)](https://guides.rubygems.org/trusted-publishing/),
+   which grants a short-lived token automatically via GitHub Actions.
+
+### RubyGems ownership
+
+Current gem owners on RubyGems.org can be listed with:
+
+```bash
+gem owner rgl
+```
+
+To add a new owner (requires existing owner credentials):
+
+```bash
+gem owner rgl --add new-maintainer@example.com
+```
+
+### Trusted Publisher setup
+
+The `publish-gem.yml` workflow is registered as a Trusted Publisher on
+RubyGems.org under the `monora/rgl` repository. If the workflow file is ever
+renamed, the Trusted Publisher entry at
+`https://rubygems.org/gems/rgl/trusted_publishers` must be updated accordingly.
+
 ## License
 
 By contributing, you agree that your contributions will be licensed under the
