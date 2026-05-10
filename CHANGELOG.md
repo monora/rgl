@@ -2,6 +2,13 @@
 
 ## [0.6.7](https://github.com/monora/rgl/compare/v0.6.6...v0.6.7) (2026-05-10)
 
+
+### Bug Fixes
+
+* command injection in write_to_graphic_file ([#154](https://github.com/monora/rgl/issues/154)) ([3ebdd43](https://github.com/monora/rgl/commit/3ebdd434ba9c6fd1ab72925fcaee8052a1086c30))
+
+## [0.6.7](https://github.com/monora/rgl/compare/v0.6.6...v0.6.7) (2026-05-10)
+
 ### Bug Fixes
 
 * Fix command injection vulnerability in `write_to_graphic_file` ([#154](https://github.com/monora/rgl/issues/154))
