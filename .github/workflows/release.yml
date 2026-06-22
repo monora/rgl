@@ -17,7 +17,7 @@ jobs:
           bump-minor-pre-major: true
           version-file: "lib/rgl/version.rb"
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         if: ${{ steps.release.outputs.release_created }}
 
       - uses: ruby/setup-ruby@v1
