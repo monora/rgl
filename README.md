@@ -3,42 +3,43 @@
 [![Version](https://badge.fury.io/rb/rgl.svg)](https://badge.fury.io/rb/rgl)
 RGL is a framework for graph data structures and algorithms.
 
-The design of the library is much influenced by the Boost Graph Library (BGL)
-which is written in C++. Refer to https://www.boost.org/libs/graph/doc for
-further links and documentation on graph data structures and algorithms and
-the design rationales of BGL.
+The design of the library is heavily influenced by the Boost Graph Library
+(BGL), which is written in C++. Refer to
+[The Boost Graph Library](https://www.boost.org/doc/libs/1_87_0/libs/graph/doc/index.html) for
+further links and documentation on graph data structures and algorithms and the
+design rationale of BGL.
 
 A comprehensive summary of graph terminology can be found in the graph section
-of the *Dictionary of Algorithms and Data Structures* at
-https://www.nist.gov/dads/HTML/graph.html or
+of the [Dictionary of Algorithms and Data
+Structures](https://www.nist.gov/dads/HTML/graph.html) or
 [Wikipedia](https://en.wikipedia.org/wiki/Graph_%28discrete_mathematics%29).
 
 * [GitHub Repository](https://github.com/monora/rgl)
-* [API Reference](https://monora.github.io/rgl/) generated from master branch
-* [API Reference](https://www.rubydoc.info/github/monora/rgl) at
-    https://rubydoc.info for the latest release
+* [API Reference](https://monora.github.io/rgl/) generated from the master branch
+* [API Reference](https://www.rubydoc.info/github/monora/rgl) at rubydoc.info
+    for the latest release
 
 ## Design principles
 
 This document concentrates on the special issues of the implementation in
 Ruby. The main design goals directly taken from the BGL design are:
 
-*   An interface for how the structure of a graph can be accessed using a
-    generic interface that hides the details of the graph data structure
-    implementation. This interface is defined by the module {RGL::Graph},
-    which should be included in concrete classes.
+*   A generic interface for accessing the structure of a graph, hiding the
+    details of the graph data structure implementation. This interface is
+    defined by the module {RGL::Graph}, which should be included in concrete
+    classes.
 
 *   A standardized generic interface for traversing graphs
     {RGL::GraphIterator}
 
-RGL provides some general purpose graph classes that conform to this
-interface, but they are not meant to be the **only** graph classes. As in BGL
-I believe that the main contribution of the RGL is the formulation of this
+RGL provides some general-purpose graph classes that conform to this
+interface, but they are not meant to be the **only** graph classes. As in BGL,
+I believe that the main contribution of RGL is the formulation of this
 interface.
 
 The BGL graph interface and graph components are generic in the sense of the
-C++ Standard Template Library (STL). In Ruby other techniques are available to
-express the generic character of the algorithms and data structures mainly
+C++ Standard Template Library (STL). In Ruby, other techniques are available
+to express the generic character of the algorithms and data structures mainly
 using mixins and iterators. The BGL documentation mentions three means to
 achieve genericity:
 
@@ -47,8 +48,8 @@ achieve genericity:
 *   Element Type Parameterization
 *   Vertex and Edge Property Multi-Parameterization
 
-The first is easily achieved in RGL using mixins, which of course is not as
-efficient than C++ templates (but much more readable :-). The second one is
+The first is easily achieved in RGL using mixins, which of course are not as
+efficient as C++ templates (but much more readable :-). The second one is
 even more easily implemented using standard iterators with blocks or using the
 [stream](https://www.rubydoc.info/github/monora/stream) module. The third one
 is no issue since Ruby is dynamically typed: Each object can be a graph
@@ -58,20 +59,20 @@ first there seems to be not much need for the graph property machinery.
 
 ### Algorithms
 
-RGL current contains a core set of algorithm patterns:
+RGL currently contains a core set of algorithm patterns:
 
 *   Breadth First Search {RGL::BFSIterator}
 *   Depth First Search {RGL::DFSIterator}
 
 The algorithm patterns by themselves do not compute any meaningful quantities
-over graphs, they are merely building blocks for constructing graph
+over graphs; they are merely building blocks for constructing graph
 algorithms. The graph algorithms in RGL currently include:
 
 *   Topological Sort {RGL::TopsortIterator}
 *   Connected Components {RGL::Graph#each_connected_component}
 *   Strongly Connected Components {RGL::Graph#strongly_connected_components}
 *   Transitive Closure {RGL::Graph#transitive_closure}
-*   Dijkstras Shortest Path Algorithm {RGL::DijkstraAlgorithm}
+*   Dijkstra's Shortest Path Algorithm {RGL::DijkstraAlgorithm}
 *   Bellman Ford Algorithm {RGL::BellmanFordAlgorithm}
 
 ### Data Structures
@@ -82,19 +83,19 @@ adjacency list and an edge list adaptor.
 *   {RGL::AdjacencyGraph}
 *   {RGL::ImplicitGraph}
 
-The AdjacencyGraph class is the general purpose _swiss army knife_ of graph
+The AdjacencyGraph class is the general-purpose _Swiss Army knife_ of graph
 classes. It is highly parameterized so that it can be optimized for different
-situations: the graph is directed or undirected, allow or disallow parallel
-edges, efficient access to just the out-edges, fast vertex insertion and
-removal at the cost of extra space overhead, etc.
+situations: whether the graph is directed or undirected, whether parallel
+edges are allowed, efficient access to just the out-edges, fast vertex
+insertion and removal at the cost of extra space overhead, etc.
 
-### Differences to BGL
+### Differences from BGL
 
 The concepts of IncidenceGraph, AdjacencyGraph and VertexListGraph
-(see [IncidenceGraph](https://www.boost.org/libs/graph/doc/IncidenceGraph.html)) are
+(see [IncidenceGraph](https://www.boost.org/doc/libs/1_87_0/libs/graph/doc/IncidenceGraph.html)) are
 bundled in RGL's base graph module. Most methods of IncidenceGraph
 should be standard in the base module Graph. The complexity guarantees
-can not necessarily provided (see [BGL's Graph Concepts](https://www.boost.org/libs/graph/doc/graph_concepts.html)).
+cannot necessarily be provided (see [BGL's Graph Concepts](https://www.boost.org/doc/libs/1_87_0/libs/graph/doc/graph_concepts.html)).
 
 ## Installation
 
@@ -103,12 +104,12 @@ can not necessarily provided (see [BGL's Graph Concepts](https://www.boost.org/l
 or download the latest sources from the [git
 repository](https://github.com/monora/rgl).
 
-If you are going to use the drawing functionalities install [Graphviz](https://www.graphviz.org/).
+If you are going to use the drawing functionality, install [Graphviz](https://www.graphviz.org/).
 
 ## Running tests
 
-Checkout RGL git repository and go to the project directory. First, install
-RGL dependencies with bundler:
+Check out the RGL git repository and go to the project directory. First,
+install RGL dependencies with bundler:
 
     % bundle install
 
@@ -142,7 +143,7 @@ Skalkos (see [PR #41](https://github.com/monora/rgl/pull/41)).
     irb> dg.has_vertex? 4
     true
 
-Every object could be a vertex (there is no class Vertex), even the class
+Every object can be a vertex (there is no class Vertex), even the class
 object *Object*:
 
     irb> dg.has_vertex? Object
@@ -207,7 +208,7 @@ We only want to see the ancestors of {RGL::AdjacencyGraph}:
     require 'rgl/traversal'
     tree = g.bfs_search_tree_from(RGL::AdjacencyGraph)
 
-Now we want to visualize this component of g with DOT.  We therefore create a
+Now we want to visualize this component of g with DOT. We therefore create a
 subgraph of the original graph, using a filtered graph:
 
     g = g.vertices_filtered_by {|v| tree.has_vertex? v}
@@ -261,23 +262,21 @@ graph.write_to_graphic_file('png', 'graph', graph_options)
 
 ## Credits
 
-Many thanks to Robert Feldt which also worked on a graph library
-(https://rockit.sf.net/subprojects/graphr) who pointed me to BGL and many other
-graph resources.
+Many thanks to Robert Feldt, who also worked on a Ruby graph library. He pointed
+me to BGL and many other graph resources. Robert kindly allowed me to integrate
+his work on [graphr](https://rockit.sf.net/subprojects/graphr), which I have not
+yet managed to do. Especially his work to output graphs for
+[GraphViz](https://www.graphviz.org) is much more elaborate than the minimal
+support in *dot.rb*.
 
-Robert kindly allowed to integrate his work on graphr, which I did not yet
-succeed. Especially his work to output graphs for
-[GraphViz](https://www.graphviz.org) is much more elaborated than the minimal
-support in dot.rb.
+Jeremy Siek, one of the authors of the nice book [The Boost Graph
+Library](https://www.boost.org/doc/libs/1_87_0/libs/graph/doc/index.html), kindly allowed me to use the
+BGL documentation as a *cheap* reference for RGL. He and Robert also gave
+feedback and many ideas for RGL.
 
-Jeremy Siek one of the authors of the nice book [The Boost Graph
-Library](https://www.boost.org/libs/graph/doc) kindly allowed to use the BGL
-documentation as a *cheap* reference for RGL. He and Robert also gave feedback
-and many ideas for RGL.
-
-Dave Thomas for [RDoc](https://ruby.github.io/rdoc/) which generated what you
-read and matz for Ruby. Dave included in the latest version of RDoc (alpha9)
-the module {RGL::DOT} which is used instead of Roberts module to visualize
+Dave Thomas for [RDoc](https://ruby.github.io/rdoc/), which generated what you
+read, and Matz for Ruby. In the latest version of RDoc (alpha9), Dave included
+the module {RGL::DOT}, which is used instead of Robert's module to visualize
 graphs.
 
 Jeremy Bopp, John Carter, Sascha Doerdelmann, Shawn Garbett, Andreas Schörk, Dan
@@ -295,5 +294,5 @@ bugfixes. The complete list of contributors is
 ## Copying
 
 RGL is Copyright (c) 2002,2004,2005,2008,2013,2015,2019,2020,2022,2023,2024,2025,2026 by Horst
-Duchene. It is free software, and may be redistributed under the {file:LICENSE}
-and terms specified in the LICENSE file.
+Duchene. It is free software, and may be redistributed under the terms
+specified in the {file:LICENSE} file.
