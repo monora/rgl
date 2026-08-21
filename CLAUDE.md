@@ -55,9 +55,10 @@ GraphViz must be installed for DOT-related tests.
 ## Release Process
 
 - Versioning in `lib/rgl/version.rb`
-- Changelog managed by [release-please](https://github.com/googleapis/release-please) on push to `master`
-- Gem publishing is manual via `gh workflow run publish-gem.yml` (requires RubyGems OTP)
+- Merging a PR to `master` triggers [release-please](https://github.com/googleapis/release-please), which opens/updates a release PR bumping the version and `CHANGELOG.md`
+- Merging the release PR, then publishing runs manually via `gh workflow run publish-gem.yml` — no OTP/API key needed, uses [RubyGems Trusted Publishing (OIDC)](https://guides.rubygems.org/trusted-publishing/)
 - Commits follow [Conventional Commits](https://www.conventionalcommits.org/) format
+- Full details: `.github/CONTRIBUTING.md`
 
 ## Code Style
 

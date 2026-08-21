@@ -2,6 +2,7 @@
 /doc
 /pkg
 /rgl
+/vendor/bundle
 /TAGS
 /tags
 graph.dot
@@ -12,3 +13,4 @@ Gemfile.lock
 /dep_graph.dot
 /graph.*
 /.claude/settings.local.json
+/.bundle/
